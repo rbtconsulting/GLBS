@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+		<record id="cron_leaves_earning_entitlement" model="ir.cron">
+			<field name="name">Leaves Earning and Entitlement Manager</field>
+			<field name="user_id" ref="base.user_root" />
+			<field name="model">hr.leave.type</field>
+			<field name="function">cron_make_leaves</field>
+			<field name="interval_type">months</field>
+			<field name="interval_number" eval="1" />
+			<field name="active">False</field>
+			<field name="numbercall">-1</field>
+		</record>
+		
+		<record id="cron_leaves_carry_over_forfeited" model="ir.cron">
+			<field name="name">Leaves Carry Over and Forfeited Manager</field>
+			<field name="user_id" ref="base.user_root" />
+			<field name="model">hr.leave.type</field>
+			<field name="function">cron_make_conversion_carry_over</field>
+			<field name="interval_type">months</field>
+			<field name="active">False</field>
+			<field name="interval_number" eval="12" />
+			<field name="numbercall">-1</field>
+		</record>
+		<record id="cron_expire_leaves" model="ir.cron">
+			<field name="name">Expires Leave</field>
+			<field name="user_id" ref="base.user_root" />
+			<field name="model">hr.leave.type</field>
+			<field name="function">cron_expire_leaves</field>
+			<field name="interval_type">months</field>
+			<field name="active">False</field>
+			<field name="interval_number" eval="12" />
+			<field name="numbercall">-1</field>
+		</record>
+		<record id="cron_employee_regularization_manager" model="ir.cron">
+			<field name="name">Employee Regularization Manager</field>
+			<field name="user_id" ref="base.user_root" />
+			<field name="model">hr.contract</field>
+			<field name="function">get_all_contracts</field>
+			<field name="interval_type">days</field>
+			<field name="interval_number" eval="1" />
+			<field name="active">True</field>
+			<field name="numbercall">-1</field>
+		</record>
+	</data>
+</odoo>

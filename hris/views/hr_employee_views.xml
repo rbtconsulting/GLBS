@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+       
+        <record id="res_company_inherit_form" model="ir.ui.view">
+            <field name="name">res.company.inherit.form</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form" />
+            <field name="arch" type="xml">
+                <field name='website' position='after'>
+                    <field name='company_representative'/>
+                    <field name='rdo_code'/>
+                </field>
+            </field>
+        </record>
+
+        <record id="hr_timesheet_sheet_employee_extd_form_inherit" model="ir.ui.view">
+            <field name="name">hr.timesheet.sheet.employee.extd_form.inherit</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr_timesheet_sheet.hr_timesheet_sheet_employee_extd_form"/>
+            <field name="arch" type="xml">
+                <button name="%(hr_timesheet_sheet.act_hr_employee_2_hr_timesheet)d" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </button>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="hr_employee_stages_inherit_form_view1">
+	        <field name="name">hr.employee.form.view</field>
+	        <field name="model">hr.employee</field>
+	        <field name="inherit_id" ref="employee_stages.hr_employee_stages_inherit_form_view"/>
+	        <field name="arch" type="xml">
+				<xpath expr="//button[@name='start_grounding']" position="replace">
+	              	<button name="start_grounding" string="Start On Boarding" type="object" states="joined"/>
+	            </xpath>
+	            <xpath expr="//button[@name='start_test_period']" position="replace">
+	                <button name="start_test_period" string="Start Probationary Period" type="object" states="grounding"/>
+	            </xpath>
+	            <xpath expr="//button[@name='start_notice_period']" position="replace">
+	                <button name="start_notice_period" string="Start Resignation Notice Period" type="object" states="employment" confirm="Are you sure to set start resignation notice to this employee?Click OK to proceed."/>
+	            </xpath>
+	            <xpath expr="//button[@name='relived']" position="replace">
+	            	<button name="relived" string="Resigned" type="object" states="notice_period" confirm="Are you sure to set this employee to resigned? Click OK to proceed." />
+	            </xpath>
+	             <xpath expr="//button[@name='terminate']" position="attributes">
+	                 <attribute name="confirm">Are you sure to terminate this employee? Click OK to proceed.</attribute>
+	            </xpath>
+	            
+	      	</field>
+	    </record>
+	    
+        <record id="employee_form_view_ref" model="ir.ui.view">
+            <field name="name">Employee</field>
+            <field name="model">hr.employee</field>
+            <field name="priority" eval="17" />
+            <field name="arch" type="xml">
+                <form create="false" edit="false" delete="false">
+                    <group>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record id="employee_tree_view_ref" model="ir.ui.view">
+            <field name="name">Employee</field>
+            <field name="model">hr.employee</field>
+            <field name="priority" eval="17" />
+            <field name="arch" type="xml">
+                <tree edit="false">
+                    <field name="name" />
+                    <field name="department_id" />
+                    <field name="job_id" />
+                </tree>
+            </field>
+        </record>
+        
+        <record id="hr_employee_information" model="ir.ui.view">
+    	    <field name="name">HR Payroll</field>
+    	    <field name="model">hr.employee</field>
+    	    <field name="inherit_id" ref="hr.view_employee_form" />
+    	    <field name="arch" type="xml">
+    	        <xpath expr="//field[@name='job_id']" position="attributes">
+    	            <attribute name="string">Position Title</attribute>
+    	        </xpath> 
+    	       <xpath expr="//button[@name='toggle_active']" position="attributes">
+    	            <attribute name="groups">hris.group_enable_menus</attribute>
+    	        </xpath>
+    	        <xpath expr="//field[@name='birthday']" position="after">
+    	            <field name="age" widget="integer" />
+    	        </xpath>
+				<xpath expr="//field[@name='parent_id']" position="before">
+    	            <field name="employee_num" />
+    	        </xpath>
+    	       	<xpath expr="//page[@name='personal_information']/group[1]/group[1]" position="before">
+   	       	        <group string="Employee Name">
+   	       	            <field name="firstname" />
+   	       	            <field name="middlename" />
+   	       	            <field name="lastname" />
+   	       	        </group>
+    	       	</xpath>
+
+    	       <!-- <xpath expr="//field[@name='address_home_id']" position='attributes'>
+    	       		<attribute name="invisible">1</attribute>
+    	       </xpath> -->
+    	       
+    	       <xpath expr="//field[@name='address_home_id']" position='after'>
+    	       	    <label for="street" string="Address"/>
+                    <div class="o_address_format">
+                        <field name="street" placeholder="Street..." class="o_address_street" readonly="0"/>
+                        <field name="street2" placeholder="Street 2..." class="o_address_street" readonly="0"/>
+                        <field name="city2" placeholder="City" class="o_address_city" readonly="0"/>
+                        <field name="state_id" class="o_address_state" placeholder="Province" options='{"no_open": True}' domain="[('country_id' , '=?' ,country)]" readonly="0"/>
+                        <field name="zip" placeholder="ZIP" class="o_address_zip" readonly="0"/>
+                        <field name="country" placeholder="Country" class="o_address_country" options='{"no_open": True, "no_create": True}' invisible="1"/>
+                        <field name="country_id" placeholder="Country" class="o_address_country" options='{"no_open": True, "no_create": True}' readonly="0"/>
+                    </div>
+   	       	</xpath>
+
+				<xpath expr="//field[@name='identification_id']" position='after'>
+					<field name = "sss_no" string = "SSS" />
+					<field name = "phic_no" />
+					<field name = "hdmf_no" />
+				</xpath>
+					<xpath expr="//field[@name='identification_id']" position='attributes'>
+					<attribute name="string">TIN</attribute>
+				</xpath>
+				
+				<xpath expr="//field[@name='gender']" position='attributes'>
+					<attribute name="required">1</attribute>
+				</xpath>
+		
+				<xpath expr="//field[@name='marital']" position='attributes'>
+					<attribute name="required">1</attribute>
+				</xpath>
+				
+				<xpath expr="//field[@name='work_location']" position='replace'>
+					<field name="work_location_id" options="{'no_create':True, 'no_create_edit':True, 'no_open':True}" />
+				</xpath>
+				<xpath expr="//field[@name='work_location_id']" position='attributes'>
+					<attribute name="string">Job Location</attribute>
+				</xpath>
+    	    </field>
+    	</record>
+    	<record id="employee_attendance_code_view" model="ir.ui.view">
+    		<field name="name">employee.attendance.code.view</field>
+    		<field name="model">hr.employee</field>
+    		<field name="inherit_id" ref="hr_attendance.view_employee_form_inherit_hr_attendance" />
+    		<field name="arch" type="xml">
+    		    <xpath expr="//field[@name='barcode']" position="before">
+    		        <field name="attendance_code" />
+    		        <field name="auto_generate_barcode" invisible="1" />
+    		    </xpath>
+    		    <xpath expr="//field[@name='barcode']" position="attributes">
+                      <attribute name="string">Employee ID</attribute>
+                      <attribute name="attrs">{'readonly':[('auto_generate_barcode', '=', True)]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='barcode']" position="before">
+    		        <field name="biometric_device_id" />
+    		    </xpath>
+    		</field>
+    	</record>
+	   	<!--End of Employee Information-->
+	   	
+	   	<!--Job Category-->
+	   	<record id="hr_job_category_view_form" model="ir.ui.view">
+    		<field name="name">hr.job.category</field>
+    		<field name="model">hr.job.category</field>
+    		<field name="arch" type="xml">
+    		    <form>
+    		        <sheet>
+    		            <group>
+    		                <group>
+    		    				<field name="name" />
+    		    			</group>
+    		    		</group>
+    		    	</sheet>
+    		    </form>
+    		</field>
+    	</record>
+	   	<record id="hr_job_category_view_tree" model="ir.ui.view">
+    		<field name="name">hr.job.category</field>
+    		<field name="model">hr.job.category</field>
+    		<field name="arch" type="xml">
+    		    <tree>
+    		        <field name="name" />
+    		    </tree>
+    		</field>
+    	</record>
+	   	<record id="action_hr_job_action" model="ir.actions.act_window">
+	   		<field name="name">Job Category</field>
+	   		<field name="res_model">hr.job.category</field>
+	   		<field name="view_mode">tree,form</field>
+	   		<field name="view_type">form</field>
+	   	</record>
+	   	
+	   	<menuitem id="menu_hris_jobs" 
+	   	    	  parent="hr.menu_human_resources_configuration" 
+             	  groups="hris.group_hr_user"
+	   	    	  name="Jobs"
+	   	    	  sequence="98" />
+	   	
+	   	<menuitem id="menu_hr_job_category" 
+	   	    	  action="action_hr_job_action" 
+	   	    	  parent="menu_hris_jobs" 
+             	  groups="hris.group_hr_user"
+	   	    	  sequence="5" />
+	   	
+	   	<record id="hr_job_inherit" model="ir.ui.view">
+    		<field name="name">hr.job.inherit</field>
+    		<field name="model">hr.job</field>
+    		<field name="inherit_id" ref="hr.view_hr_job_form" />
+    		<field name="arch" type="xml">
+    		    <xpath expr="//field[@name='address_id']" position="after">
+    		        <field name="code" string="Code" required="1" />
+    		        <field name="level" string="Level" invisible="1"/>
+    		        <field name="job_categ_id" string="Job Category"/>
+    		        <field name="structure_id" required="1" string="Salary Structure" options="{'no_open':True, 'no_create':True, 'no_create_edit':True}" />
+		    </xpath>
+    		    <xpath expr="//field[@name='job_categ_id']" position="attributes">
+    		    	<attribute name="invisible">1</attribute>
+    		    </xpath>   		    
+    		    <xpath expr="//group[@name='employee_data'][last()]/child::group[position()=1]" position="attributes">
+    		    	<attribute name="invisible">1</attribute>
+    		    </xpath> 
+    		</field>
+    	</record>
+
+	   	<!-- End of Job Category-->
+	   	
+	   	<!-- Start of Work Location -->
+	   	<!-- Clearance -->
+	   	   	<record id="hr_employee_clearance" model="ir.ui.view">
+	    		<field name="name">hr.employee.clearance</field>
+	    		<field name="model">hr.employee</field>
+	    		<field name="inherit_id" ref="employee_check_list.hr_employee_inherit_form_view" />
+	    		<field name="arch" type="xml">
+	    		    <xpath expr="//page[@name='checklist']" position="attributes">
+	    		     <attribute name="string">Clearance</attribute>
+	    		    </xpath>
+	    		   	<xpath expr="//page[@name='checklist']" position="inside">
+	    		     	<field name="hr_clearance_line" readonly="1"/>
+	    		    </xpath> 
+	    		</field>
+    	</record>
+	   	
+	   	<record id="hr_employee_work_location_view_form" model="ir.ui.view">
+    		<field name="name">hr.employee.work_location</field>
+    		<field name="model">hr.employee.work_location</field>
+    		<field name="arch" type="xml">
+    		    <form>
+    		        <sheet>
+    		            <group>
+    		                <group>
+    		    				<field name="name" />
+    		    				<field name="region" />
+    		    			</group>
+    		    		</group>
+    		    	</sheet>
+    		    </form>
+    		</field>
+    	</record>
+	   	<record id="hr_employee_work_location_view_tree" model="ir.ui.view">
+    		<field name="name">hr.employee.work_location</field>
+    		<field name="model">hr.employee.work_location</field>
+    		<field name="arch" type="xml">
+    		    <tree>
+    		        <field name="name" />
+    		        <field name="region" />
+    		    </tree>
+    		</field>
+    	</record>
+	   	<record id="action_hr_action_employee_work_location" model="ir.actions.act_window">
+	   		<field name="name">Employee Work Location</field>
+	   		<field name="res_model">hr.employee.work_location</field>
+	   		<field name="view_mode">tree,form</field>
+	   		<field name="view_type">form</field>
+	   	</record>
+	   	
+	   	<menuitem id="menu_hris_contracts" 
+	   	    	  parent="hr.menu_human_resources_configuration" 
+             	  groups="hris.group_hr_user"
+             	  name="Contracts"
+	   	    	  sequence="99" />
+	   	
+	   	<menuitem id="menu_hr_employee_work_location" 
+	   	    	  action="action_hr_action_employee_work_location" 
+	   	    	  parent="hr_payroll.menu_hr_payroll_configuration" 
+             	  groups="hris.group_hr_user"
+	   	    	  sequence="21" />
+	   	    	  
+	   	<!--Added employee menu-->
+	   	
+        <menuitem id="menu_employee_payroll"
+			parent="hr_payroll.menu_hr_payroll_root"
+			name="Employees"
+			groups="hris.group_hr_user"
+			sequence="1"/>
+
+        <menuitem
+            id="hr.menu_open_view_employee_list_my"
+            action="hr.open_view_employee_list_my"
+            parent="menu_employee_payroll"
+            groups="hris.group_hr_user"
+            sequence="1"/>
+            
+       	<!-- added contracts tab -->
+		
+		<menuitem id="hr.menu_contracts_tab" 
+	        name="Payroll Information"
+	        action="hr_contract.action_hr_contract"
+	        sequence="2"
+	        parent="menu_employee_payroll"
+	        />
+            
+	   	<!--Added Attendance request
+	   	
+	   	<menuitem id="hr.menu_attendance_request" 
+	        name="TA Summary Upload" 
+	        action="action_attendance_request"
+	        sequence="5" 
+	        parent="hr_payroll.menu_hr_payroll_root"
+	        /> -->
+	        
+	     <!-- hide entry progress form -->
+	     
+	       <record id="hr_employee_entry_exit_progress" model="ir.ui.view">
+              <field name="name">Hr Employee View Form</field>
+              <field name="model">hr.employee</field>
+              <field name="inherit_id" ref="employee_check_list.hr_employee_inherit_form_view"/>
+              <field name="arch" type="xml">
+                <xpath expr="//field[@name='entry_progress']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                  </xpath>
+             <xpath expr="//field[@name='exit_progress']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                  </xpath>
+              </field>
+          </record>          
+          
+		<!-- hide AML , Loan defaulter , coach 
+		 
+		<record id="loan_hider" model="ir.ui.view">
+			<field name="name">loan.employee.extd.form.hider</field>
+			<field name="model">hr.employee</field>
+			<field name="groups_id" eval="[(4, [ref('hris.group_hr_user')])]"/>
+			<field name="inherit_id" ref="hr.view_employee_form" />
+			<field name="arch" type="xml">
+		<xpath expr="//field[@name='allow_multiple_loan']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                  </xpath>
+                  <xpath expr="//field[@name='loan_defaulter']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                  </xpath>
+                  <xpath expr="//field[@name='coach_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                  </xpath>
+			</field>
+		</record> -->
+		
+		<!-- required fields -->
+          <record id="hr_employee_venue_view_form_create_" model="ir.ui.view">
+              <field name="name">Hr Employee View Form create</field>
+              <field name="model">hr.employee</field>
+              <field name="inherit_id" ref="hris.hr_employee_information"/>
+              <field name="groups_id" eval="[(4, [ref('hris.group_hr_user')])]"/>
+              <field name="arch" type="xml">
+                <!-- <xpath expr="//field[@name='sss_no']" position="attributes">
+					<attribute name="required">1</attribute>					
+                </xpath> -->
+                <xpath expr="//field[@name='identification_id']" position="attributes">
+					<attribute name="required">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='phic_no']" position="attributes">
+					<attribute name="required">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='hdmf_no']" position="attributes">
+					<attribute name="required">1</attribute>
+                </xpath>               
+              </field>
+          </record>		
+
+         <!-- Employee ID search -->
+         
+		 <record id="hr_employee_view" model="ir.ui.view">
+    	    <field name="name">search employee view</field>
+    	    <field name="model">hr.employee</field>
+    	    <field name="inherit_id" ref="hr.view_employee_filter" />
+    	    <field name="arch" type="xml">
+    	        <xpath expr="//field[@name='job_id']" position="after" >
+    	            <field name="barcode" string="Employee ID"/>
+    	        </xpath>    	        	    
+         	</field>
+         </record> 
+		 
+          
+    </data>
+</odoo>

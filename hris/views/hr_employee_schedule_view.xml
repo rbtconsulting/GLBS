@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+	<data>
+	    <menuitem id="menu_hr_manage_schedule" 
+	        	   name="Schedule" 
+	        	   parent="hr_attendance.menu_hr_attendance_root"
+	        	   sequence="21"
+	        	    groups="hris.group_hr_user"/>
+	     
+	    <!--Start of Employee Work Time-->
+	    <record id="hr_employee_work_time_view_form" model="ir.ui.view">
+	        <field name="name">HR Employee Work Time</field>
+	        <field name="model">hr.employee.schedule.work_time</field>
+	        <field name="arch" type="xml">
+	            <form>
+	                <header>
+	                    <button name="btn_make_draft" groups="hr.group_hr_user,hr.group_hr_manager" string="RESET TO DRAFT" states="approved,disapproved" type="object" class="btn btn-primary" />
+	                    <button name="btn_approved" groups="hr.group_hr_user,hr.group_hr_manager" string="APPROVE" states="draft" type="object" class="btn btn-primary" />
+	                    <button name="btn_disapproved" groups="hr.group_hr_user,hr.group_hr_manager" string="DISAPPROVED" states="draft" type="object" class="btn btn-primary" />
+	                    <button name="btn_cancelled" groups="hr.group_hr_user,hr.group_hr_manager" string="CANCEL" states="approved" type="object" class="btn btn-primary" />
+	                   
+	                    <field name="state" widget="statusbar" nolabel="1" statusbar_visible="draft,approved,cancelled" />
+	                </header>
+	                <sheet>
+	                    <group>
+               	            <group>
+               	                <field name="name" attrs="{'readonly': [('state', '!=', 'draft')]}" />
+               	                <field name="employee_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+               	                <field name="employee_num" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+               	                <field name="department_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                	            <field name="start_date" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                	            <field name="end_date" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                	            <field name="grace_period" widget="float_time" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                	            <field name="schedule_type" attrs="{'readonly': [('state', '!=', 'draft')]}" />
+                	            <field name="night_shift" attrs="{'readonly': [('state', '!=', 'draft')]}" />
+                	            <field name="priority" attrs="{'readonly': [('state', '!=', 'draft')]}" />
+               	            </group>
+		               </group>
+		               <field name="work_time_lines" attrs="{'readonly': [('state', '!=', 'draft')]}">
+		               		<form>
+		               		    <sheet>
+		               		    	<group>
+		               		    	    <group>
+		               		    	      	<field name="days_of_week" />
+		               		    	      	<field name="earliest_check_in" widget="float_time" />
+		               		    	      	<field name="latest_check_in" widget="float_time" />
+		               		    	      	<field name="time_to_render" widget="float_time" />
+		               		    	      	<field name="break_period" widget="float_time" />
+		               		    	    </group>
+		               		    	</group>
+		               		    </sheet>
+		               		</form>
+		               		<tree editable="bottom">
+		               		    <field name="days_of_week" />
+		               		   	<field name="earliest_check_in" widget="float_time"/>
+		               		   	<field name="latest_check_in" widget="float_time" />
+		               		   	<field name="time_to_render" widget="float_time" />
+		               		   	<field name="break_period" widget="float_time" />
+		               		</tree>
+		               </field>
+	                </sheet>
+	            </form>
+	        </field>
+	    </record>
+	    <record id="hr_employee_work_time_view_tree" model="ir.ui.view">
+	        <field name="name">Employee Work Time</field>
+	        <field name="model">hr.employee.schedule.work_time</field>
+	        <field name="arch" type="xml">
+	            <tree>
+	                <field name="name" />
+	                <field name="start_date" />
+                	<field name="end_date" />
+                	<field name="grace_period" widget="float" />
+                	<field name="schedule_type" />
+                	<field name="night_shift" />
+                	<field name="priority" />
+	            </tree>
+	        </field>
+	    </record>
+	    
+	    <record id="action_hr_employee_work_time" model="ir.actions.act_window">
+	    	<field name="name">HR Employee Work Time</field>
+	    	<field name="res_model">hr.employee.schedule.work_time</field>
+	        <field name="view_mode">tree,form</field>
+	        <field name="view_type">form</field>
+	        <field name="help" type="html">
+	            <p class="oe_nocontent_create_view">
+	            	Click here to add new Employee Work Time.
+	            </p>
+	        </field>
+	    </record>
+	    
+	    <menuitem  id="menu_hr_employee_work_time"
+	   	    	   parent="menu_hr_manage_schedule" 
+	        	   name="Employee Work Time"
+	        	   action="action_hr_employee_work_time" 
+	        	   sequence="2"
+	        	    />
+	    <!--End of Employee Work Time-->
+	</data>
+</odoo>

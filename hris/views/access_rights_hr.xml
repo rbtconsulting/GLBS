@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+       <!--hr. experience -->
+        <record model="ir.ui.menu" id="hr_experience.menu_hr_experience" >
+            <field name="groups_id" eval="[(6,0,[ ref('hris.group_hr_user')])]"/>
+        </record>
+        <!-- hr. contract-->
+        <record model="ir.ui.menu" id="hr_contract.hr_menu_contract" >
+            <field name="groups_id" eval="[(6,0,[ ref('hris.group_hr_user')])]"/>
+        </record>
+        <!--hr. config-->
+        <record model="ir.ui.menu" id="hr.menu_human_resources_configuration" >
+            <field name="groups_id" eval="[(6,0,[ ref('hris.group_hr_user')])]"/>
+        </record>
+        <!--hr. department-->
+        <record model="ir.ui.menu" id="hr.menu_hr_department_tree" >
+            <field name="groups_id" eval="[(6,0,[ ref('hris.group_hr_user')])]"/>
+        </record>
+        <!--leave reports-->
+        <record model="ir.ui.menu" id="hr_holidays.menu_hr_holidays_report" >
+            <field name="groups_id" eval="[(6,0,[ ref('hris.group_hr_user')])]"/>
+        </record>
+        <!--leave config-->
+         <record model="ir.ui.menu" id="hr_holidays.menu_hr_holidays_configuration" >
+            <field name="groups_id" eval="[(6,0,[ ref('hris.group_hr_user')])]"/>
+        </record>
+        <!--leaves dashboard-->
+       <record model="ir.ui.menu" id="hr_holidays.menu_hr_holidays_dashboard" >
+            <field name="groups_id" eval="[(6,0,[ ref('hris.group_hr_user')])]"/>
+        </record>
+        <!--attendance report-->
+        <record model="ir.ui.menu" id="hr_attendance.menu_hr_attendance_report" >
+            <field name="groups_id" eval="[(6,0,[ ref('hris.group_hr_user')])]"/>
+        </record>
+        <!--hr_payroll payslip-->
+         <record model="ir.ui.menu" id="hr_payroll.menu_hr_payslip_run" >
+            <field name="groups_id" eval="[(6,0,[ ref('hris.group_hr_user')])]"/>
+        </record>
+        <!-- hr_payroll config-->
+         <record model="ir.ui.menu" id="hr_payroll.menu_hr_payroll_configuration" >
+            <field name="groups_id" eval="[(6,0,[ ref('hris.group_hr_user')])]"/>
+        </record>
+        <!--hr_holidays.  leaves-->
+        <record model="ir.ui.menu" id="hr_holidays.menu_open_department_leave_approve" >
+            <field name="groups_id" eval="[(6,0,[ref('hris.group_hr_user')])]"/>
+        </record>
+        <record model="ir.ui.menu" id="hris.menu_hr_manage_schedule" >
+            <field name="groups_id" eval="[(6,0,[ ref('hris.group_hr_user')])]"/>
+        </record>
+         <record model="ir.ui.menu" id="hr_holidays.menu_open_company_allocation" >
+            <field name="groups_id" eval="[(6,0,[ ref('hris.group_hr_user')])]"/>
+        </record>
+        <record model="ir.ui.menu" id="hr_holidays.menu_open_ask_holidays_new" >
+            <field name="groups_id" eval="[(6,0,[ ref('hris.group_hr_user')])]"/>
+        </record>
+        <record model="ir.ui.menu" id="hr_holidays.menu_open_allocation_holidays" >
+            <field name="groups_id" eval="[(6,0,[ ref('hris.group_hr_user')])]"/>
+        </record>
+        <record model="ir.ui.menu" id="hr_attendance.menu_hr_attendance_view_attendances" >
+                <field name="groups_id" eval="[(6,0,[ref('hris.group_hr_user'),ref('hris.group_firstlevel'),ref('hris.group_approver')])]"/>
+        </record>
+
+        <!-- personal info and work info tabs only -->
+        <record id="hr_employee_view_form_hr_manager" model="ir.ui.view">
+          <field name="name">hr.employee.view.form.hr.manager</field>
+          <field name="model">hr.employee</field>
+          <field name="inherit_id" ref="hr.view_employee_form"/>
+         <field name="groups_id" eval="[(4,[ref('hris.group_hr_user')])]"/>
+          <field name="arch" type="xml">
+              <xpath expr="//notebook" position="replace">
+                    <notebook name="info_wrapper" class="hidden">
+                    </notebook>
+                  <notebook>                   
+                            <page name="public" string="Public Information">
+                                <group>
+                                    <group string="Contact Information">
+                                        <field name="address_id"
+                                            context="{'show_address': 1}"
+                                            options='{"always_reload": True, "highlight_first_line": True, "no_open": True}'/>
+                                        <field name="mobile_phone"/>
+                                        <field name="work_location"/>
+                                        <field name="work_email" widget="email"  />
+                                        <field name="work_phone"/>
+                                    </group>
+                                    <group string="Position">
+					<field name="id_company"/>
+                                        <field name="department_id"/>
+                                        <field name="job_id"  options="{'no_open':True, 'no_create_edit':True, 'no_create':True}"/>
+                                        <field name="parent_id"  options="{'no_open':True, 'no_create_edit':True, 'no_create':True}"/>
+                                        <field name="coach_id"  options="{'no_open':True, 'no_create_edit':True, 'no_create':True}"/>
+                                        <field name="calendar_id"  options="{'no_open':True, 'no_create_edit':True, 'no_create':True}"/>
+                                    </group>
+                                </group>
+                                <field name="notes" placeholder="Other Information ..." colspan="4"/>
+                            </page>
+                            <page string="Loan Details" invisible='1'>
+								<group col="4" colspan="4">
+									<field name="loan_ids" height="360" nolabel="1" colspan="4">
+										<tree string="Loans">
+											<field name="name"/>
+											<field name="date_applied"/>
+											<field name="date_approved"/>
+											<field name="loan_type"/>
+											<field name="int_rate" string="Rate"/>
+											<field name="principal_amount"/>
+											<field name="final_total"/>
+											<field name="total_amount_paid"/>
+											<field name="total_amount_due"/>
+											<field name="state"/>
+										</tree>
+									</field>
+								</group>
+							</page>
+                            <page name="personal_information" string="Personal Information" groups="hr.group_hr_user">
+                                <group>
+                                    <group string="Citizenship &amp; Other Information">
+                                        <field name="country_id" options='{"no_open": True, "no_create": True}'/>
+                                        <field name="identification_id" groups="hr.group_hr_user"/>
+                                        <field name="passport_id" groups="hr.group_hr_user"/>
+                                        <field name="bank_account_id" context="{'default_partner_id': address_home_id}"/>
+                                    </group>
+                                    <group string="Contact Information">
+                                        <field name="address_home_id"
+                                            context="{'show_address': 1}"
+                                            options='{"always_reload": True, "highlight_first_line": True}'/>
+                                    </group>
+                                    <group string="Status">
+                                        <field name="gender"/>
+                                        <field name="marital"/>
+                                    </group>
+                                    <group string="Birth">
+                                        <field name="birthday"/>
+                                    </group>
+                                </group>
+                            </page>
+                              <page name="hr_settings" string="HR Settings" groups="hr.group_hr_user">
+                                <group>
+                                    <group string='Status' name="active_group">
+                                        <field name="company_id" groups="base.group_multi_company"/>
+                                        <field name="user_id" string="User Account"/>
+                                        <field name="pin"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                  </xpath>
+                  
+          </field>
+     	</record>
+
+    </data>
+</odoo>

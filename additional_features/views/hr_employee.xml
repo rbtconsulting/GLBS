@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+   <data>
+
+		<record id="hr_employee_carry_over" model="ir.ui.view">
+    	    <field name="name">HR.Employee.carryover</field>
+    	    <field name="model">hr.employee</field>
+    	    <field name="inherit_id" ref="hris.hr_employee_view_form_hr_manager" />
+    	    <field name="arch" type="xml">
+    	        <xpath expr="//page[@name='hr_settings']" position="after">
+    	             <page string="Carry Over Details">
+                         <field name="carry_over_ids">
+                             <tree>
+                                 <field name="holiday_status_id"/>
+                                 <field name="original_amount"/>
+                                 <field name="used_amount"/>
+                                 <field name="amount"/>
+                                 <field name="year"/>
+                             </tree>
+                         </field>
+                     </page>
+    	        </xpath>
+    	   	</field>
+    	  </record>
+	</data>
+</odoo>

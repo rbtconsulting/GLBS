@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+          <record id="report_data_" model="ir.config_parameter">
+              <field name="key">report.url</field>
+              <field name="value">http://10.0.10.253</field>
+              <field name="group_ids">hris.group_hr_user</field>
+          </record>
+
+        <!--vikings -->
+       <!-- <record id="leave_type_sickleave" model="hr.holidays.status">
+              <field name="name" >Sick Leaves</field>
+          </record>
+          <record id="leave_type_vacationleave" model="hr.holidays.status">
+              <field name="name" >Vacation Leave</field>
+          </record>-->
+
+	</data>
+</odoo>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <template id="kfa_report_employee">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <div class="page" style="font-size:12px !important;margin:0 0 0 60; padding:0">
+                        <div class="row mt32 mb32">
+                            <table class="table table-condensed" style="border-top:1px solid black;border-bottom:1px solid black; padding:0; margin:0 0 5 0">
+                                <tbody>
+                                    <tr>
+                                        <td style="border: none; width: 500; padding-top:5;">
+                                            <strong>KRA Month</strong>
+                                            <span t-att-style="style" t-esc="o.name" />
+                                        </td>
+                                        <td style="border: none; width: 500; padding-top:5;">
+                                            <strong>Year</strong>
+                                            <span t-att-style="style" t-esc="o.year.name" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: none; width: 500; padding-top:5;">
+                                            <strong>Employee</strong>
+                                            <span t-att-style="style" t-esc="o.employee_id.name" />
+                                        </td>
+                                        <td style="border: none; width: 500; padding-top:5;">
+                                            <strong>KRA</strong>
+                                            <span t-att-style="style" t-esc="o.kra_id.name" />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table class="table table-condensed" style="padding:0; margin:0">
+                                <tbody>
+                                    <t t-if="o.kra_question_ids">
+                                        <tr>
+                                            <td colspan="2" style="text-align: justify; border: none; width: 500; ">
+                                                <strong>KRA Questions:</strong>
+                                                <br />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width:10%;">Question</td>
+                                            <td style="width:15%;">Description</td>
+                                            <td style="width:5%;">Hint</td>
+                                            <td style="width:10%;">Weightage</td>
+                                            <td style="width:15%;">Employee Rating</td>
+                                            <td style="width:5%;">Employee Remark</td>
+                                            <td style="width:15%;">Manager Rating</td>
+                                            <td style="width:5%;">Manager Remark</td>
+                                            <td style="width:15%;">Final Score</td>
+                                        </tr>
+                                        <tr t-foreach="o.kra_question_ids" t-as="l">
+                                            <td style="width:10%;">
+                                                <span t-field="l.name" />
+                                            </td>
+                                            <td style="width:15%;">
+                                                <span t-field="l.description" />
+                                            </td>
+                                            <td style="width:5%;">
+                                                <span t-field="l.hint" />
+                                            </td>
+                                            <td style="width:10%;">
+                                                <span t-field="l.weightage" />
+                                            </td>
+                                            <td style="width:15%;">
+                                                <span t-field="l.employee_rating" />
+                                            </td>
+                                            <td style="width:5%;">
+                                                <span t-field="l.employee_remark" />
+                                            </td>
+                                            <td style="width:15%;">
+                                                <span t-field="l.manager_rating" />
+                                            </td>
+                                            <td style="width:5%;">
+                                                <span t-field="l.manager_remark" />
+                                            </td>
+                                            <td style="width:15%;">
+                                                <span t-field="l.final_score" />
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </template>
+        <report id="report_kra_employee" string="Employee KRA" model="employee.kra" report_type="qweb-pdf" file="employee_kra.kra_report_employee" name="employee_kra.kfa_report_employee" header="True" />
+    </data>
+</openerp>
+

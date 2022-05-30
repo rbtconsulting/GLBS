@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+       <record id="hr_payslip_form_custom" model="ir.ui.view">
+              <field name="name">hr.payslip.form.custom</field>
+              <field name="model">hr.payslip</field>
+              <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
+              <field name="groups_id" eval="[(4, [ref('group_approver'),ref('group_firstlevel')])]"/>
+              <field name="arch" type="xml">
+                  <xpath expr="//form/sheet" position="inside">
+                      <separator string="Payslip Details"/>
+                        <field name="details_by_salary_rule_category" context="{'group_by':'category_id'}" domain="[('appears_on_payslip', '=', True)]">
+                            <tree string="Payslip Lines" decoration-info="total == 0" >
+                                <field name="category_id"  options="{'no_open':True}"/>
+                                <field name="name"/>
+                                <field name="code"/>
+                                <field name="total"/>
+                            </tree>
+                        </field>
+                  </xpath>
+                  <xpath expr="//form/header[1]" position="attributes">
+                      <attribute name="invisible">True</attribute>
+                  </xpath>
+                  <xpath expr="//form/sheet/div[@name='button_box']" position="attributes">
+                      <attribute name="invisible">True</attribute>
+                  </xpath>
+                  <xpath expr="//form/sheet/notebook/page[1]" position="attributes">
+                      <attribute name="invisible">True</attribute>
+                  </xpath>
+                  <xpath expr="//form/sheet/notebook/page[2]" position="attributes">
+                      <attribute name="invisible">True</attribute>
+                  </xpath>
+                  <xpath expr="//form/sheet/notebook/page[3]" position="attributes">
+                      <attribute name="invisible">True</attribute>
+                  </xpath>
+                  <xpath expr="//form/sheet/notebook/page[4]" position="attributes">
+                      <attribute name="invisible">True</attribute>
+                  </xpath>
+                  <xpath expr="//form/sheet/notebook/page[1]/separator[1]" position="attributes">
+                      <attribute name="invisible">True</attribute>
+                  </xpath>
+                  <xpath expr="//form/sheet/notebook/page[1]/separator[2]" position="attributes">
+                      <attribute name="invisible">True</attribute>
+                  </xpath>
+                  <xpath expr="//field[@name='worked_days_line_ids']" position="attributes">
+                      <attribute name="invisible">True</attribute>
+                  </xpath>
+                  <xpath expr="//field[@name='input_line_ids']" position="attributes">
+                      <attribute name="invisible">True</attribute>
+                  </xpath>
+                  <xpath expr="//form/sheet/group[1]/field[@name='contract_id']" position="replace">
+                      <field name="contract_id" domain="[('employee_id','=',employee_id),('date_start','&lt;=',date_to),'|',('date_end','&gt;=',date_from),('date_end','=',False)]" context="{'default_employee_id': employee_id}" options="{'no_create': True,'no_open': True,'no_create_edit':True}"/>
+                  </xpath>
+                  <xpath expr="//form/sheet/group[1]/field[@name='struct_id']" position="replace">
+                       <field name="struct_id" attrs="{'required':[('contract_id','&lt;&gt;',False)]}" options="{'no_create': True,'no_open': True,'no_create_edit':True}"/>
+                  </xpath>
+              </field>
+          </record>
+
+       <record id="hr_salary_rule_category_form_custom" model="ir.ui.view">
+              <field name="name">hr.salary.rule.category.form.custom</field>
+              <field name="model">hr.salary.rule.category</field>
+              <field name="inherit_id" ref="hr_payroll.hr_salary_rule_category_form"/>
+              <field name="groups_id" eval="[(4, [ref('group_approver'),ref('group_firstlevel')])]"/>
+              <field name="arch" type="xml">
+                  <xpath expr="//form" position="attributes">
+                      <attribute name="create">false</attribute>
+                      <attribute name="edit">false</attribute>
+                      <attribute name="delete">false</attribute>
+                      <attribute name="menu">false</attribute>
+                  </xpath>
+              </field>
+       </record>
+
+      <record id="edit_holiday_new_approver" model="ir.ui.view">
+              <field name="name">hr.holidays.edit.holiday.approver</field>
+              <field name="model">hr.holidays</field>
+              <field name="inherit_id" ref="hr_holidays.edit_holiday_new"/>
+              <field name="groups_id" eval="[(4,[ref('group_firstlevel'),ref('group_approver')])]"/>
+              <field name="arch" type="xml">
+                  <xpath expr="//field[@name='employee_id']" position="replace">
+                           <field name="employee_id"
+                            options="{'no_open':True, 'no_create_edit':True, 'no_create':True}"
+                            domain ="['|',('user_id','=',uid),('parent_id.user_id','=',uid)]"/>
+                  </xpath>
+                  <xpath expr="//field[@name='department_id']" position="replace">
+                       <field name="department_id"
+                              groups="hr_holidays.group_hr_holidays_user"
+                              attrs="{'readonly':['|','|' ,('type','=','add'),('holiday_type','=','category'),('state','=', 'validate')],'invisible':[('holiday_type','=','category')]}"
+                              options="{'no_open':True, 'no_create_edit':True, 'no_create':True}"/>
+                  </xpath>
+                  <xpath expr="//field[@name='holiday_status_id']" position="attributes">
+                      <attribute name="options">{'no_open':True, 'no_create_edit':True, 'no_create':True}</attribute>
+                  </xpath>
+              </field>
+       </record>
+
+
+    <record id="hr_attendance_action_filter" model="ir.actions.act_window">
+        <field name="name">View Attendances</field>
+        <field name="res_model">hr.attendance</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">['|',('employee_id.user_id','=',uid),('employee_id.parent_id.user_id','=',uid)]</field>
+        <field name="context">{"search_default_today":1}</field>
+         <field name="groups_id" eval="[(4,[ref('group_firstlevel'),ref('group_approver')])]"/>
+        <field name="search_view_id" ref="hr_attendance.hr_attendance_view_filter" />
+        <field name="help" type="html">
+            <p>The attendance records of your employees will be displayed here.</p>
+        </field>
+    </record>
+    <menuitem id="menu_hr_attendance_view_attendances_custom"
+                   name="View Attendances"
+                   parent="hr_attendance.menu_hr_attendance_manage_attendances"
+                   sequence="10"
+                   groups="group_approver,group_firstlevel"
+                   action="hr_attendance_action_filter"/>
+
+
+
+
+        <!--leaves summary view -->
+
+        <record id="view_holiday_simple_custom" model="ir.ui.view">
+            <field name="name">hr.holidays.report_tree</field>
+            <field name="model">hr.holidays</field>
+            <field name="priority">20</field>
+            <field name="arch" type="xml">
+                <tree decoration-danger="state == 'refuse'" decoration-info="state == 'draft'" string="Leaves Summary">
+                    <field name="employee_id" />
+                    <field name="category_id" invisible="1"/>
+                    <field name="department_id" invisible="1"/>
+                    <field name="type"/>
+                    <field name="name"/>
+                    <field name="number_of_days" string="Number of Days" sum="Remaining Days"/>
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                    <field name="holiday_status_id"/>
+                    <field name="manager_id" invisible="1"/>
+                    <field name="user_id" invisible="1"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="open_company_allocation_custom" model="ir.actions.act_window">
+            <field name="name">Leaves Summary</field>
+            <field name="res_model">hr.holidays</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" eval="view_holiday_simple_custom"/>
+            <field name="context">{
+                'search_default_group_type': 1,
+                'search_default_year': 1 ,
+                'search_default_my_leaves': 1,
+                'needaction_menu_ref':
+                [
+                    'hr_holidays.menu_open_ask_holidays_new',
+                    'hr_holidays.menu_open_allocation_holidays',
+                    'hr_holidays.menu_request_approve_allocation',
+                    'hr_holidays.menu_open_employee_leave',
+                ]
+            }</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click here to create a new leave request.
+                </p>
+            </field>
+              <field name="domain">['|',('employee_id.user_id','=',uid),('employee_id.parent_id.user_id','=',uid)]</field>
+            <field name="search_view_id" ref="hr_holidays.view_hr_holidays_filter"/>
+        </record>
+
+        <menuitem
+            id="menu_open_company_allocation_custom"
+            name="Leaves Summary"
+            parent="hr_holidays.menu_hr_holidays_my_leaves"
+            action="open_company_allocation_custom"
+            groups="group_approver,group_firstlevel"
+            sequence="21"/>
+        <!-- leaves request view-->
+
+        <record id="open_ask_holidays" model="ir.actions.act_window">
+            <field name="name">Leaves Request</field>
+            <field name="res_model">hr.holidays</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="hr_holidays.edit_holiday_new"/>
+            <field name="context">{
+                'default_type': 'remove',
+                'search_default_my_leaves': 1,
+                'needaction_menu_ref':
+                [
+                    'hr_holidays.menu_open_company_allocation',
+                ]
+            }</field>
+             <field name="domain">['|',('employee_id.user_id','=',uid),('employee_id.parent_id.user_id','=',uid)]</field>
+            <field name="search_view_id" ref="hr_holidays.view_hr_holidays_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a new leave request.
+              </p><p>
+                Once you have recorded your leave request, it will be sent
+                to a manager for validation. Be sure to set the right leave
+                type (recuperation, legal holidays, sickness) and the exact
+                number of open days related to your leave.
+              </p>
+            </field>
+        </record>
+
+        <record id="action_open_ask_holidays_tree" model="ir.actions.act_window.view">
+            <field name="sequence" eval="2"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="hr_holidays.view_holiday"/>
+            <field name="act_window_id" ref="open_ask_holidays"/>
+        </record>
+
+        <record id="action_open_ask_holidays_form" model="ir.actions.act_window.view">
+            <field name="sequence" eval="3"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="hr_holidays.edit_holiday_new"/>
+            <field name="act_window_id" ref="open_ask_holidays"/>
+        </record>
+
+        <record id="action_open_ask_holidays_calendar" model="ir.actions.act_window.view">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">calendar</field>
+            <field name="view_id" ref="hr_holidays.view_holiday_new_calendar"/>
+            <field name="act_window_id" ref="open_ask_holidays"/>
+        </record>
+
+        <menuitem
+            id="menu_open_ask_holidays_new"
+            parent="hr_holidays.menu_hr_holidays_my_leaves"
+            action="open_ask_holidays"
+            groups="group_approver,group_firstlevel"
+            sequence="22"/>
+
+
+        <!-- allocation request-->
+          <record id="open_allocation_holidays" model="ir.actions.act_window">
+            <field name="name">Allocation Request</field>
+            <field name="res_model">hr.holidays</field>
+            <field name="view_type">form</field>
+            <field name="context">{
+                'default_type':'add',
+                'search_default_my_leaves': 1,
+                'needaction_menu_ref':
+                [
+                    'hr_holidays.menu_open_company_allocation',
+                ]
+            }</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click here to create a new leave allocation request.
+                </p>
+            </field>
+            <field name="domain">['|',('employee_id.user_id','=',uid),('employee_id.parent_id.user_id','=',uid)]</field>
+            <field name="view_id" ref=""/>
+            <field name="search_view_id" ref="hr_holidays.view_hr_holidays_filter"/>
+        </record>
+
+        <record id="action_open_allocation_holidays_tree" model="ir.actions.act_window.view">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="hr_holidays.view_holiday_allocation_tree"/>
+            <field name="act_window_id" ref="open_allocation_holidays"/>
+        </record>
+
+        <record id="action_open_allocation_holidays_form" model="ir.actions.act_window.view">
+            <field name="sequence" eval="2"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="hr_holidays.edit_holiday_new"/>
+            <field name="act_window_id" ref="open_allocation_holidays"/>
+        </record>
+
+       <record id="action_server_leave_filter" model="ir.actions.server">
+          <field name="name">Allocation Request</field>
+          <field name="model_id" ref="model_hr_holidays"/>
+          <field name="state">code</field>
+          <field name="code">action =  env.get('hr.holidays').leaves_filter_act()</field>
+      </record>
+
+
+        <menuitem
+            id="menu_open_allocation_holidays"
+            parent="hr_holidays.menu_hr_holidays_my_leaves"
+            action="action_server_leave_filter"
+            groups="group_approver,group_firstlevel"
+            sequence="40"/>
+
+        <menuitem
+            id="hr_holidays.menu_open_department_leave_allocation_approve"
+            parent="hr_holidays.menu_hr_holidays_approvals"
+            action="action_server_leave_filter"
+            sequence="40"/>
+
+
+    </data>
+</odoo>

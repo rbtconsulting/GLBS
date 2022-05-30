@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="tax_code1i" model="alphanumeric.tax.code">
+        	<field name="description">On gross rental or lease for the continued use or possession of personal property in excess of Ten Thousand</field>
+        	<field name="tax_rate">5</field>
+        	<field name="atc_type">ind</field>
+        	<field name="code">WI100</field>
+        </record>
+        <record id="tax_code1c" model="alphanumeric.tax.code">
+        	<field name="description">On gross rental or lease for the continued use or possession of personal property in excess of Ten Thousand</field>
+        	<field name="tax_rate">5</field>
+        	<field name="atc_type">corp</field>
+        	<field name="code">WC100</field>
+        </record>
+        
+        <record id="tax_code2i" model="alphanumeric.tax.code">
+        	<field name="description">Income payment made by top withholding agents to their local/resident supplier of goods other than thosed covered by other rates of withholding tax</field>
+        	<field name="tax_rate">1</field>
+        	<field name="atc_type">ind</field>
+        	<field name="code">WI158</field>
+        </record>
+        <record id="tax_code2c" model="alphanumeric.tax.code">
+        	<field name="description"> Income payment made by top withholding agents to their local/resident supplier of goods other than thosed covered by other rates of withholding tax</field>
+        	<field name="tax_rate">1</field>
+        	<field name="atc_type">corp</field>
+        	<field name="code">WC158</field>
+        </record>
+        
+        <record id="tax_code3i" model="alphanumeric.tax.code">
+        	<field name="description">Income payment made by top withholding agents to their local/resident supplier of services other than thosed covered by other rates of withholding tax
+        	</field>
+        	<field name="tax_rate">2</field>
+        	<field name="atc_type">ind</field>
+        	<field name="code">WI160</field>
+        </record>
+        <record id="tax_code3c" model="alphanumeric.tax.code">
+        	<field name="description">Income payment made by top withholding agents to their local/resident supplier of services other than thosed covered by other rates of withholding tax</field>
+        	<field name="tax_rate">2</field>
+        	<field name="atc_type">corp</field>
+        	<field name="code">WC160</field>
+        </record>
+    </data>
+</odoo>

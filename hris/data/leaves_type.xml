@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+		<record id="is_ob_leaves_type" model="hr.holidays.status">
+			<field name="name">Official Business</field>
+			<field name="leave_remarks">wp</field>
+			<field name="is_ob">True</field>
+			<field name="limit">True</field>
+		</record>
+	</data>
+</odoo>

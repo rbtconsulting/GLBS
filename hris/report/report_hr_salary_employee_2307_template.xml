@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="hris.report_hrsalaryemployee2307_template">
+      <t t-call="report.html_container">
+			<t t-foreach="get_employee_salary_details" t-as="ds">
+            	<div class="page" style="width:100%;text-transform:uppercase;font-weight:bold;">                
+           
+	             	<div style="position:relative; z-index= -1;padding:7mm;">
+	 	          		<image style="width:100%;" t-att-src="'data:image/png;base64,'+ image_2307"/>
+	                </div>
+	                        
+	            	<div style="position: absolute; top:135 px; left:170 px;width:50%;letter-spacing:8px; z-index=1;font-size:16px;">
+						<span t-esc="ds['START_DATE']"/>
+					</div>
+					<div style="position: absolute; top:135 px; left: 520 px;width:50%;letter-spacing:8px; z-index=1;font-size:16px;">
+						<span t-esc="ds['END_DATE']"/>
+					</div>
+					<div style="position: absolute; top:184px; left: 195px;letter-spacing:6px; z-index=1;font-size:16px;">
+						<span t-esc="ds['TIN_NO'][0:3]"/>  
+						<span t-esc="ds['TIN_NO'][3:6]"/>  
+						<span t-esc="ds['TIN_NO'][6:9]"/>   
+						<span t-esc="ds['TIN_NO'][9:]"/>
+					</div>
+
+					<div style="position: absolute; top:215 px; left: 195 px; z-index=1;font-size:16px;width:50%;">
+						<span t-esc="ds['EMP_LNAME']"/>,
+						<span t-esc="ds['EMP_FNAME']"/>,
+						<span t-esc="ds['EMP_MNAME']"/>
+					</div>
+					
+					<div style="position: absolute; top:255 px; left: 195px; z-index=1;font-size:16px;">
+						<span t-esc="ds['EMP_ADDR']"/>
+					</div>
+					
+					<div style="position: absolute; top:255 px; left: 860px; letter-spacing:8px;z-index=1;font-size:16px;">
+						<span t-esc="ds['EMP_ZIP']"/>
+					</div>
+					<div style="position: absolute; top:340px; left: 195px;letter-spacing:6px; z-index=1;font-size:16px;">
+						<span t-esc="ds['EMPR_TIN'][0:3]"/>  
+						<span t-esc="ds['EMPR_TIN'][3:6]"/>  
+						<span t-esc="ds['EMPR_TIN'][6:9]"/>   
+						<span t-esc="ds['EMPR_TIN'][9:]"/>
+					</div>
+
+					<div style="position: absolute; top:360px; left:195px; z-index=1;font-size:16px;">
+						<span t-esc="ds['EMPR_NAME']"/>
+					</div>
+
+					<div style="position: absolute; top:410px; left:195px; z-index=1;font-size:16px;">
+						<span t-esc="ds['EMPR_ADDR']"/>
+					</div>
+					
+					<div style="position: absolute; top:410px; left:860px; letter-spacing:8px; z-index=1;font-size:16px;">
+						<span t-esc="ds['EMPR_ZIP']"/>
+					</div>
+					
+
+					<div style="position:absolute;top:510px; word-wrap:break-word;overflow-wrap:break-word;width:22%;left:50px;z-index=1; font-size:16px;">
+						<span t-esc="ds['SUBJECT']"/>
+					</div>
+					<div style="position: absolute; top:510px; left:280px ; z-index=1;font-size:16px;">
+						<span t-esc="ds['CODE']"/>
+					</div>
+					
+					<div style="position: absolute; top:510px; left: 360 px; z-index=1;font-size:16px;">
+						<span t-esc="'{:,.2f}'.format(ds['INCOME_PAYMENTS'][1])"/>
+					</div>
+					<div style="position: absolute; top:510px; left: 480 px; z-index=1;font-size:16px;">
+						<span t-esc="'{:,.2f}'.format(ds['INCOME_PAYMENTS'][2])"/>
+					</div>
+					<div style="position: absolute; top:510px; left: 580 px; z-index=1;font-size:16px;">
+						<span t-esc="'{:,.2f}'.format(ds['INCOME_PAYMENTS'][3])"/>
+					</div>
+					
+					<div style="position: absolute; top:510px; left: 695 px; z-index=1;font-size:16px;">
+						<span t-esc="'{:,.2f}'.format(ds['TOTAL'])"/>
+					</div>
+					
+					<div style="position: absolute; top:510px; left: 810 px; z-index=1;font-size:16px;">
+						<span t-esc="'{:,.2f}'.format(ds['TAX_WITHHELD'])"/>
+					</div>
+					
+					<!--TOTALS-->
+					<div style="position: absolute; top:760px; left: 360 px; z-index=1;font-size:16px;">
+						<span t-esc="'{:,.2f}'.format(ds['TOTAL_FIRST'])"/>
+					</div>
+					<div style="position: absolute; top:760px; left: 480 px; z-index=1;font-size:16px;">
+						<span t-esc="'{:,.2f}'.format(ds['TOTAL_SECOND'])"/>
+					</div>
+					<div style="position: absolute; top:760px; left: 580 px; z-index=1;font-size:16px;">
+						<span t-esc="'{:,.2f}'.format(ds['TOTAL_THIRD'])"/>
+					</div>
+					
+					<div style="position: absolute; top:760px; left: 695 px; z-index=1;font-size:16px;">
+						<span t-esc="'{:,.2f}'.format(ds['TOTAL'])"/>
+					</div>
+					
+					<div style="position: absolute; top:760px; left: 810 px; z-index=1;font-size:16px;">
+						<span t-esc="'{:,.2f}'.format(ds['TAX_WITHHELD'])"/>
+					</div>
+	            </div>
+			</t>
+	    </t>
+	</template>
+	
+</odoo>

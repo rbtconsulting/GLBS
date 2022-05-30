@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_leave_conversion_page">
+        <t t-call="report.external_layout">
+            <div class="page">
+                    <style>
+
+                    .nopadding {
+                      padding: 1px !important;
+                      margin: 0 !important;
+                    }
+
+                    #logo {
+                      width: 280px;
+                      height: 70px;
+                    }
+
+
+
+                    p, table {
+                      font-family: Calibri, Candara, Segoe, Segoe UI, Optima, Arial, sans-serif;
+                      font-size: 13px;
+                      font-style: normal;
+                      font-variant: normal;
+                      line-height: 14px;
+                    }
+
+                    #header {
+                      font-size: 14px;
+                      line-height: 5px;
+                      font-weight:bold;
+                    }
+
+                    #info {
+                      border: 0px;
+                      text-align: left;
+                    }
+
+
+
+                </style>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-xs-6" style="margin-left:5px;">
+                                 <span><img t-if="o.company_id.logo" t-att-src="'data:image/png;base64,%s' %o.company_id.logo" widthi="100px" height="100px"/></span>
+                            <!--<b><p id="header"><span t-field="o.id_company"/></p></b>-->
+                        </div>
+                        <div class="col-xs-5 text-right" style="font-size:15px;">
+                            <p>PRIVATE and CONFIDENTIAL</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 text-center">
+                            <span style="font-size:18px;font-weight:bold;letter-spacing:2px;">Leave Conversion</span>
+                            <br/>
+                            <b>
+                            [Year : <span t-field="o.year" />]
+                            </b>
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                            <table id="info">
+                              <tbody>
+                                <tr>
+                                  <td class="col-xs-3 nopadding"><b>Employee No.: </b><span t-field="o.employee_id.barcode"/> </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-xs-3 nopadding"><b>Employee Name: </b><span t-field="o.employee_id.name"/></td>
+                                </tr>
+                                <tr>
+                                    <td class="col-xs-3 nopadding"><b>Position: </b><span t-field="o.employee_id.job_id"/> </td>
+                                </tr>
+                                  <tr>
+                                  <td class="col-xs-3 nopadding"><b>Date Hired: </b><span t-field="o.employee_id.contract_id.date_start"/></td>
+                                 </tr>
+                              </tbody>
+                            </table>
+                            <br/>
+                            <table class="table table-bordered" >
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th class="col-xs-3">Leave Type</th>
+                                        <th class="col-xs-1 text-center">Leave Credit</th>
+                                        <th class="col-xs-1 text-center ">Used Leaves</th>
+                                        <th class="col-xs-1 text-center">Leaves to Convert</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="o.conversion_line_ids" t-as="line">
+                                        <td class="border-right"><span t-esc="line.leave_type_id.name"/></td>
+                                        <td class="border-right text-right"><span t-esc="line.leave_credit"/></td>
+                                        <td class="border-right text-right"><span t-esc="line.used_leaves"/></td>
+                                        <td class="border-right text-right"><span t-esc="line.leave_to_convert"/></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-4 pull-right">
+                            <table class="table table-condensed">
+                                <tr class="border-light">
+                                     <td><strong>Total Leaves to convert</strong></td>
+                                    <td class="text-right">
+                                        <span t-field="o.leave_credit"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Daily Rate</strong></td>
+                                    <td class="text-right">
+                                           <span t-field="o.daily_rate" t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
+                                    </td>
+                                </tr>
+                                <tr class="border-black">
+                                    <td><h4><strong>Total Amount</strong></h4></td>
+                                    <td class="text-right">
+                                        <h4> <span t-field="o.amount" t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/></h4>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                 </div>
+              </div>
+        </t>
+    </template>
+
+    <template id="leave_conversion_template">
+        <t t-call="report.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="additional_features.report_leave_conversion_page" />
+            </t>
+        </t>
+    </template>
+
+     <record id="paperformat_report" model="report.paperformat">
+            <field name="name">Legal Portrait</field>
+            <field name="default" eval="True" />
+            <field name="format">Legal</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">20</field>
+            <field name="margin_bottom">20</field>
+            <field name="margin_left">1</field>
+            <field name="margin_right">1</field>
+            <field name="header_line" eval="False" />
+            <field name="header_spacing">35</field>
+            <field name="dpi">90</field>
+        </record>
+
+      <report
+            id="action_report_leave_conversion"
+            model="hr.leaves.conversion"
+            string="Payslip"
+            report_type="qweb-pdf"
+            name="additional_features.leave_conversion_template"
+            file="additional_features.leave_conversion_template"
+            paperformat="paperformat_report"
+        />
+
+</odoo>
+

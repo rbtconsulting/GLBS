@@ -1,0 +1,140 @@
+<odoo>
+	<data>
+	<template id="hris.report_job_offer_template">
+    		<t t-call="report.html_container">
+                 <div class="page">
+                <style>
+                 
+				table {
+    				font-family: arial, sans-serif;
+    				border-collapse: collapse;
+    				width: 100%;
+					}
+
+				td, th {
+   					 border: 1px solid #dddddd;
+    				text-align: left;
+    				padding: 8px;
+						}
+
+				tr:nth-child(even) {
+    				background-color: #dddddd;
+					}
+					
+                </style>
+                
+                <t t-set="data_source" t-value="job_offer"/>
+                <t t-set="details" t-value="details" />
+                <t t-set="positions" t-value="positions" />
+                    <tr>
+                    	<p style="position:absolute;">
+                    		<h1 style="text-align:center">
+                    			<b> JOB OFFER</b>
+                    		</h1>
+					 	</p>
+					 	<t t-set="foo" t-value=" 100* (' '.replace(' ',u'\xa0').encode('utf-8')) "/>
+					 	<p style="text-align:left;padding:5px"><b>Applicant Name&#160;&#160;&#160;&#160;&#160;&#160;&#160;:&#160;&#160;<t t-esc="details['APPLICANT_NAME']" /></b></p>
+						<p style="text-align:left;padding:5px"><b>Position&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;:&#160;&#160;<t t-esc="details['POSITION']" /></b></p>
+						<p style="text-align:left;padding:5px"><b>Department/Section:&#160;&#160;<t t-esc="details['DEPARTMENT']" /></b></p>
+						<p style="text-align:left;padding:5px"><b>Immediate Superior:&#160;&#160;<t t-esc="details['SUPERIOR']" /></b></p>
+						<p style="text-align:left;padding:5px"><b>Interface With&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;:&#160;&#160;<t t-esc="details['INTERFACE']" /></b></p>
+						<p style="text-align:left;padding:5px"><b>Employer's Name&#160;&#160;&#160;&#160;:&#160;&#160;<t t-esc="details['EMP_NAME']" /></b></p>
+						<p style="text-align:left;padding:5px"><b>Job Location&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;:&#160;&#160;<t t-esc="details['JOB_LOC']" /></b></p>
+						<p style="text-align:left;padding:5px"><b>Work Schedule&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;:&#160;&#160;<t t-esc="details['WORK_SCHED']" /></b></p>
+						<p style="text-align:left;padding:5px"><b>Effectivity Date&#160;&#160;&#160;&#160;&#160;&#160;&#160;:&#160;&#160;<t t-esc="details['DATE']" /></b></p>
+                  	</tr>
+                  
+				
+                <table class="table table-condensed,table-hover">
+                    <tr>
+                        <th class="text-center" width="30%">COMPENSATION AND OTHERS</th>
+                        <th class="text-center" width="30%">AMOUNT</th>
+                        <th class="text-center" width="40%">REMARKS</th>   
+					</tr>
+					<t t-foreach="data_source" t-as="ds">
+						<tr>
+							<td style="text-align:center; vertical-align: middle;" >
+	                 			<t t-if="ds.has_key('COMPENSATION')">
+		              				<b>
+		              				<span style="text-align:center; vertical-align: middle;" t-esc="ds['COMPENSATION']"/>
+		              				</b>
+		              			</t>
+	                 		</td>
+							<td style="text-align:center; vertical-align: middle;" >
+	    						<t t-if="ds.has_key('AMOUNT')">
+		              				<span t-esc="'{:,.2f}'.format(ds['AMOUNT'])"/>
+		              			</t>
+		              		</td>
+							<td style="text-align:center; vertical-align: middle;" >
+	    						<t t-if="ds.has_key('REMARKS')">
+		              				<span t-esc="ds['REMARKS']"/>
+		              			</t>	
+		              		</td>
+		              		
+	  					</tr>
+  					</t>
+  					</table>
+  					<h4> Following the initial probitionary
+                        period, a progression and performance review will be
+                        conducted on the 5<sup>th</sup> month of your employement to assess your
+                        capability and fitness to the position. </h4>
+						
+  					<table class="table table-condensed,table-hover">
+  					
+	  					<tr>
+	                        <th class="text-center" width="50%">OTHER PERKS AND BENEFITS</th>
+	                        <th class="text-center" width="50%"></th>
+						</tr>
+	  					<t t-foreach="perks" t-as="ds">
+	                 		<tr>
+							<td style="text-align:center; vertical-align: middle;" >
+	                 			<t t-if="ds.has_key('PERKS')">
+		              				<b>
+		              				<span t-esc="ds['PERKS']"/>
+		              				</b>
+		              			</t>
+	                 		</td>
+							<td style="text-align:center; vertical-align: middle;" >
+	    						<t t-if="ds.has_key('DESCRIPTION')">
+		              				<span t-esc="ds['DESCRIPTION']"/>
+		              			</t>
+		              		</td>
+	  						</tr>
+	                 	</t>
+                </table>
+                	<h4>NOTE: Employee's Personal Copy must be SECURED/KEPT by the employee and must remain
+					HIGHLY CONFIDENTIAL.If you have other queries regarding the contents of this Job offer(JO),
+					please direct your queries to HR.</h4>
+                <footer>
+                	<div>
+					<div class="col-xs-3" style="margin-left:20px;margin-top:30px">
+					<b>Prepared by</b><br/><br/><br/>
+					<p style="text-decoration: underline;" t-esc="details['PREPARED']" />
+						<t t-if="positions.has_key('PREPARED')">
+	              				<b t-esc="positions['PREPARED']"/>
+	              			</t><br/>
+						
+					</div>
+					<div class="col-xs-3" style="margin-left:100px;margin-top:30px">
+					<b>Endorsed by</b><br/><br/><br/>
+					<p style=" text-decoration: underline;" t-esc="details['ENDORSED']" />
+						<t t-if="positions.has_key('ENDORSED')">
+	              				<b t-esc="positions['ENDORSED']"/>
+	              			</t><br/>
+						
+					</div>
+					<div class="col-xs-3" style="margin-left:50px;margin-top:30px">
+					<b>Approved by</b><br/><br/><br/>
+					<p style="text-decoration: underline;" t-esc="details['APPROVED']" />
+						<t t-if="positions.has_key('APPROVED')">
+	              				<b t-esc="positions['APPROVED']"/>
+	              			</t><br/>
+						
+					</div>
+				</div> 
+                </footer>            
+            </div>
+            </t>
+		</template>
+	</data>
+</odoo>

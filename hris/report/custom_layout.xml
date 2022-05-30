@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="custom_layout">		
+		<t t-raw="0" />
+	</template>
+</odoo>

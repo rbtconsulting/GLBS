@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+	<template id="report_hdmf_contribution_template">
+		 <t t-call="report.html_container">
+			<t t-foreach="docs" t-as="o">
+	          <div class="page">
+
+				   <style>
+						.nopadding {
+						  padding: 0px;
+						  margin: 0px;
+						}
+						#msrf-border {
+						  border-collapse: collapse;
+						  width: 700px !important;
+						  height: 1050px !important;
+						  padding-left: 2px;
+						  padding-right: 2px;
+						  padding-top: 10px;
+						}
+
+						table, tr, th, td{
+						  empty-cells: show;
+						  border: 1px solid black;
+						  border-collapse: collapse;
+						  width:100%;
+						  white-space: nowrap;
+						}
+
+						p, table {
+						  font-family: Calibri, Candara, Segoe, Segoe UI, Optima, Arial, sans-serif;
+						  font-style: normal;
+						  font-variant: normal;
+						  font-size: 12px;
+						}
+						h7 {
+						  font-family: Calibri, Candara, Segoe, Segoe UI, Optima, Arial, sans-serif;
+						  font-size: 20px;
+						  font-weight: bold;
+						  line-height: 20px;
+						}
+						#computational-table {
+						  width: 100%;
+						  text-align: center;
+					      font-size:12px;
+						}
+					    #computational-table &gt;thead &gt;tr &gt;td {
+					      margin-left:5px;
+					      text-align: left;
+					      padding-left:5px;
+						}
+					    #computational-table &gt; thead &gt;tr &gt; .td_data {
+					      padding-bottom:8px;
+					      border:none;
+					    }
+					    #computational-table &gt; tbody &gt; tr &gt; td {
+					       font-size:12px;
+					    }
+					    #computational-table &gt; tfoot&gt; tr &gt; td {
+					       border:none;
+					       padding:12px!important;
+
+					    }
+					     .data-header {
+						     font-size:12px!important;
+						     text-align:center!important;
+						     padding:5px;
+
+					    }
+					    .data-info {
+					     	font-size:12px!important;
+					     	padding:5px;
+					    }
+						#info-table td{
+						  border: 0px;
+						}
+					  </style>
+				  <t t-set="company_details" t-value="company_details"/>
+                  <t t-set="data_source" t-value="get_hdmf_contribution_details"/>
+                  <t t-set="totals" t-value="totals"/>
+				  <t t-set="dates" t-value="dates"/>
+				  
+					<p> <strong><h6 style="text-align:right!important;">HQP-PFF-053 </h6> </strong> </p>
+					<div class="row">
+					  <div class="col-xs-3">
+						<img src="/hris/static/src/img/pag-ibig-logo.jpg" alt="pag-ibig logo" style="height:60px!important; width:60px!important;"/>
+					  </div>
+					  <div class="col-xs-6 nopadding">
+						 <h7> <center> <strong> MEMBERSHIP SAVINGS <br/> REMITTANCE FORM (MSRF) </strong> </center> </h7>
+					  </div>
+					  <div class="col-xs-3">
+						<table>
+						  <thead>
+							<tr>
+							  <th style="background-color:#a6a6a6!important;"><p style="padding:5px;"> Pag-IBIG EMPLOYER'S ID NUMBER </p> </th>
+							</tr>
+						  </thead>
+						  <tbody>
+							<tr>
+							  <td> <p style="padding:5px;"><span t-esc="company_details['C_PAGIBIG_NUM']"/> </p> </td>
+							</tr>
+						  </tbody>
+						</table>
+					  </div>
+					</div>
+				   	
+					<div class="row">
+					  <p class="nopadding"> <strong style="font-size:10px;"> <br/>NOTE: PLEASE READ INSTRUCTIONS AT THE BACK </strong> </p>
+					  <table id="computational-table">
+						<thead>
+						  <tr>
+							<td class="td_data" colspan="13" style="text-align:left;padding-left:10px!important;"> EMPLOYER/BUSINESS NAME <br/><span t-esc="company_details['C_NAME']"/><br/> </td>
+						  </tr>
+							<tr style="border-bottom:none;">
+							   <td colspan="13" style="text-align:left;padding-left:10px!important;padding-bottom:none!important;border:none;"> EMPLOYER/BUSINESS ADDRESS </td>
+						    </tr>
+						  <tr style="border-top:none!important;border-bottom:none;border-right:1px solid black!important;">
+							<td colspan="3" class="td_data" style="margin-left:15px;"> Unit/Room No., Floor </td>
+							<td colspan="3" class="td_data"> Building Name </td>
+							<td colspan="4" class="td_data"> House No. </td>
+							<td colspan="3" class="td_data"> Street Name</td>
+						  </tr>
+							<tr style="border-top:none!important;border-bottom:none;border-right:1px solid black!important;">
+								<td colspan="13" class="td_data"><span t-esc="company_details['C_ADDRESS']"/><span t-esc="company_details['C_ADDRESS2']"/><br/> </td>
+							</tr>
+						  <tr>
+							<td colspan="2" class="td_data" style="margin-left:15px;"> Subdivision </td>
+							<td colspan="2" class="td_data"> Barangay </td>
+							<td colspan="2" class="td_data"> Municipality/City <br/><span t-esc="company_details['C_CITY']"/></td>
+							<td colspan="5" class="td_data"> Province/State/Country (if abroad) <br/><span t-esc="company_details['C_STATE']"/><span t-esc="company_details['C_COUNTRY']"/></td>
+							<td colspan="2" class="td_data"> Zip Code <br/> <span t-esc="company_details['C_ZIP']"/></td>
+						  </tr>
+						  <tr>
+							<td rowspan="2" class="data-header"> Pag-IBIG <br/> MID No. </td>
+							<td rowspan="2" class="data-header"> ACCOUNT <br/> NO. </td>
+							<td rowspan="2" class="data-header"> MEMBERSHIP <br/> PROGRAM </td>
+							<td colspan="4" class="data-header"> NAME OF MEMBERS </td>
+							<td rowspan="2" class="data-header"> PERIOD <br/> COVERED </td>
+							<td rowspan="2" class="data-header"> MONTHLY <br/> COMPENSATION </td>
+							<td colspan="3" class="data-header"> MEMBERSHIP SAVINGS </td>
+							<td rowspan="2" class="data-header"> REMARKS </td>
+						  </tr>
+						  <tr>
+							<td class="data-info"> Last Name </td>
+							<td class="data-info"> First Name </td>
+							<td class="data-info"> Name Extensions (Jr., III, etc.) </td>
+							<td class="data-info"> Middle Name </td>
+							<td class="data-info"> EE <br/> SHARE </td>
+							<td class="data-info"> ER <br/> SHARE </td>
+							<td class="data-info"> TOTAL </td>
+						  </tr>
+						</thead>
+						<tfoot>
+						  <tr>
+							<td colspan="13" style="padding:5px;">
+							  I hereby certify under pain of perjury that the information given and all statements made herein are true and correct to the best of my knowledge and belief. I further certiffy that my signature appearing herein is genuine and authentic.
+							</td>
+						  </tr>
+						  <tr>
+							<td colspan="5">
+							  _________________________________________________________<br/>
+							  HEAD OF OFFICE OR AUTHORIZED REPRESENTATIVE <br/>
+							  (Signature Over Printed Name)
+							</td>
+							<td colspan="4">
+							  ________________________________<br/>
+							  DESIGNATION/POSITION
+							</td>
+							<td colspan="4">
+							  __________________________<br/>
+							  DATE
+							</td>
+						  </tr>
+						</tfoot>
+						<tbody>
+					     <t t-foreach="data_source" t-as="ds">
+						  <tr>
+							<td><span t-esc="ds['EMP_HDMF_NUM']"/></td>
+							<td><span t-esc="ds['EMP_BANK_ACC']"/></td>
+							<td/>
+							<td><span t-esc="ds['EMP_SURNAME']"/></td>
+							<td><span t-esc="ds['EMP_FIRST']"/></td>
+							<td/>
+							<td><span t-esc="ds['EMP_MIDDLE']"/></td>
+							<td><span t-esc="dates['DATE_FROM']"/> - <span t-esc="dates['DATE_TO']"/></td>
+							<td class="text-right"><span t-esc="'{:,.2f}'.format(ds['MONTHLY_COMPENSATION'])"/></td>
+						    <td class="text-right"><span t-esc="'{:,.2f}'.format(ds['HDMF_EE'])"/></td>
+						    <td class="text-right"><span t-esc="'{:,.2f}'.format(ds['HDMF_ER'])"/></td>
+						    <td class="text-right"><span t-esc="'{:,.2f}'.format(ds['HDMF_TOTAL'])"/></td>
+							<td/>
+						  </tr>
+						 </t>
+						  <tr style="text-align: left;padding:5px;">
+							<td colspan="9"> TOTAL FOR THIS PAGE </td>
+							<td class="text-right"> ₱ <span t-esc="'{:,.2f}'.format(totals['TOTAL_HDMF'])"/></td>
+							<td class="text-right"> ₱ <span t-esc="'{:,.2f}'.format(totals['TOTAL_HDMFER'])"/></td>
+							<td class="text-right" colspan="2"> ₱ <span t-esc="'{:,.2f}'.format(totals['TOTAL_HDMF_CON'])"/></td>
+						  </tr>
+						  <tr style="text-align: left;padding:5px;">
+							<td colspan="9"> GRAND TOTAL (if last page) </td>
+							<td> ₱ </td>
+							<td> ₱ </td>
+							<td colspan="2"> ₱ </td>
+						  </tr>
+						  <tr>
+							<td colspan="13" style="background-color:#a6a6a6!important;padding:5px;"> EMPLOYER CERTIFICATION </td>
+						  </tr>
+						</tbody>
+					  </table>
+					  <center>THIS FORM MAY BE REPRODUCED. NOT FOR SALE. (V03. 10/2016)</center>
+					</div>
+				  </div>    
+            </t>
+        </t>    
+	</template>
+  </data>
+</odoo>
+

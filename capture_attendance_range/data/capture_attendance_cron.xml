@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data >
+
+
+        <record id="ir_cron_capture_attendance" model="ir.cron">
+            <field name="name">Capture Attendance</field>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="priority">2</field>
+            <field name="numbercall">-1</field>
+            <field eval="False" name="doall"/>
+            <field eval="'hr.biometric.connection'" name="model"/>
+            <field eval="'capture_attendance_cron'" name="function"/>
+        </record>
+
+        <record id="ir_cron_capture_night_shift_attendance" model="ir.cron">
+            <field name="name">Capture Night Shift Attendance</field>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="priority">2</field>
+            <field name="numbercall">-1</field>
+            <field eval="False" name="doall"/>
+            <field eval="'hr.biometric.connection'" name="model"/>
+            <field eval="'capture_night_shift_attendance_cron'" name="function"/>
+        </record>
+
+    </data>
+</odoo>

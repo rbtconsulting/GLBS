@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="TOTDED" model="hr.salary.rule.category">
+            <field name="name">TOTAL DEDUCTION</field>
+            <field name="code">TOTDED</field>
+        </record>
+
+        <record id="TOTEAR" model="hr.salary.rule.category">
+            <field name="name">TOTAL EARNINGS</field>
+            <field name="code">TOTEAR</field>
+        </record>
+        <record id="BSC" model="hr.salary.rule.category">
+            <field name="name">Basic</field>
+            <field name="code">BSC</field>
+        </record>
+
+        <record id="EMRCTRB" model="hr.salary.rule.category">
+            <field name="name">Employer Contribution</field>
+            <field name="code">EMRCTRB</field>
+        </record>
+
+        <record id="FNP" model="hr.salary.rule.category">
+            <field name="name">Final Net Pay</field>
+            <field name="code">FNP</field>
+        </record>
+
+        <record id="NPAT" model="hr.salary.rule.category">
+            <field name="name">Net Pay After Tax</field>
+            <field name="code">NPAT</field>
+        </record>
+
+        <record id="NTP" model="hr.salary.rule.category">
+            <field name="name">Net Taxable Pay</field>
+            <field name="code">NTP</field>
+        </record>
+
+        <record id="GTP" model="hr.salary.rule.category">
+            <field name="name">Gross Taxable Pay</field>
+            <field name="code">GTP</field>
+        </record>
+
+        <record id="MTH13" model="hr.salary.rule.category">
+            <field name="name">13th Monthy</field>
+            <field name="code">MTH13</field>
+        </record>
+
+        <record id="BON" model="hr.salary.rule.category">
+            <field name="name">Bonus</field>
+            <field name="code">BON</field>
+        </record>
+
+        <record id="LON" model="hr.salary.rule.category">
+            <field name="name">Loans</field>
+            <field name="code">LON</field>
+        </record>
+
+        <record id="WTX" model="hr.salary.rule.category">
+            <field name="name">Withholding Tax</field>
+            <field name="code">WTX</field>
+        </record>
+
+        <record id="EMPCTRB" model="hr.salary.rule.category">
+            <field name="name">Employee Contribution</field>
+            <field name="code">EMPCTRB</field>
+        </record>
+
+        <record id="OtherTaxInc" model="hr.salary.rule.category">
+            <field name="name">Other Taxable Income</field>
+            <field name="code">OtherTaxInc</field>
+        </record>
+
+        <record id="ONTXINC" model="hr.salary.rule.category">
+            <field name="name">Other NonTaxable Income</field>
+            <field name="code">ONTXINC</field>
+        </record>
+
+        <record id="ONTXDED" model="hr.salary.rule.category">
+            <field name="name">Other NonTaxable Deductions</field>
+            <field name="code">ONTXDED</field>
+        </record>
+
+        <record id="OtherTaxDed" model="hr.salary.rule.category">
+            <field name="name">Other Taxable Deductions</field>
+            <field name="code">OtherTaxDed</field>
+        </record>
+
+        <record id="TaxDue" model="hr.salary.rule.category">
+            <field name="name">TAX DUE</field>
+            <field name="code">TaxDue</field>
+        </record>
+
+    </data>
+</odoo>

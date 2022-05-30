@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+	<data>
+	    <record id="hr_attendance_request_view_form" model="ir.ui.view">
+	    	<field name="name">HR Attendance Request</field>
+	    	<field name="model">hr.attendance.request</field>
+	    	<field name="arch" type="xml">
+	    	    <form>
+	    	        <header>
+	      	            <button name="btn_approve" 
+	      	                	states="draft" 
+	      	                	class="btn-primary" 
+	      	                	type="object" 
+	      	                	string="Approve" 
+	      	                	groups="hris.group_approver,hris.group_hr_user" />
+	      	            
+	      	            <button name="btn_disapprove" 
+	      	                	confirm="This record cannot be reset to draft once disapproved.Click OK to proceed." 
+	      	                	groups="hris.group_approver" 
+	      	                	states="draft" 
+	      	                	class="btn-primary" 
+	      	                	type="object" 
+	      	                	string="Disapprove" />
+	      	            
+	      	            <button name="btn_reset_to_draft" 
+	      	                	states="approve" 
+	      	                	class="btn-primary" 
+	      	                	type="object" 
+	      	                	string="Reset to Draft" 
+	      	                	groups="hris.group_approver,hris.group_hr_user" />
+	      	           
+	      	        	<field name="state" nolabel="1" widget="statusbar" statusbar_visible="draft,approve" />
+	      	        </header>
+	    	        <sheet>
+	    	            <group>
+	    	                <group string="Employee" >
+	    	                    <field name="employee_id" 
+	    	                        attrs="{'readonly':[('state', '!=','draft')]}"
+	    	                        options="{'no_open':True, 'no_create':True, 'no_ceate_edit':True}" />
+	    	                </group>
+	    	                <group string="Reference">
+	    	                    <field name="payroll_period_id" 
+	    	                           attrs="{'readonly':[('state', '!=','draft')]}"
+	    	                           options="{'no_open':True, 'no_create':True, 'no_ceate_edit':True}" />    
+	    	                    <field name="payslip_id"
+	    	                           attrs="{'readonly':[('state', '!=','draft')]}"
+	    	                           options="{'no_open':True, 'no_create':True, 'no_ceate_edit':True}" readonly="1"/>
+	    	                </group>
+	    	            </group>
+	    	            <notebook>
+	    	                <page string="Requests">
+	    	                    <field name="request_line" attrs="{'readonly':[('state', '!=','draft')]}">
+	    	                        <tree editable="top">
+	    	                        	<field name="code" />
+	    	                        	<field name="number_of_hours" />
+	    	                        	<field name="attendance_date" />
+	    	                       	</tree>
+	    	                       	<form>
+	    	                       	    <field name="code" />
+	    	                        	<field name="number_of_hours" />
+	    	                        	<field name="attendance_date" />
+	    	                       	</form>
+	    	                    </field>
+	    	                </page>
+	    	            </notebook>
+	    	        </sheet>
+	    	        <group string="Remarks">
+	    	        	<field name="remarks" nolabel="1" attrs="{'readonly':[('state', '!=','draft')]}" />
+	    	        </group>
+	    	    </form>
+	    	</field>
+	    </record>
+	    <record id="hr_attendance_request_view_tree" model="ir.ui.view">
+	    	<field name="name">HR Attendance Request</field>
+	    	<field name="model">hr.attendance.request</field>
+	    	<field name="arch" type="xml">
+	    		<tree>
+	    		    <field name="employee_id" />
+	    		    <field name="payroll_period_id" />
+	    		    <field name="state" />
+	    		</tree>
+	    	</field>
+	    </record>
+	   
+	    <record id="action_attendance_request" model="ir.actions.act_window">
+	    	<field name="name">TA Summary Upload</field>
+	    	<field name="res_model">hr.attendance.request</field>
+	    	<field name="view_mode">tree,form</field>
+	    	<field name="view_type">form</field>
+	    	<field name="help" type="html">
+	    	    <p class="oe_nocontent_create_view">
+	    	        Click here to create TA summary upload.
+	    	    </p>
+	    	</field>
+	    </record>    
+	    <!-- <menuitem id="menu_attendance_request"
+	        	  name="TA Summary Upload"
+	        	  action="action_attendance_request"
+	        	  sequence="3"
+	        	  parent="hr_payroll.menu_hr_payroll_root"
+	        	  /> -->
+	</data>
+</odoo>

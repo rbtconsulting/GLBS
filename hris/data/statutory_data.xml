@@ -1,0 +1,629 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <!--Start of Annual Income Tax-->
+        <record id="AIC1" model="annual.income.tax">
+		   		<field name="name">Not Over P250,000</field>
+				<field name="min_range" eval="0.0" /> 
+				<field name="max_range" eval="250000.0"/>           
+	            <field name="percentage" eval="0"/>
+	           	<field name="prescribed_tax" eval="0" />
+	    </record>
+	    <record id="AIC2" model="annual.income.tax">
+		   		<field name="name">Over P250,000-Not Over P400,000</field>
+				<field name="min_range" eval="250000.01" /> 
+				<field name="max_range" eval="400000.0"/>           
+	            <field name="percentage" eval="20.0"/>
+	           	<field name="prescribed_tax" eval="0" />
+	    </record>
+	    <record id="AIC3" model="annual.income.tax">
+		   		<field name="name">Over P400,000-Not Over P800,000</field>
+				<field name="min_range" eval="400000.01" /> 
+				<field name="max_range" eval="800000.0"/>           
+	            <field name="percentage" eval="25.0"/>
+	           	<field name="prescribed_tax" eval="30000.0" />
+	    </record>	
+        <record id="AIC4" model="annual.income.tax">
+		   		<field name="name">Over P800,000-Not Over P2,000,000</field>
+				<field name="min_range" eval="800000.01" /> 
+				<field name="max_range" eval="2000000.0"/>           
+	            <field name="percentage" eval="30.0"/>
+	           	<field name="prescribed_tax" eval="130000.0" />
+	    </record>	
+        <record id="AIC5" model="annual.income.tax">
+		   		<field name="name">Over P2,000,000-Not Over P5,000,000</field>
+				<field name="min_range" eval="2000000.01" /> 
+				<field name="max_range" eval="5000000.0"/>           
+	            <field name="percentage" eval="32.0"/>
+	           	<field name="prescribed_tax" eval="490000.0" />
+	    </record>	
+        <record id="AIC6" model="annual.income.tax">
+		   		<field name="name">Over P5,000,000</field>
+				<field name="min_range" eval="5000000.01" /> 
+				<field name="max_range" eval="999000000.0"/>           
+	            <field name="percentage" eval="35.0"/>
+	           	<field name="prescribed_tax" eval="1450000.0" />
+	    </record>	
+        
+        <!--End of Annual Income Tax-->
+        <!--Start of Withholding Tax-->		
+					
+		<record id="D1" model="payroll.withholding_tax.contribution">
+	            <field name="code">D1</field>
+		   		<field name="name">D1</field>
+				<field name="min_range" eval="0.0" /> 
+				<field name="max_range" eval="685.0"/>           
+	            <field name="compensation_level">1</field>
+	           	<field name="contrib_method">daily</field> 
+	           	<field name="percentage" eval="2.0"/>
+	           	<field name="prescribed_tax" eval="14.8" />
+	    </record>
+	    		
+		<record id="D2" model="payroll.withholding_tax.contribution">
+	            <field name="code">D2</field>
+		   		<field name="name">D2</field>
+				<field name="min_range" eval="685.0" /> 
+				<field name="max_range" eval="1096.0"/>           
+	            <field name="compensation_level">2</field>
+	           	<field name="contrib_method">daily</field> 
+	           	<field name="percentage" eval="20.0"/>
+	           	<field name="prescribed_tax" eval="0.0" />
+	    </record>
+	    		
+		<record id="D3" model="payroll.withholding_tax.contribution">
+	            <field name="code">D3</field>
+		   		<field name="name">D3</field>
+				<field name="min_range" eval="1096.0" /> 
+				<field name="max_range" eval="2192.0"/>           
+	            <field name="compensation_level">3</field>
+	           	<field name="contrib_method">daily</field> 
+	           	<field name="percentage" eval="25.0"/>
+	           	<field name="prescribed_tax" eval="82.19" />
+	    </record>
+	    		
+		<record id="D4" model="payroll.withholding_tax.contribution">
+	            <field name="code">D4</field>
+		   		<field name="name">D4</field>
+				<field name="min_range" eval="2192.0" /> 
+				<field name="max_range" eval="5479.0"/>           
+	            <field name="compensation_level">4</field>
+	           	<field name="contrib_method">daily</field> 
+	           	<field name="percentage" eval="30.0"/>
+	           	<field name="prescribed_tax" eval="356.16" />
+	    </record>
+	    		
+		<record id="D5" model="payroll.withholding_tax.contribution">
+	            <field name="code">D5</field>
+		   		<field name="name">D5</field>
+				<field name="min_range" eval="5479.0" /> 
+				<field name="max_range" eval="21918.0"/>           
+	            <field name="compensation_level">5</field>
+	           	<field name="contrib_method">daily</field> 
+	           	<field name="percentage" eval="32.0"/>
+	           	<field name="prescribed_tax" eval="1342.47" />
+	    </record>
+	    		
+		<record id="D6" model="payroll.withholding_tax.contribution">
+	            <field name="code">D6</field>
+		   		<field name="name">D6</field>
+				<field name="min_range" eval="21918.0" /> 
+				<field name="max_range" eval="0.0"/>           
+	            <field name="compensation_level">6</field>
+	           	<field name="contrib_method">daily</field> 
+	           	<field name="percentage" eval="35.0"/>
+	           	<field name="prescribed_tax" eval="6602.74" />
+	    </record>
+	    		
+		<record id="W1" model="payroll.withholding_tax.contribution">
+	            <field name="code">W1</field>
+		   		<field name="name">W1</field>
+				<field name="min_range" eval="0.0" /> 
+				<field name="max_range" eval="4808.0"/>           
+	            <field name="compensation_level">1</field>
+	           	<field name="contrib_method">weekly</field> 
+	           	<field name="percentage" eval="0.0"/>
+	           	<field name="prescribed_tax" eval="0.0" />
+	    </record>
+	    		
+		<record id="W2" model="payroll.withholding_tax.contribution">
+	            <field name="code">W2</field>
+		   		<field name="name">W2</field>
+				<field name="min_range" eval="4808.0" /> 
+				<field name="max_range" eval="7692.0"/>           
+	            <field name="compensation_level">2</field>
+	           	<field name="contrib_method">weekly</field> 
+	           	<field name="percentage" eval="20.0"/>
+	           	<field name="prescribed_tax" eval="0.0" />
+	    </record>
+	    		
+		<record id="W3" model="payroll.withholding_tax.contribution">
+	            <field name="code">W3</field>
+		   		<field name="name">W3</field>
+				<field name="min_range" eval="7692.0" /> 
+				<field name="max_range" eval="15385.0"/>           
+	            <field name="compensation_level">3</field>
+	           	<field name="contrib_method">weekly</field> 
+	           	<field name="percentage" eval="25.0"/>
+	           	<field name="prescribed_tax" eval="576.92" />
+	    </record>
+	    		
+		<record id="W4" model="payroll.withholding_tax.contribution">
+	            <field name="code">W4</field>
+		   		<field name="name">W4</field>
+				<field name="min_range" eval="15385.0" /> 
+				<field name="max_range" eval="38462.0"/>           
+	            <field name="compensation_level">4</field>
+	           	<field name="contrib_method">weekly</field> 
+	           	<field name="percentage" eval="30.0"/>
+	           	<field name="prescribed_tax" eval="2500.0" />
+	    </record>
+	    		
+		<record id="W5" model="payroll.withholding_tax.contribution">
+	            <field name="code">W5</field>
+		   		<field name="name">W5</field>
+				<field name="min_range" eval="38462.0" /> 
+				<field name="max_range" eval="153846.0"/>           
+	            <field name="compensation_level">5</field>
+	           	<field name="contrib_method">weekly</field> 
+	           	<field name="percentage" eval="32.0"/>
+	           	<field name="prescribed_tax" eval="9423.08" />
+	    </record>
+	    		
+		<record id="W6" model="payroll.withholding_tax.contribution">
+	            <field name="code">W6</field>
+		   		<field name="name">W6</field>
+				<field name="min_range" eval="153846.0" /> 
+				<field name="max_range" eval="0.0"/>           
+	            <field name="compensation_level">6</field>
+	           	<field name="contrib_method">weekly</field> 
+	           	<field name="percentage" eval="35.0"/>
+	           	<field name="prescribed_tax" eval="46346.15" />
+	    </record>
+	    		
+		<record id="S1" model="payroll.withholding_tax.contribution">
+	            <field name="code">S1</field>
+		   		<field name="name">S1</field>
+				<field name="min_range" eval="0.0" /> 
+				<field name="max_range" eval="10417.0"/>           
+	            <field name="compensation_level">1</field>
+	           	<field name="contrib_method">semi_monthly</field> 
+	           	<field name="percentage" eval="0.0"/>
+	           	<field name="prescribed_tax" eval="0.0" />
+	    </record>
+	    		
+		<record id="S2" model="payroll.withholding_tax.contribution">
+	            <field name="code">S2</field>
+		   		<field name="name">S2</field>
+				<field name="min_range" eval="10417.0" /> 
+				<field name="max_range" eval="16667.0"/>           
+	            <field name="compensation_level">2</field>
+	           	<field name="contrib_method">semi_monthly</field> 
+	           	<field name="percentage" eval="20.0"/>
+	           	<field name="prescribed_tax" eval="0.0" />
+	    </record>
+	    		
+		<record id="S3" model="payroll.withholding_tax.contribution">
+	            <field name="code">S3</field>
+		   		<field name="name">S3</field>
+				<field name="min_range" eval="16667.0" /> 
+				<field name="max_range" eval="33333.0"/>           
+	            <field name="compensation_level">3</field>
+	           	<field name="contrib_method">semi_monthly</field> 
+	           	<field name="percentage" eval="25.0"/>
+	           	<field name="prescribed_tax" eval="1250.0" />
+	    </record>
+	    		
+		<record id="S4" model="payroll.withholding_tax.contribution">
+	            <field name="code">S4</field>
+		   		<field name="name">S4</field>
+				<field name="min_range" eval="33333.0" /> 
+				<field name="max_range" eval="83333.0"/>           
+	            <field name="compensation_level">4</field>
+	           	<field name="contrib_method">semi_monthly</field> 
+	           	<field name="percentage" eval="30.0"/>
+	           	<field name="prescribed_tax" eval="5416.67" />
+	    </record>
+	    		
+		<record id="S5" model="payroll.withholding_tax.contribution">
+	            <field name="code">S5</field>
+		   		<field name="name">S5</field>
+				<field name="min_range" eval="83333.0" /> 
+				<field name="max_range" eval="333333.0"/>           
+	            <field name="compensation_level">5</field>
+	           	<field name="contrib_method">semi_monthly</field> 
+	           	<field name="percentage" eval="32.0"/>
+	           	<field name="prescribed_tax" eval="20416.67" />
+	    </record>
+	    		
+		<record id="S6" model="payroll.withholding_tax.contribution">
+	            <field name="code">S6</field>
+		   		<field name="name">S6</field>
+				<field name="min_range" eval="333333.0" /> 
+				<field name="max_range" eval="0.0"/>           
+	            <field name="compensation_level">6</field>
+	           	<field name="contrib_method">semi_monthly</field> 
+	           	<field name="percentage" eval="35.0"/>
+	           	<field name="prescribed_tax" eval="100416.67" />
+	    </record>
+	    		
+		<record id="M1" model="payroll.withholding_tax.contribution">
+	            <field name="code">M1</field>
+		   		<field name="name">M1</field>
+				<field name="min_range" eval="0.0" /> 
+				<field name="max_range" eval="20833.0"/>           
+	            <field name="compensation_level">1</field>
+	           	<field name="contrib_method">monthly</field> 
+	           	<field name="percentage" eval="0.0"/>
+	           	<field name="prescribed_tax" eval="0.0" />
+	    </record>
+	    		
+		<record id="M2" model="payroll.withholding_tax.contribution">
+	            <field name="code">M2</field>
+		   		<field name="name">M2</field>
+				<field name="min_range" eval="20833.0" /> 
+				<field name="max_range" eval="33333.0"/>           
+	            <field name="compensation_level">2</field>
+	           	<field name="contrib_method">monthly</field> 
+	           	<field name="percentage" eval="20.0"/>
+	           	<field name="prescribed_tax" eval="0.0" />
+	    </record>
+	    		
+		<record id="M3" model="payroll.withholding_tax.contribution">
+	            <field name="code">M3</field>
+		   		<field name="name">M3</field>
+				<field name="min_range" eval="33333.0" /> 
+				<field name="max_range" eval="66667.0"/>           
+	            <field name="compensation_level">3</field>
+	           	<field name="contrib_method">monthly</field> 
+	           	<field name="percentage" eval="25.0"/>
+	           	<field name="prescribed_tax" eval="2500.0" />
+	    </record>
+	    		
+		<record id="M4" model="payroll.withholding_tax.contribution">
+	            <field name="code">M4</field>
+		   		<field name="name">M4</field>
+				<field name="min_range" eval="66667.0" /> 
+				<field name="max_range" eval="166667.0"/>           
+	            <field name="compensation_level">4</field>
+	           	<field name="contrib_method">monthly</field> 
+	           	<field name="percentage" eval="30.0"/>
+	           	<field name="prescribed_tax" eval="10833.33" />
+	    </record>
+	    		
+		<record id="M5" model="payroll.withholding_tax.contribution">
+	            <field name="code">M5</field>
+		   		<field name="name">M5</field>
+				<field name="min_range" eval="166667.0" /> 
+				<field name="max_range" eval="666667.0"/>           
+	            <field name="compensation_level">5</field>
+	           	<field name="contrib_method">monthly</field> 
+	           	<field name="percentage" eval="32.0"/>
+	           	<field name="prescribed_tax" eval="40833.33" />
+	    </record>
+	    		
+		<record id="M6" model="payroll.withholding_tax.contribution">
+	            <field name="code">M6</field>
+		   		<field name="name">M6</field>
+				<field name="min_range" eval="666667.0" /> 
+				<field name="max_range" eval="0.0"/>           
+	            <field name="compensation_level">6</field>
+	           	<field name="contrib_method">monthly</field> 
+	           	<field name="percentage" eval="35.0"/>
+	           	<field name="prescribed_tax" eval="200833.33" />
+	    </record>
+    
+	    <!--End of Withholding Tax Table-->
+	    <!--Start of SSS Table-->
+	    	<record id="A1" model="payroll.sss.contribution">
+		    <field name="code">A1</field>
+		    <field name="name">1000-1249.99</field>
+		    <field name="min_range" eval="1000.0"/> 
+		    <field name="max_range" eval="1249.99" />
+		    <field name="salary_credit" eval="1000.0" />
+		    <field name="ss_er" eval="73.70" /> 
+		    <field name="ss_ee" eval="36.3" />
+		    <field name="ec_er" eval="10.0" />
+    	</record>
+    	<record id="A2" model="payroll.sss.contribution">
+		    <field name="code">A2</field>
+		    <field name="name">1250-1749.99</field>
+		    <field name="min_range" eval="1250.0"/> 
+		    <field name="max_range" eval="1749.99" />
+		    <field name="salary_credit" eval="1500.0" />
+		    <field name="ss_er" eval="110.50" /> 
+		    <field name="ss_ee" eval="54.5" />
+		    <field name="ec_er" eval="10.0" />
+	    </record>
+	    <record id="A3" model="payroll.sss.contribution">
+		    <field name="code">A3</field>
+		    <field name="name">1750-2249.99</field>
+		    <field name="min_range" eval="1750.0"/> 
+		    <field name="max_range" eval="2249.99" />
+		    <field name="salary_credit" eval="2000.0" />
+		    <field name="ss_er" eval="147.30" /> 
+		    <field name="ss_ee" eval="72.7" />
+		    <field name="ec_er" eval="10.0" />
+	    </record>
+	    <record id="A4" model="payroll.sss.contribution">
+		    <field name="code">A4</field>
+		    <field name="name">2250-2749.99</field>
+		    <field name="min_range" eval="2250.0"/> 
+		    <field name="max_range" eval="2749.99" />
+		    <field name="salary_credit" eval="2500.0" />
+		    <field name="ss_er" eval="184.20" /> 
+		    <field name="ss_ee" eval="90.8" />
+		    <field name="ec_er" eval="10.0" />
+	    </record>
+	    <record id="A5" model="payroll.sss.contribution">
+		    <field name="code">A5</field>
+		    <field name="name">2750-3249.99</field>
+		    <field name="min_range" eval="2750.0"/> 
+		    <field name="max_range" eval="3249.99" />
+		    <field name="salary_credit" eval="3000.0" />
+		    <field name="ss_er" eval="221.00" /> 
+		    <field name="ss_ee" eval="109.0" />
+		    <field name="ec_er" eval="10.0" />
+	    </record>
+	    <record id="A6" model="payroll.sss.contribution">
+		    <field name="code">A6</field>
+		    <field name="name">3250-3749.99</field>
+		    <field name="min_range" eval="3250.0"/> 
+		    <field name="max_range" eval="3749.99" />
+		    <field name="salary_credit" eval="3500.0" />
+		    <field name="ss_er" eval="257.80" /> 
+		    <field name="ss_ee" eval="127.2" />
+		    <field name="ec_er" eval="10.0" />
+	    </record>
+	    <record id="A7" model="payroll.sss.contribution">
+		    <field name="code">A7</field>
+		    <field name="name">3750-4249.99</field>
+		    <field name="min_range" eval="3750.0"/> 
+		    <field name="max_range" eval="4249.99" />
+		    <field name="salary_credit" eval="4000.0" />
+		    <field name="ss_er" eval="294.70" /> 
+		    <field name="ss_ee" eval="145.3" />
+		    <field name="ec_er" eval="10.0" />
+	    </record>
+	    <record id="A8" model="payroll.sss.contribution">
+		    <field name="code">A8</field>
+		    <field name="name">4250-4749.99</field>
+		    <field name="min_range" eval="4250.0"/> 
+		    <field name="max_range" eval="4749.99" />
+		    <field name="salary_credit" eval="4500.0" />
+		    <field name="ss_er" eval="331.50" /> 
+		    <field name="ss_ee" eval="163.5" />
+		    <field name="ec_er" eval="10.0" />
+	    </record>
+	    <record id="A9" model="payroll.sss.contribution">
+		    <field name="code">A9</field>
+		    <field name="name">4750-5249.99</field>
+		    <field name="min_range" eval="4750.0"/> 
+		    <field name="max_range" eval="5249.99" />
+		    <field name="salary_credit" eval="5000.0" />
+		    <field name="ss_er" eval="368.50" /> 
+		    <field name="ss_ee" eval="181.7" />
+		    <field name="ec_er" eval="10.0" />
+	    </record>
+	    <record id="A10" model="payroll.sss.contribution">
+		    <field name="code">A10</field>
+		    <field name="name">5250-5749.99</field>
+		    <field name="min_range" eval="5250.0"/> 
+		    <field name="max_range" eval="5749.99" />
+		    <field name="salary_credit" eval="5500.0" />
+		    <field name="ss_er" eval="405.20" /> 
+		    <field name="ss_ee" eval="199.8" />
+		    <field name="ec_er" eval="10.0" />
+	    </record>
+	    <record id="A11" model="payroll.sss.contribution">
+		    <field name="code">A11</field>
+		    <field name="name">5750-6249.99</field>
+		    <field name="min_range" eval="5750.0"/> 
+		    <field name="max_range" eval="6249.99" />
+		    <field name="salary_credit" eval="6000.0" />
+		    <field name="ss_er" eval="442.00" /> 
+		    <field name="ss_ee" eval="218.0" />
+		    <field name="ec_er" eval="10.0" />
+	    </record>
+	    <record id="A12" model="payroll.sss.contribution">
+		    <field name="code">A12</field>
+		    <field name="name">6250-6749.99</field>
+		    <field name="min_range" eval="6250.0"/> 
+		    <field name="max_range" eval="6749.99" />
+		    <field name="salary_credit" eval="6500.0" />
+		    <field name="ss_er" eval="478.80" /> 
+		    <field name="ss_ee" eval="236.2" />
+		    <field name="ec_er" eval="10.0" />
+	    </record>
+	    <record id="A13" model="payroll.sss.contribution">
+		    <field name="code">A13</field>
+		    <field name="name">6750-7249.99</field>
+		    <field name="min_range" eval="6750.0"/> 
+		    <field name="max_range" eval="7249.99" />
+		    <field name="salary_credit" eval="7000.0" />
+		    <field name="ss_er" eval="515.70" /> 
+		    <field name="ss_ee" eval="254.3" />
+		    <field name="ec_er" eval="10.0" />
+	    </record>
+	    <record id="A14" model="payroll.sss.contribution">
+		    <field name="code">A14</field>
+		    <field name="name">7250-7749.99</field>
+		    <field name="min_range" eval="7250.0"/> 
+		    <field name="max_range" eval="7749.99" />
+		    <field name="salary_credit" eval="7500.0" />
+		    <field name="ss_er" eval="552.50" /> 
+		    <field name="ss_ee" eval="272.5" />
+		    <field name="ec_er" eval="10.0" />
+	    </record>
+	    <record id="A15" model="payroll.sss.contribution">
+		    <field name="code">A15</field>
+		    <field name="name">7750-8249.99</field>
+		    <field name="min_range" eval="7750.0"/> 
+		    <field name="max_range" eval="8249.99" />
+		    <field name="salary_credit" eval="8000.0" />
+		    <field name="ss_er" eval="589.30" /> 
+		    <field name="ss_ee" eval="290.7" />
+		    <field name="ec_er" eval="10.0" />
+	    </record>
+	    <record id="A16" model="payroll.sss.contribution">
+		    <field name="code">A16</field>
+		    <field name="name">8250-8749.99</field>
+		    <field name="min_range" eval="8250.0"/> 
+		    <field name="max_range" eval="8749.99" />
+		    <field name="salary_credit" eval="8500.0" />
+		    <field name="ss_er" eval="626.20" /> 
+		    <field name="ss_ee" eval="308.8" />
+		    <field name="ec_er" eval="10.0" />
+	    </record>
+	    <record id="A17" model="payroll.sss.contribution">
+		    <field name="code">A17</field>
+		    <field name="name">8750-9249.99</field>
+		    <field name="min_range" eval="8750.0"/> 
+		    <field name="max_range" eval="9249.99" />
+		    <field name="salary_credit" eval="9000.0" />
+		    <field name="ss_er" eval="663.00" /> 
+		    <field name="ss_ee" eval="327.0" />
+		    <field name="ec_er" eval="10.0" />
+	    </record>
+	    <record id="A18" model="payroll.sss.contribution">
+		    <field name="code">A18</field>
+		    <field name="name">9250-9749.99</field>
+		    <field name="min_range" eval="9250.0"/> 
+		    <field name="max_range" eval="9749.99" />
+		    <field name="salary_credit" eval="9500.0" />
+		    <field name="ss_er" eval="699.80" /> 
+		    <field name="ss_ee" eval="345.2" />
+		    <field name="ec_er" eval="10.0" />
+	    </record>
+	    <record id="A19" model="payroll.sss.contribution">
+		    <field name="code">A19</field>
+		    <field name="name">9750-10249.99</field>
+		    <field name="min_range" eval="9750.0"/> 
+		    <field name="max_range" eval="10249.99" />
+		    <field name="salary_credit" eval="10000.0" />
+		    <field name="ss_er" eval="736.70" /> 
+		    <field name="ss_ee" eval="363.3" />
+		    <field name="ec_er" eval="10.0" />
+	    </record>
+	    <record id="A20" model="payroll.sss.contribution">
+		    <field name="code">A20</field>
+		    <field name="name">10250-10749.99</field>
+		    <field name="min_range" eval="10250.0"/> 
+		    <field name="max_range" eval="10749.99" />
+		    <field name="salary_credit" eval="10500.0" />
+		    <field name="ss_er" eval="773.50" /> 
+		    <field name="ss_ee" eval="381.5" />
+		    <field name="ec_er" eval="10.0" />
+	    </record>
+	    <record id="A21" model="payroll.sss.contribution">
+		    <field name="code">A21</field>
+		    <field name="name">10750-11249.99</field>
+		    <field name="min_range" eval="10750.0"/> 
+		    <field name="max_range" eval="11249.99" />
+		    <field name="salary_credit" eval="11000.0" />
+		    <field name="ss_er" eval="810.30" /> 
+		    <field name="ss_ee" eval="399.7" />
+		    <field name="ec_er" eval="10.0" />
+	    </record>
+	    <record id="A22" model="payroll.sss.contribution">
+		    <field name="code">A22</field>
+		    <field name="name">11250-11749.99</field>
+		    <field name="min_range" eval="11250.0"/> 
+		    <field name="max_range" eval="11749.99" />
+		    <field name="salary_credit" eval="11500.0" />
+		    <field name="ss_er" eval="847.20" /> 
+		    <field name="ss_ee" eval="417.8" />
+		    <field name="ec_er" eval="10.0" />
+	    </record>
+	    <record id="A23" model="payroll.sss.contribution">
+		    <field name="code">A23</field>
+		    <field name="name">11750-12249.99</field>
+		    <field name="min_range" eval="11750.0"/> 
+		    <field name="max_range" eval="12249.99" />
+		    <field name="salary_credit" eval="12000.0" />
+		    <field name="ss_er" eval="884.00" /> 
+		    <field name="ss_ee" eval="436.0" />
+		    <field name="ec_er" eval="10.0" />
+	    </record>
+	    <record id="A24" model="payroll.sss.contribution">
+		    <field name="code">A24</field>
+		    <field name="name">12250-12749.99</field>
+		    <field name="min_range" eval="12250.0"/> 
+		    <field name="max_range" eval="12749.99" />
+		    <field name="salary_credit" eval="12500.0" />
+		    <field name="ss_er" eval="920.80" /> 
+		    <field name="ss_ee" eval="454.2" />
+		    <field name="ec_er" eval="10.0" />
+	    </record>
+	    <record id="A25" model="payroll.sss.contribution">
+		    <field name="code">A25</field>
+		    <field name="name">12750-13249.99</field>
+		    <field name="min_range" eval="12750.0"/> 
+		    <field name="max_range" eval="13249.99" />
+		    <field name="salary_credit" eval="13000.0" />
+		    <field name="ss_er" eval="957.70" /> 
+		    <field name="ss_ee" eval="472.3" />
+		    <field name="ec_er" eval="10.0" />
+	    </record>
+	    <record id="A26" model="payroll.sss.contribution">
+		    <field name="code">A26</field>
+		    <field name="name">13250-13749.99</field>
+		    <field name="min_range" eval="13250.0"/> 
+		    <field name="max_range" eval="13749.99" />
+		    <field name="salary_credit" eval="13500.0" />
+		    <field name="ss_er" eval="994.50" /> 
+		    <field name="ss_ee" eval="490.5" />
+		    <field name="ec_er" eval="10.0" />
+	    </record>
+	    <record id="A27" model="payroll.sss.contribution">
+		    <field name="code">A27</field>
+		    <field name="name">13750-14249.99</field>
+		    <field name="min_range" eval="13750.0"/> 
+		    <field name="max_range" eval="14249.99" />
+		    <field name="salary_credit" eval="14000.0" />
+		    <field name="ss_er" eval="1031.30" /> 
+		    <field name="ss_ee" eval="508.7" />
+		    <field name="ec_er" eval="10.0" />
+	    </record>
+	    <record id="A28" model="payroll.sss.contribution">
+		    <field name="code">A28</field>
+		    <field name="name">14250-14749.99</field>
+		    <field name="min_range" eval="14250.0"/> 
+		    <field name="max_range" eval="14749.99" />
+		    <field name="salary_credit" eval="14500.0" />
+		    <field name="ss_er" eval="1068.20" /> 
+		    <field name="ss_ee" eval="526.8" />
+		    <field name="ec_er" eval="10.0" />
+	    </record>
+	    <record id="A29" model="payroll.sss.contribution">
+		    <field name="code">A29</field>
+		    <field name="name">14750-15249.99</field>
+		    <field name="min_range" eval="14750.0"/> 
+		    <field name="max_range" eval="15249.99" />
+		    <field name="salary_credit" eval="15000.0" />
+		    <field name="ss_er" eval="1105.00" /> 
+		    <field name="ss_ee" eval="545.0" />
+		    <field name="ec_er" eval="30.0" />
+	    </record>
+	    <record id="A30" model="payroll.sss.contribution">
+		    <field name="code">A30</field>
+		    <field name="name">15250-15749.99</field>
+		    <field name="min_range" eval="15250.0"/> 
+		    <field name="max_range" eval="15749.99" />
+		    <field name="salary_credit" eval="15500.0" />
+		    <field name="ss_er" eval="1141.80" /> 
+		    <field name="ss_ee" eval="563.2" />
+		    <field name="ec_er" eval="30.0" />
+	    </record>
+	    <record id="A31" model="payroll.sss.contribution">
+		    <field name="code">A31</field>
+		    <field name="name">-15750</field>
+		    <field name="min_range" eval="15750.0"/> 
+		    <field name="max_range" eval="111111111.0" />
+		    <field name="salary_credit" eval="16000.0" />
+		    <field name="ss_er" eval="1178.70" /> 
+		    <field name="ss_ee" eval="581.3" />
+		    <field name="ec_er" eval="30.0" />
+	    </record>
+	    <!--End of SSS Table-->
+    </data>
+</odoo>

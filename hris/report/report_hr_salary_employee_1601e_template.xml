@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_hrsalaryemployee1601e_template">
+        <t t-call="hris.custom_layout">
+	<t t-foreach ="get_employee_salary_details" t-as="ds">		
+               <div class="page">
+    
+               	<div style="margin:auto;z-index=-1">
+                    <image style="width:229.5mm; height:365.6mm;" src="/hr_employee_bir_reports/static/src/img/1601-E.jpg" />
+           	</div>
+                        <table>    
+                            <tr>
+                               <div style="position: absolute; top:150px; left:185px; z-index=1">
+				<span t-esc="ds['PERIOD_COVERED'][0]"/>
+				</div>
+				<div style="position: absolute; top:150px; left:235px; z-index=1">
+				<span t-esc="ds['PERIOD_COVERED'][1]"/>
+				</div>
+				<div style="position: absolute; top:240px; left:110px; z-index=1">
+				<span t-esc="ds['EMP_LNAME']"/>,
+				</div>      
+				<div style="position:absolute;top:240px;left:220px;z-index=1">
+				<span t-esc="ds['EMP_FNAME']"/>,
+				</div>
+				<div style="position:absolute;top:240px;left:320px;z-index=1">
+				<span t-esc="ds['EMP_MNAME']"/>
+				</div>
+				<div style="position: absolute; top:205px; left:88px;letter-spacing:15px; z-index=1">
+				<span t-esc="ds['TIN_NO'][0:3]"/>
+				</div>
+				<div style="position:absolute; top:205px; left:164px; letter-spacing:15px; z-index=1">
+				<span t-esc="ds['TIN_NO'][3:6]"/>
+				</div>
+				<div style="position:absolute; top:205px; left:240px; letter-spacing:15px; z-index=1">
+				<span t-esc="ds['TIN_NO'][6:9]" />
+				</div>
+				<div style="position:absolute; top:205px; left:316px; letter-spacing:15px; z-index=1">
+				<span t-esc="ds['TIN_NO'][9:12]	" />
+				</div>
+				<div style="position: absolute; top:270px; left:110px; z-index=1">
+				<span t-esc="ds['EMP_ADDR']"/>
+				</div>			
+				<div style="position: absolute; top:240px; left:755px; z-index=1">
+				<span t-esc="ds['TEL_NO']"/>
+				</div>
+				<div style="position: absolute; top:375px; left:490px; z-index=1">
+				<t t-if="ds.has_key('GROSS')"><span t-esc="'{:,.2f}'.format(ds['GROSS'])" /></t>
+				</div>
+				<div style="position: absolute; top:375px; left:618px; z-index=1">
+   				<t t-if="ds.has_key('TAX_RATE')"><span t-esc="'{:,.2f}'.format(ds['TAX_RATE'])" />%</t>
+				</div>
+  				<div style="position: absolute; top:375px; left:700px; z-index=1">
+				<t t-if="ds.has_key('TOTAL')"><span t-esc="'{:,.2f}'.format(ds['TOTAL'])" /></t>
+				</div>	
+				<div style="position: absolute; top:375px; left:420px; z-index=1">
+				W1010
+				</div>
+				<div style="position: absolute; top:375px; left:200px; z-index=1">
+				Total professional fee
+				</div>
+                         </tr>
+                        </table>     
+            </div>
+	</t>
+        </t>
+    </template>
+</odoo>
+

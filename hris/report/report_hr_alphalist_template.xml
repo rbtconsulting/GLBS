@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+	<template id="report_alphalist_template">
+	    <t t-call="report.html_container">
+	        <t t-call="report.internal_layout">
+	             <div class="page">
+	                 <t t-set="data_source" t-value="get_alphalist_details" />
+	                 <t t-set="totals" t-value="totals" />
+	                 <t t-set="dates" t-value="dates" />
+	                 <t t-set="company_id" t-value="company_id" />
+	                <style>
+	                    .header{
+	                         font-weight:bold;
+	                         font-size :20px;
+	                         padding-bottom:10px;
+	
+	                    }
+	                    #total{
+	                        font-weight:bold;
+	                        font-size :16px;
+	                    }
+	                    .grand{
+	                         font-size:17px;
+	
+	                    }
+	                    footer{
+	                        border:1px solid black;
+	                    }
+	                    footer a{
+	                        padding:10px;
+	                        color:black;
+	
+	                    }
+	                    .b{
+	                         padding:20px;
+	                    }
+	
+	                </style>
+	               <center>
+	                   <div><h1><img t-if="o.company_id.logo" t-att-src="'data:image/png;base64,%s' %o.company_id.logo" width="60px" height="60px"/></h1></div>
+	                   <div><h4 class="header">ALPHABETICAL LISTING OF EMPLOYEES FROM WHOM TAXES WERE WITHHELDt</h4></div>
+	                   <div><h4>ALPHALIST OF EMPLOYEES AS OF <b><span t-esc="dates['DATE_TO']" /></b> WITH NO PREVIOUS EMPLOYER WITH IN THE YEAR</h4></div>
+	               </center>
+	                <table class="table table-bordered">
+	                        <tr class="table-header">
+	                            <th class="text-center">SEQ NO.</th>
+	                            <th class="text-center">TIN</th>
+	                            <th class="text-center">EMP NO.</th>
+	                            <th class="text-center">LAST NAME</th>
+	                            <th class="text-center">FIRST NAME</th>
+	                            <th class="text-center">MIDDLE NAME</th>
+	                            <th class="text-center">GROSS COMPENSATION INCOME</th>
+	                            <th class="text-center">13TH MONTH PAY &amp; OTHER BENEFITS</th>
+	                            <th class="text-center">DE MINIMIS BENEFITS</th>
+	                            <th class="text-center">SSS, GSIS, PHIC &amp; PAG-IBIG CONTRIBUTIONS AND UNION DUES</th>
+	                            <th class="text-center">SALARIES &amp; OTHER FORMS OF COMPENSATION</th>
+	                            <th class="text-center">TOTAL NON-TAXABLE/EXEMPT COMPENSATION INCOME</th>
+	                            <th class="text-center">BASIC SALARY</th>
+	                            <th class="text-center">13TH MONTH PAY &amp; OTHER BENEFITS</th>
+	                            <th class="text-center">SALARIES &amp; OTHER FORMS OF COMPENSATION</th>
+	                            <th class="text-center">TOTAL TAXABLE COMPENSATION INCOME</th>
+	                            <th class="text-center">CODE</th>
+	                            <th class="text-center">AMOUNT</th>
+	                            <th class="text-center">PREMIUM PAID ON HEALTH AND/OR HOSPITAL INSURANCE</th>
+	                            <th class="text-center">NET TAXABLE COMPENSATION INCOME</th>
+	                            <th class="text-center">TAX DUE (JAN - DEC)</th>
+	                            <th class="text-center">TAX WITHHELD (JAN - NOV)</th>
+	                            <th class="text-center">AMOUNT W/HELD &amp; PAID FOR IN DECEMBER</th>
+	                            <th class="text-center">OVER WITHHELD TAX REFUNDED TO EMPLOYEE</th>
+	                            <th class="text-center">AMOUNT OF TAX WITHHELD AS ADJUSTED</th>
+	                            <th class="text-center">SUBSTITUTED FILING (Y/N)</th>
+	                        </tr>
+	                   <t t-foreach="data_source" t-as="ds">
+	                       <tr>
+	                           <td class="text-center"><span t-esc="totals[len(totals)-1]['SEQ_NO']" /></td>
+	                            <td class="text-center"><span t-esc="ds['EMP_TIN']" /></td>
+	                            <td class="text-center"><span t-esc="ds['EMP_NUM']" /></td>
+	                            <td class="text-center"><span t-esc="ds['EMP_LNAME']" /></td>
+	                            <td class="text-center"><span t-esc="ds['EMP_FNAME']" /></td>
+	                            <td class="text-center"><span t-esc="ds['EMP_MNAME']" /></td>
+	                            <td class="text-center"><t t-if="ds.has_key('GROSS')"><span t-esc="'{:,.2f}'.format(ds['GROSS'])" /></t></td>
+	                            <td></td>
+	                            <td></td>
+	                            <td class="text-center">
+	                                <t t-if="ds.has_key('SSS-SM') or ds.has_key('SSS-M')
+	                                          or ds.has_key('HDMF-SM') or ds.has_key('HDMF-M')
+	                                          or ds.has_key('PHIC-SM') or ds.has_key('PHIC-M')">
+	                                    <span t-esc="'{:,.2f}'.format(ds['SSS-SM'] + ds['SSS-M'] + ds['HDMF-SM'] + ds['HDMF-M'] + ds['PHIC-SM'] + ds['PHIC-M'])" />
+	                                </t>
+	                            </td>
+	                           <td></td>
+	                           <td></td>
+	                           <td class="text-center"><t t-if="ds.has_key('BASIC')"><span t-esc="'{:,.2f}'.format(ds['BASIC'])" /></t></td>
+	                       </tr>
+	                   </t>
+	                    <tr>
+	                        <td></td>
+	                        <td></td>
+	                        <td></td>
+	                        <td></td>
+	                        <td class="text-center" colspan="2"><b>Employee Count <span t-esc="totals[len(totals)-1]['TOTAL_ROWS']" /></b></td>
+	                        <td class="text-center"><b><span t-esc="'{:,.2f}'.format(totals[len(totals)-1]['TOTAL_GROSS'])" /></b></td>
+	                        <td></td>
+	                        <td></td>
+	                        <td class="text-center"><b><span t-esc="'{:,.2f}'.format(totals[len(totals)-1]['TOTAL_SSS_HDMF_PHIC'])" /></b></td>
+	                        <td></td>
+	                        <td></td>
+	                        <td class="text-center"><b><span t-esc="'{:,.2f}'.format(totals[len(totals)-1]['TOTAL_BASIC'])" /></b></td>
+	                      </tr>
+	                </table>
+	                 <footer>
+	                      <center>
+	                          <b ><a href="#">Prepared by:___________________      </a></b>
+	                          <b ><a href="#">Checked by:____________________       </a></b>
+	                          <b ><a href="#">Noted by:____________________         </a></b>
+	                     </center>
+	                 </footer>
+	            </div>
+	        </t>
+	    </t>
+	</template>
+  </data>
+</odoo>
+

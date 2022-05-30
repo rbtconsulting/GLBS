@@ -1,0 +1,10 @@
+models/*.pyc
+report/*.pyc
+report/*.swp
+wizard/*.pyc
+wizard/*.swp
+security/*.swp
+security/*.csv#
+*.pyc
+*.swp
+*.csv#

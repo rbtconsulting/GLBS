@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--        <templates>
+            <t t-extend="UserMenu.about">
+                <t t-jquery="a.oe_active_debug_mode" t-operation="replace"/>
+            </t>
+        </templates>
+         <templates>
+            <t t-extend="ViewManagerAction">
+                <t t-jquery="select.oe_debug_view" t-operation="replace">
+                  <select t-if="widget.session.uid === 1 and widget.session.debug" class="oe_debug_view"/>
+               </t>
+            </t>
+        </templates>
+      <templates>-->
+        <templates id="template" xml:space="preserve">
+          <t t-name="debug_modification" t-extend="WebClient.DebugManager">
+              <t t-jquery="li[@class='o_debug_manager']" t-operation="replace">
+                  <li class="o_debug_manager">
+                    <a href="#" title="Open Developer Tools sample" class="dropdown-toggle" data-toggle="dropdown">
+                        <span class="fa fa-bug"/>
+                        <b class="caret"/>
+                     </a>
+                    <ul class="dropdown-menu o_debug_dropdown" role="menu"/>
+                 </li>
+              </t>
+          </t>
+      </templates>

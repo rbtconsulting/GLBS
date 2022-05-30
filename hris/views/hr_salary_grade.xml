@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+	<data>
+	<!-- form view -->	
+	     <record id="form_hr_salary_grade" model="ir.ui.view">
+            <field name="name">hr.salary.grade.form</field>
+            <field name="model">hr.salary.grade</field>
+            <field name="arch" type="xml">
+				    <form>
+				    	<sheet>
+				    		<group>
+				    			<group>
+				    				<field name="salary_grade"/>
+				    				<field name="sg_step"/>
+				    				<field name="sg_amount"/>
+				    			</group>
+				    	  	</group>
+				    	</sheet>
+				    </form>
+            </field>
+		 </record>
+		 
+	<!-- Tree view -->
+	
+		 <record id="tree_hr_salary_grade" model="ir.ui.view">
+            <field name="name">hr.salary.grade.tree</field>
+            <field name="model">hr.salary.grade</field>
+            <field name="arch" type="xml">
+				    <tree>
+				    	<field name="salary_grade"/>
+				    	<field name="sg_step"/>
+				    	<field name="sg_amount"/>
+				    </tree>
+            </field>
+		 </record>
+		 
+	<!-- action salary grade  -->
+		 
+		<record model="ir.actions.act_window" id="action_hr_salary_grade">
+      		<field name="name">salary grade</field>
+      		<field name="res_model">hr.salary.grade</field>
+      		<field name="view_type">form</field>
+      		<field name="view_mode">tree,form</field>
+    	</record>
+    	
+    <!-- Menu payroll configuration item -->
+    
+		<menuitem id="menu_hris_salary_grade" 
+	        	  name="Salary Grade" 
+	        	  parent="hr_payroll.menu_hr_payroll_configuration"
+        		  sequence="5" 
+        		  action="action_hr_salary_grade"
+                          groups="menu_hide"
+        />
+		
+		<!-- form view salary grade config-->	
+	     <record id="form_hr_salary_grade_config" model="ir.ui.view">
+            <field name="name">hr.salary.grade.config.form</field>
+            <field name="model">hr.salary.grade.name</field>
+            <field name="arch" type="xml">
+				    <form>
+				    	<sheet>
+				    		<group>
+				    			<group>
+				    				<field name="name"/>
+				    			</group>
+				    	  	</group>
+				    	</sheet>
+				    </form>
+            </field>
+		 </record>
+		 
+	<!-- Tree view -->
+	
+		 <record id="tree_hr_salary_grade_config" model="ir.ui.view">
+            <field name="name">hr.salary.grade.config.tree</field>
+            <field name="model">hr.salary.grade.name</field>
+            <field name="arch" type="xml">
+				    <tree>
+				    	<field name="name"/>
+				    </tree>
+            </field>
+		 </record>
+		 
+	<!-- action salary grade config  -->
+		 
+		<record model="ir.actions.act_window" id="action_hr_salary_grade_config">
+      		<field name="name">salary grade config</field>
+      		<field name="res_model">hr.salary.grade.name</field>
+      		<field name="view_type">form</field>
+      		<field name="view_mode">tree,form</field>
+    	</record>
+    	
+    <!-- Menu payroll configuration item -->
+    
+		<menuitem id="menu_hris_salary_grade_config" 
+	        	  name="Salary Grade Config" 
+	        	  parent="hr_payroll.menu_hr_payroll_configuration"
+        		  sequence="6" 
+        		  action="action_hr_salary_grade_config"
+                          groups="menu_hide"
+		/>
+	
+			<!-- form view salary grade step config-->	
+			
+	     <record id="form_hr_salary_grade_step_config" model="ir.ui.view">
+            <field name="name">hr.salary.step.name.form</field>
+            <field name="model">hr.salary.step.name</field>
+            <field name="arch" type="xml">
+				    <form>
+				    	<sheet>
+				    		<group>
+				    			<group>
+				    				<field name="name"/>
+				    			</group>
+				    	  	</group>
+				    	</sheet>
+				    </form>
+            </field>
+		 </record>
+		 
+	<!-- Tree view -->
+	
+		 <record id="tree_hr_salary_grade_config" model="ir.ui.view">
+            <field name="name">hr.salary.step.name.tree</field>
+            <field name="model">hr.salary.step.name</field>
+            <field name="arch" type="xml">
+				    <tree>
+				    	<field name="name"/>
+				    </tree>
+            </field>
+		 </record>
+		 
+	<!-- action salary grade step config  -->
+		 
+		<record model="ir.actions.act_window" id="action_hr_salary_step_name_config">
+      		<field name="name">salary step name</field>
+      		<field name="res_model">hr.salary.step.name</field>
+      		<field name="view_type">form</field>
+      		<field name="view_mode">tree,form</field>
+    	</record>
+    	
+    <!-- Menu payroll configuration item -->
+    
+		<menuitem id="menu_hris_salary_step_name_config" 
+	        	  name="Salary Step Name Config" 
+	        	  parent="hr_payroll.menu_hr_payroll_configuration"
+        		  sequence="7" 
+        		  action="action_hr_salary_step_name_config"
+        		  groups="menu_hide"
+  		/>
+
+			<!-- form view remarks config-->	
+			
+	     <record id="form_hr_sgremarks_form" model="ir.ui.view">
+            <field name="name">hr.sgremarks.form</field>
+            <field name="model">hr.remarks.salary.grade</field>
+            <field name="arch" type="xml">
+				    <form>
+				    	<sheet>
+				    		<group>
+				    			<group>
+				    				<field name="name"/>
+				    			</group>
+				    	  	</group>
+				    	</sheet>
+				    </form>
+            </field>
+		 </record>
+		 
+	<!-- Tree view -->
+	
+		 <record id="tree_hr_sgremarks_tree" model="ir.ui.view">
+            <field name="name">hr.sgremarks.tree</field>
+            <field name="model">hr.remarks.salary.grade</field>
+            <field name="arch" type="xml">
+				    <tree>
+				    	<field name="name"/>
+				    </tree>
+            </field>
+		 </record>
+		 
+	<!-- action salary grade step config  -->
+		 
+		<record model="ir.actions.act_window" id="action_hr_sgremarks">
+      		<field name="name">Salary Grade Remarks</field>
+      		<field name="res_model">hr.remarks.salary.grade</field>
+      		<field name="view_type">form</field>
+      		<field name="view_mode">tree,form</field>
+    	</record>
+    	
+    <!-- Menu payroll configuration item -->
+    
+		<menuitem id="menu_hris_salary_step_name_config" 
+	        	  name="Salary Grade Remarks" 
+	        	  parent="hr_payroll.menu_hr_payroll_configuration"
+        		  sequence="8" 
+        		  action="action_hr_sgremarks"
+        		  groups="menu_hide"
+		/>
+        
+	</data>
+	
+</odoo>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        
+		<record id="hr_timelog_data_sec" model="hr.timelog.parser">
+	     	<field name="name">Security Door</field>
+	     	<field name="datetime_format">%m/%d/%Y %H:%M:%S</field>
+	     	<field name="datetime_regex">\d{1,}/\d{1,}/\d{4} \d{2}:\d{2}:\d{2}</field>
+	     	<field name="employeeid_regex">\d{4}-\d{4}</field>
+	     	<field name="skip_row">0</field>
+	     	<field name="maxtime">12</field>
+	     	<field name="input_type">security</field>
+	    </record>
+	    <record id="hr_timelog_data_fifo" model="hr.timelog.parser">
+	     	<field name="name">Facebio</field>
+	     	<field name="datetime_format">%m/%d/%Y %I:%M:%S %p</field>
+	     	<field name="datetime_regex">\d{1,}/\d{1,}/\d{4} \d{1,}:\d{2}:\d{2} [AaPp][Mm]</field>
+	     	<field name="employeeid_regex">\s\d{1,9}\s</field>
+	     	<field name="in_string">C/In</field>
+	     	<field name="inout_regex">C/(?:In|Out)</field>
+	     	<field name="skip_row">2</field>
+	     	<field name="maxtime">24</field>
+	     	<field name="out_string">C/Out</field>
+	     	<field name="input_type">first_in_out</field>
+	    </record>
+	    <record id="hr_timelog_data_fifo_a" model="hr.timelog.parser">
+	     	<field name="name">Facebio Auto</field>
+	     	<field name="input_type">first_in_out_a</field>
+	    </record>
+	    
+	</data>
+</odoo>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_employee_tax" model="ir.ui.view">
+            <field name="name">With Holding Tax Report</field>
+            <field name="model">hr.tax.contribution</field>
+            <field name="arch" type="xml">
+	            <form string="with Holding Tax">
+                   <field invisible="1" name="state"/>
+                    <group states="draft">
+                        <label for="date_from" string="Date Covered"/>
+                        <div>
+                            <field name="date_from" class="oe_inline" />
+                              <strong> To </strong>
+                            <field name="date_to" class="oe_inline" />
+                        </div>
+                    </group>
+                    <group states="done">
+                        <field name="name" colspan="4" invisible="1" />
+                        <field name="report" filename="name" colspan="4" attrs="{'invisible':[('state', '=' , 'draft')]}"/>
+                    </group>
+                    <group states="draft">
+                         <div>
+                             <separator string="Employees"/>
+                             <field name="employee_ids" context="{'tree_view_ref':'hris.employee_tree_view_ref', 'form_view_ref':'hris.employee_form_view_ref'}"
+                           nolabel="1" widget="many2many_list" colspan="4" >
+                            </field>
+                        </div>
+                    </group>
+                    <footer states="draft">
+                         <button name="action_generate_xls_report" string="PRINT EXCEL" type="object" class="oe_highlight" />
+                         <button name="print_report" string="PRINT PDF" type="object" class="btn-primary" />
+                         <button string="Cancel" class="btn-default" special="cancel" />
+                    </footer>
+                    <footer states="done">
+                        <button special="cancel" string="Cancel" class="btn-default"/>
+                    </footer>
+              	</form>
+            </field>
+        </record>
+        
+       <record id="action_employee_tax" model="ir.actions.act_window">
+            <field name="name">With Holding Tax Report</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hr.tax.contribution</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem
+            name="Withholding Tax"
+            parent="menu_contribution_report"
+            sequence="4"
+            action="action_employee_tax"
+            id="menu_tax_contribution"
+            groups="base.group_erp_manager"
+           />
+	</data>
+</odoo>

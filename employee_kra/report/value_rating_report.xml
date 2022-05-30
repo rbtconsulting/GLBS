@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <template id="kra_report_employee_rating">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <div class="page" style="font-size:12px !important;margin:0 0 0 30; padding:0">
+                        <div class="row mt32 mb32">
+                            <table class="table table-condensed" style="border-top:1px solid black;border-bottom:1px solid black; padding:0; margin:0 0 5 0">
+                                <tbody>
+                                    <tr>
+                                        <td style="border: none; width: 100; padding-top:5;">
+                                            <strong>Employee Name</strong>
+                                            <span t-att-style="style" t-esc="o.employee_id.name" />
+                                        </td>
+                                        <td style="border: none; width: 100; padding-top:5;">
+                                            <strong>Employee Code</strong>
+                                            <span t-att-style="style" t-esc="o.employee_code" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: none; width: 100; padding-top:5;">
+                                            <strong>Designation</strong>
+                                            <span t-att-style="style" t-esc="o.designation.name" />
+                                        </td>
+                                        <td style="border: none; width: 100; padding-top:5;">
+                                            <strong>Appraiser</strong>
+                                            <span t-att-style="style" t-esc="o.appraiser_id.name" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: none; width: 100; padding-top:5;">
+                                            <strong>Month</strong>
+                                            <span t-att-style="style" t-esc="o.month" />
+                                        </td>
+                                        <td style="border: none; width: 100; padding-top:5;">
+                                            <strong>Year</strong>
+                                            <span t-att-style="style" t-esc="o.year.name" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: none; width: 100; padding-top:5;">
+                                            <strong>Total Average</strong>
+                                            <strong><span t-att-style="style" t-esc="o.total_avg"/></strong>
+                                        </td>
+                                        <td style="border: none; width: 100; padding-top:5;">
+                                            <strong>Leadership Score</strong>
+                                            <strong><span t-att-style="style" t-esc="o.score_leader"/></strong>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table class="table table-condensed">
+                                <tbody>
+                                    <thead>
+                                        <strong>Approach To Work</strong>
+                                    </thead>
+                                    <tr>
+                                        <td style="border: none; width: 100; padding-top:5;">
+                                            System and Processes
+                                            <span t-att-style="style" t-esc="o.sys_process" />
+                                        </td>
+                                        <td style="border: none; width: 100; padding-top:5;">
+                                            Follow Instructions
+                                            <span t-att-style="style" t-esc="o.follow_instr" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: none; width: 100; padding-top:5;">
+                                            Adaptable and Flexible
+                                            <span t-att-style="style" t-esc="o.flexible" />
+                                        </td>
+                                        <td style="border: none; width: 100; padding-top:5;">
+                                            Ability To Plan
+                                            <span t-att-style="style" t-esc="o.plan" />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table class="table table-condensed">
+                                <tbody>
+                                    <thead>
+                                        <strong>Technical Skills</strong>
+                                    </thead>
+                                    <tr>
+                                        <td style="border: none; width: 100; padding-top:5;">
+                                            Job Knowledge
+                                            <span t-att-style="style" t-esc="o.job_knowledge" />
+                                        </td>
+                                        <td style="border: none; width: 100; padding-top:5;">
+                                            Skill To Handle Work
+                                            <span t-att-style="style" t-esc="o.skill" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: none; width: 100; padding-top:5;">
+                                            Learn New Skill
+                                            <span t-att-style="style" t-esc="o.learn_skill" />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table class="table table-condensed">
+                                <tbody>
+                                    <thead>
+                                        <strong>Quality Of work</strong>
+                                    </thead>
+                                    <tr>
+                                        <td style="border: none; width: 100; padding-top:5;">
+                                            Accuracy
+                                            <span t-att-style="style" t-esc="o.accuracy" />
+                                        </td>
+                                        <td style="border: none; width: 100; padding-top:5;">
+                                            Reliability
+                                            <span t-att-style="style" t-esc="o.reliability" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: none; width: 100; padding-top:5;">
+                                            Client Satisfaction
+                                            <span t-att-style="style" t-esc="o.cust_sati" />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table class="table table-condensed">
+                                <tbody>
+                                    <thead>
+                                        <strong>Handling Targets</strong>
+                                    </thead>
+                                    <tr>
+                                        <td style="border: none; width: 100; padding-top:5;">
+                                            Work Completion On Time
+                                            <span t-att-style="style" t-esc="o.work_comple" />
+                                        </td>
+                                        <td style="border: none; width: 100; padding-top:5;">
+                                            Ability to work under pressure
+                                            <span t-att-style="style" t-esc="o.pressure" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: none; width: 100; padding-top:5;">
+                                            Handling new portfolio
+                                            <span t-att-style="style" t-esc="o.handling" />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table class="table table-condensed">
+                                <tbody>
+                                    <thead>
+                                        <strong>Interpersonal Skills</strong>
+                                    </thead>
+                                    <tr>
+                                        <td style="border: none; width: 100; padding-top:5;">
+                                            Relationship with co-workers
+                                            <span t-att-style="style" t-esc="o.relationship" />
+                                        </td>
+                                        <td style="border: none; width: 100; padding-top:5;">
+                                            Problem solving
+                                            <span t-att-style="style" t-esc="o.prob_solv" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: none; width: 100; padding-top:5;">
+                                            Decision making
+                                            <span t-att-style="style" t-esc="o.dec_mak" />
+                                        </td>
+                                        <td style="border: none; width: 100; padding-top:5;">
+                                            Time management
+                                            <span t-att-style="style" t-esc="o.time_mng" />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table class="table table-condensed">
+                                <tbody>
+                                    <thead>
+                                        <strong>Communication Skills</strong>
+                                    </thead>
+                                    <tr>
+                                        <td style="border: none; width: 100; padding-top:5;">
+                                            Oral and written expression
+                                            <span t-att-style="style" t-esc="o.express" />
+                                        </td>
+                                        <td style="border: none; width: 100; padding-top:5;">
+                                            Sharing of knowledge
+                                            <span t-att-style="style" t-esc="o.share_know" />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table class="table table-condensed">
+                                <tbody>
+                                    <thead>
+                                        <strong>Development</strong>
+                                    </thead>
+                                    <tr>
+                                        <td style="border: none; width: 100; padding-top:5;">
+                                            Enthusiastic
+                                            <span t-att-style="style" t-esc="o.enthu" />
+                                        </td>
+                                        <td style="border: none; width: 100; padding-top:5;">
+                                            Trustworthy
+                                            <span t-att-style="style" t-esc="o.trust" />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table class="table table-condensed">
+                                <tbody>
+                                    <thead>
+                                        <strong>Personality</strong>
+                                    </thead>
+                                    <tr>
+                                        <td style="border: none; width: 100; padding-top:5;">
+                                            Oral and written expression
+                                            <span t-att-style="style" t-esc="o.express" />
+                                        </td>
+                                        <td style="border: none; width: 100; padding-top:5;">
+                                            Sharing of knowledge
+                                            <span t-att-style="style" t-esc="o.share_know" />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table class="table table-condensed">
+                                <tbody>
+                                    <thead>
+                                        <strong>Code of Conduct</strong>
+                                    </thead>
+                                    <tr>
+                                        <td style="border: none; width: 100; padding-top:5;">
+                                            Work Place ettiquttes
+                                            <span t-att-style="style" t-esc="o.ettiquttes" />
+                                        </td>
+                                        <td style="border: none; width: 100; padding-top:5;">
+                                            Punctuality
+                                            <span t-att-style="style" t-esc="o.punctuality" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: none; width: 100; padding-top:5;">
+                                            Descipline
+                                            <span t-att-style="style" t-esc="o.descipline" />
+                                        </td>
+                                        <td style="border: none; width: 100; padding-top:5;">
+                                            Attendance
+                                            <span t-att-style="style" t-esc="o.attendance" />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table class="table table-condensed">
+                                <tbody>
+                                    <thead>
+                                        <strong>Leadership</strong>
+                                    </thead>
+                                    <tr>
+                                        <td style="border: none; width: 100; padding-top:5;">
+                                            Team work
+                                            <span t-att-style="style" t-esc="o.team_work" />
+                                        </td>
+                                        <td style="border: none; width: 100; padding-top:5;">
+                                            Team Building
+                                            <span t-att-style="style" t-esc="o.team_build" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: none; width: 100; padding-top:5;">
+                                            New Strategy and direction
+                                            <span t-att-style="style" t-esc="o.strategy" />
+                                        </td>
+                                        <td style="border: none; width: 100; padding-top:5;">
+                                            Participation in HR activities
+                                            <span t-att-style="style" t-esc="o.participation" />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </template>
+        <report id="report_kra_employee_rating" string="Employee Value Rating" model="value.rating" report_type="qweb-pdf" file="employee_kra.kra_report_employee_rating" name="employee_kra.kra_report_employee_rating" header="True" />
+    </data>
+</openerp>
+

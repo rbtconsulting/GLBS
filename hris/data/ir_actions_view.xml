@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+   	<data>
+		<record id="action_refresh_attendance" model="ir.actions.server">
+		    <field name="name">Refresh</field>
+		    <field name="type">ir.actions.server</field>
+		    <field name="model_id" ref="model_hr_attendance"/>
+		    <field name="state">code</field>
+		    <field name="code">env['hr.attendance'].browse(context.get('active_ids')).recompute_attendance()
+for field in [k for k,v in model.fields_get().items() if 'store' in v and v['depends'] and v['type'] == 'float']:
+    env.add_todo(model._fields[field], object)
+    model.recompute()  
+		    </field>
+		</record>
+		<record id="action_refresh_attendance_value" model="ir.values">
+		    <field name="name">Refresh</field>
+		    <field name="action_id" ref="action_refresh_attendance"/>
+		    <field name="value" eval="'ir.actions.server,' + str(ref('action_refresh_attendance'))"/>
+		    <field name="key">action</field>
+		    <field name="model_id" ref="model_hr_attendance"/>
+		    <field name="model">hr.attendance</field>
+		    <field name="key2">client_action_multi</field>
+		</record>
+		<!--Start of overtime-->
+		<record id="action_approve_attendance_overtime" model="ir.actions.server">
+		    <field name="name">Approve Overtime</field>
+		    <field name="type">ir.actions.server</field>
+		    <field name="model_id" ref="model_hr_attendance_overtime"/>
+		    <field name="state">code</field>
+		    <field name="code">env['hr.attendance.overtime'].browse(context.get('active_ids')).action_approved()
+		    </field>
+		</record>
+		<record id="action_approve_attendance_overtime_value" model="ir.values">
+		    <field name="name">Approve Overtime</field>
+		    <field name="action_id" ref="action_approve_attendance_overtime"/>
+		    <field name="value" eval="'ir.actions.server,' + str(ref('action_approve_attendance_overtime'))"/>
+		    <field name="key">action</field>
+		    <field name="model_id" ref="model_hr_attendance_overtime"/>
+		    <field name="model">hr.attendance.overtime</field>
+		    <field name="key2">client_action_multi</field>
+		</record>
+		<record id="action_disapprove_attendance_overtime" model="ir.actions.server">
+		    <field name="name">Disapprove Overtime</field>
+		    <field name="type">ir.actions.server</field>
+		    <field name="model_id" ref="model_hr_attendance_overtime"/>
+		    <field name="state">code</field>
+		    <field name="code">env['hr.attendance.overtime'].browse(context.get('active_ids')).action_disapproved()
+		    </field>
+		</record>
+		<record id="action_disapprove_attendance_overtime_value" model="ir.values">
+		    <field name="name">Disapprove Overtime</field>
+		    <field name="action_id" ref="action_disapprove_attendance_overtime"/>
+		    <field name="value" eval="'ir.actions.server,' + str(ref('action_disapprove_attendance_overtime'))"/>
+		    <field name="key">action</field>
+		    <field name="model_id" ref="model_hr_attendance_overtime"/>
+		    <field name="model">hr.attendance.overtime</field>
+		    <field name="key2">client_action_multi</field>
+		</record>
+		<!--End of overtime-->
+		<!--Start of change of attendance-->
+		<record id="action_approve_attendance_change" model="ir.actions.server">
+		    <field name="name">Approve Change of Attendance</field>
+		    <field name="type">ir.actions.server</field>
+		    <field name="model_id" ref="model_hr_attendance_change"/>
+		    <field name="state">code</field>
+		    <field name="code">env['hr.attendance.change'].browse(context.get('active_ids')).action_approved()
+		    </field>
+		</record>
+		<record id="action_approve_attendance_change_value" model="ir.values">
+		    <field name="name">Approve Change of Attendance</field>
+		    <field name="action_id" ref="action_approve_attendance_change"/>
+		    <field name="value" eval="'ir.actions.server,' + str(ref('action_approve_attendance_change'))"/>
+		    <field name="key">action</field>
+		    <field name="model_id" ref="model_hr_attendance_change"/>
+		    <field name="model">hr.attendance.change</field>
+		    <field name="key2">client_action_multi</field>
+		</record>
+		<!--End of change of attendance-->
+		<!--start of leaves-->
+		<record id="action_approve_leaves" model="ir.actions.server">
+		    <field name="name">Approve Leaves</field>
+		    <field name="type">ir.actions.server</field>
+		    <field name="model_id" ref="model_hr_holidays"/>
+		    <field name="state">code</field>
+		    <field name="code">env['hr.holidays'].browse(context.get('active_ids')).action_validate()
+		    </field>
+		</record>
+		<record id="action_approve_leaves_values" model="ir.values">
+		    <field name="name">Approve Leaves</field>
+		    <field name="action_id" ref="action_approve_leaves"/>
+		    <field name="value" eval="'ir.actions.server,' + str(ref('action_approve_leaves'))"/>
+		    <field name="key">action</field>
+		    <field name="model_id" ref="model_hr_holidays"/>
+		    <field name="model">hr.holidays</field>
+		    <field name="key2">client_action_multi</field>
+		</record>
+		<record id="action_disapprove_leaves" model="ir.actions.server">
+		    <field name="name">Disapprove Leaves</field>
+		    <field name="type">ir.actions.server</field>
+		    <field name="model_id" ref="model_hr_holidays"/>
+		    <field name="state">code</field>
+		    <field name="code">records.action_refuse()
+		    </field>
+		</record>
+		<record id="action_disapprove_leaves_values" model="ir.values">
+		    <field name="name">Disapprove Leaves</field>
+		    <field name="action_id" ref="action_disapprove_leaves"/>
+		    <field name="value" eval="'ir.actions.server,' + str(ref('action_disapprove_leaves'))"/>
+		    <field name="key">action</field>
+		    <field name="model_id" ref="model_hr_holidays"/>
+		    <field name="model">hr.holidays</field>
+		    <field name="key2">client_action_multi</field>
+		</record>
+		<!--End of change of leaves-->
+	</data>
+</odoo>	

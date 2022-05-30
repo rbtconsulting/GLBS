@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<odoo>
+  <record id="paperformat_euro_landscape"
+          model="report.paperformat">
+      <field name="name">European A4 Landscape</field>
+      <field name="default" eval="True" />
+      <field name="format">A4</field>
+      <field name="page_height">0</field>
+      <field name="page_width">0</field>
+      <field name="orientation">Landscape</field>
+      <field name="margin_top">40</field>
+      <field name="margin_bottom">23</field>
+      <field name="margin_left">7</field>
+      <field name="margin_right">7</field>
+      <field name="header_line" eval="False" />
+      <field name="header_spacing">35</field>
+      <field name="dpi">90</field>
+  </record>
+
+  <report id="action_employee_master_list_report"
+          string="Master List"
+          model="hr.employee"
+          report_type="qweb-html"
+          name="employee_reports.report_employee_master_list"
+          paperformat="paperformat_euro_landscape"
+  />
+
+  <template id="report_employee_master_list">
+    <t t-call="report.html_container">
+      <t t-call="report.external_layout">
+        <div class="page">
+           <!-- Report page content -->
+           <div class="row bg-primary">
+              <div class="col-xs-2">Employee</div>
+              <div class="col-xs-3">Address</div>
+              <div class="col-xs-3">Department</div>
+              <div class="col-xs-3">Job Title</div>
+          </div>
+          <t t-foreach="docs" t-as="o">
+            <div class="row">
+                <div class="col-xs-2">
+                  <h4><img class="media-object"
+                      t-att-src="'data:image/png;base64,%s' % o.image_small"
+                      style="max-height: 50px;" /><span t-field="o.name" />
+                  </h4>
+                </div>
+                <div class="col-xs-3">
+                  <div t-field="o.address_id"
+                       t-field-options='{
+                         "widget": "contact",
+                         "fields": ["address", "name", "phone", "fax"],
+                         "no_marker": true}' />
+                </div>
+                <div class="col-xs-3">
+                  <span t-field="o.department_id.name" />
+                </div>
+                <div class="col-xs-3">
+                  <span t-field="o.job_id.name" />
+                </div>
+            </div>
+          </t>
+        </div>
+      </t>
+    </t>
+  </template>
+</odoo>

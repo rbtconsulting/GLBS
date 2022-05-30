@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+   <data>
+    	<record model="ir.ui.view" id="view_disciplinary_tree">
+		     <field name="name">hr.disciplinary.tree</field>
+		     <field name="model">hr.disciplinary</field>
+		     <field name="type">tree</field>
+		     <field name="arch" type="xml">
+		         <tree >
+		         	 <field name="employee_id"/>
+		             <field name="case_id"/>
+		             <field name="occurence_date"/>
+		             <field name="penalty_id"/>
+		             <field name="effect_date"/>
+		             <field name="recommended_by_id"/>
+		         </tree>
+	     	 </field>
+     	</record>
+	     <record model="ir.ui.view" id="view_disciplinary_form">
+	        <field name="name">hr.disciplinary.form</field>
+	        <field name="model">hr.disciplinary</field>
+	        <field name="arch" type="xml">
+	            <form string="Disciplinary Actions">
+	               <header>
+	                </header>
+	                  <sheet>
+	                    <group name="main" col="4">
+	                        <separator string="Disciplinary Actions" colspan="4"/>
+	                    </group>
+	                    <group>
+	                        <group>
+	                        	<field name="employee_id"/>
+	                            <field name="case_id" />
+	                            <field name="occurence_date" />
+	                            <field name="penalty_id" />
+	                            <field name="effect_date" />
+	                            <field name="recommended_by_id" options="{'no_open':True,'no_create':True,'no_create_edit':True}"/>
+	                        </group>
+	                        <group  string='Suspension Details' attrs="{'invisible':[('penalty_id', '!=' , 'suspension')]}">
+	                            <field name="start_date"  />
+	                            <field name="end_date" />
+	                            <field name="diff_days"/>
+	                         </group>
+	                    </group>
+	                </sheet>
+	            </form>
+	      </field>
+	    </record>
+    	<!-- Menu -->
+    	<record model="ir.actions.act_window" id="action_disciplinary_action">
+      		<field name="name">Disciplinary Actions</field>
+      		<field name="res_model">hr.disciplinary</field>
+      		<field name="view_type">form</field>
+      		<field name="view_mode">tree,form</field>
+    		<field name="domain">[('employee_id','=',active_id)]</field>
+    	</record>
+
+		<!-- hr employee view-->
+		<record model="ir.ui.view" id="view_employee_form_inherit_discicplinary">
+        	<field name="name">hr.experience.employee.form</field>
+        	<field name="model">hr.employee</field>
+        	<field name="inherit_id" ref="hr.view_employee_form"/>
+        		<field name="arch" type="xml">
+		            <notebook position="inside">
+		                <page string="Disciplinary Actions" groups="base.group_user">
+		                    <field name="disciplinary_ids" context="{'default_employee_id': active_id}">
+		                        <tree string="Disciplinary Actions">
+		                               <field name="case_id"/>
+		                               <field name="occurence_date" string="Date of Occurence"/>
+		                               <field name="penalty_id" />
+		                               <field name="effect_date" string="Effectivity Date"/>
+		                               <field name="recommended_by_id"/>
+		                         </tree>
+		                         <form string="Disciplinary Actions">
+		                         	<sheet>
+		                                <group string="Disciplinary Actions">
+		                                    <group>
+		                                        <field name="case_id" />
+		                                        <field name="occurence_date" />
+		                                        <field name="penalty_id" />
+		                                        <field name="effect_date" />
+		                                        <field name="recommended_by_id" options="{'no_open':True,'no_create':True,'no_create_edit':True}"/>
+		                                    </group>
+		                                    <group  string='Suspension Details' attrs="{'invisible':[('penalty_id', '!=' , 'suspension')]}">
+		                                        <field name="start_date"  />
+		                                        <field name="end_date" />
+		                                        <field name="diff_days" />
+		                                     </group>
+		                                </group>
+		                            </sheet>
+		                        </form>
+		                    </field>
+		                </page>
+		           </notebook>
+        	</field>
+		</record>
+		
+		<record id="hr_employee_disciplinary_action" model="ir.ui.view">
+    	    <field name="name">HR.Employee.DA</field>
+    	    <field name="model">hr.employee</field>
+    	    <field name="inherit_id" ref="hr.view_employee_form" />
+    	    <field name="arch" type="xml">
+    	        
+    	        <xpath expr="//div[@name='button_box']" position="inside">
+    	            <button name="%(hris.action_disciplinary_action)d" string="Disciplinary Action"
+    	                context="{'default_employee_id':id}" 
+    	                icon="fa-file-o" type="action" groups="hr.group_hr_manager,hris.group_hr_user" class="oe_stat_button"/>
+    	        </xpath>
+    	   	</field>
+    	  </record>
+	</data>
+</odoo>

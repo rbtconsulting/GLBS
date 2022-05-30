@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <menuitem id="menu_bir1601c_report_structures"
+            parent="hr_payroll.menu_hr_payroll_configuration"
+            groups="hris.group_hr_user"
+            sequence="41"
+            name="BIR 1601-C Structure"/>
+
+        <record id="bir1601c_report_config_view_tree" model="ir.ui.view">
+            <field name="name">bir1601c.report.config.view.tree</field>
+            <field name="model">bir.1601c.report.config</field>
+            <field name="arch" type="xml">
+                <tree create="0">
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="salary_rule_ids"/>
+                </tree>
+            </field>
+        </record>
+        <record id="bir1601c_report_config_view_form" model="ir.ui.view">
+            <field name="name">bir1601c.report.config.view.form</field>
+            <field name="model">bir.1601c.report.config</field>
+            <field name="arch" type="xml">
+                <form create="0">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="code" readonly="1"/>
+                                <field name="name" readonly="1"/>
+                                <field name="earner_type"/>
+                                <field name="salary_rule_ids" widget="many2many_tags" options="{'no_create':True,'no_open':True, 'no_create_edit':True}"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window"
+            id="action_bir1601c_report_config_list_form">
+            <field name="name">BIR 1601-C Structure</field>
+            <field name="res_model">bir.1601c.report.config</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_bir1601c_report_config"
+            action="action_bir1601c_report_config_list_form"
+            parent="menu_hr_report_structures" sequence="36"
+            groups="hris.group_hr_user" />
+
+    </data>
+</odoo>

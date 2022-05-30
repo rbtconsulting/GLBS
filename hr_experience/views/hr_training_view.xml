@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- training tree -->
+    <record model="ir.ui.view" id="view_training_tree">
+        <field name="name">hr.training.tree</field>
+        <field name="model">hr.training</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="trainings">
+                <field name="name" string="Training"/>
+                <field name="employee_id"/>
+                <field name="training" string="# Certificate"/>
+                <field name="partner_id" string="Issued By"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- training tree -->
+    <record model="ir.ui.view" id="view_training_form">
+        <field name="name">hr.training.form</field>
+        <field name="model">hr.training</field>
+        <field name="arch" type="xml">
+            <form string="Training">
+                <sheet>
+                    <group name="main">
+                        <field name="employee_id"/>
+                        <field name="name" string="Training"/>
+                        <separator string="Dates" colspan="4"/>
+                        <field name="start_date"/>
+                        <field name="expire"/>
+                        <field name="end_date" attrs="{'invisible':[('expire', '=', False)]}"/>
+                        <separator string="Partner information" colspan="4"/>
+                        <field name="partner_id" string="Issued By"/>
+                        <field name="location"/>
+                        <group colspan="4">
+                            <separator string="raining information" colspan="4"/>
+                            <field name="training"/>
+                        </group>
+                        <separator string="Description" colspan="4"/>
+                        <field name="description" colspan="4" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Menu -->
+    <record model="ir.actions.act_window" id="open_view_training_form">
+        <field name="name">trainings</field>
+        <field name="res_model">hr.training</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem name="Trainings"
+              parent="menu_hr_experience"
+              id="menu_open_view_training_form"
+              action="open_view_training_form"/>
+
+</odoo>

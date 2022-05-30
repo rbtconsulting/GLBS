@@ -1,0 +1,21 @@
+import hr_salary_employee_1601c
+import hr_salary_employee_1601e
+import hr_salary_employee_2307
+import hr_salary_employee_2316
+import hr_payroll_payslips_by_employees
+import hr_alphalist
+import hr_employee_phic
+import hr_employee_hdmf
+import hr_employee_sss
+import hr_employee_tax
+import hr_payroll_registry
+import hr_payslip_view
+import employee_13th_month_report
+import wizard_bank_account_report
+import certificate_of_employment
+import hr_job_offer_report
+import personal_action_notice
+import hr_annualization_view
+
+
+

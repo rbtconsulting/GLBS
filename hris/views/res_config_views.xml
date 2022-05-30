@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<odoo>
+    <data>
+        <record id="view_payroll_configuration_netcap" model="ir.ui.view">
+            <field name="name">Configure Payroll</field>
+            <field name="model">hr.payroll.config.settings</field>
+            <field name="inherit_id" ref="hr_payroll.view_hr_payroll_configuration" />
+            <field name="arch" type="xml">
+                <xpath expr="//group[1]/div" position="inside">
+                    <div name="netcap" class="o_row">
+                       	<label for="netcap" />
+                    	<field name="netcap" />
+                    	<field name="percentage" 
+                    	    attrs="{'invisible':[('netcap', '=', False)], 'required':[('netcap', '=', True)]}" />%
+                    </div>
+                    <div class="o_row">
+                    	<label for="nontaxable_limit" />
+                    	<field name="nontaxable_limit" />
+                    </div>
+                </xpath>
+            </field>
+        </record>
+        
+
+	    <record id="hr_attendance_view_config_inherit" model="ir.ui.view">
+	        <field name="name">base.config.setting.hr.form.attendance.inherit</field>
+	        <field name="model">base.config.settings</field>
+	        <field name="inherit_id" ref="hr_attendance.hr_attendance_view_config" />
+	        <field name="arch" type="xml">
+	            <field name="group_attendance_use_pin" position="after">
+	            	<label for="default_ot_lockout" />
+	            	<div class="o_row">
+						<field name="default_ot_lockout" />
+						<field name="default_ot_lockout_period" attrs="{'invisible': [('default_ot_lockout', '=', False)]}" />payroll cutoff
+					</div>
+					<label for="default_ob_lockout" />
+					<div class="o_row">
+						<field name="default_ob_lockout" />
+						<field name="default_ob_lockout_period" attrs="{'invisible': [('default_ob_lockout', '=', False)]}" />payroll cutoff
+					</div>
+					<field name="default_no_ot_late" />
+					<field name="minimum_overtime_hours" />hours
+					
+	            </field>
+				<!-- <xpath expr="//field[@name='group_attendance_use_pin']" position="attributes">
+					<attribute name="invisible">1</attribute>
+				</xpath> -->
+	        </field>
+	    </record>
+	    
+	    <menuitem id="hr_attendance.menu_hr_attendance_settings" 
+	        	  name="Configuration" 
+	     		  parent="hr_attendance.menu_hr_attendance_root"
+        		  sequence="99" 
+        		  groups="hr_attendance.group_hr_attendance_manager"
+        		  />
+	    
+	    <menuitem id="menu_hris_attendance_settings" 
+	        	  name="Settings" 
+	        	  parent="hr_attendance.menu_hr_attendance_settings"
+        		  sequence="5" 
+        		  action="hr_attendance.action_hr_attendance_settings" 
+        		  groups="hr_attendance.group_hr_attendance_manager"
+        		  />
+	    
+        <record id="form_hr_settings_sm" model="ir.ui.view">
+            <field name="name">hr.settings.form.sm</field>
+            <field name="model">hr.settings</field>
+           	<field name="inherit_id" ref="employee_check_list.form_hr_settings" />
+            <field name="arch" type="xml">
+               <xpath expr="//form" position="inside">
+                   <group string="Salary Movement">
+                       <label for="sm_lockout" />
+                       <div class="o_row">
+                     		<field name="sm_lockout" />
+                       		<field name="sm_lockout_period" attrs="{'invisible':[('sm_lockout', '=', False)]}" />
+                       </div>
+                   </group>
+                   <group string="Auto Generate Employee Barcode">
+                       <label for="default_auto_generate_barcode" />
+                       <div class="o_row">
+                     		<field name="default_auto_generate_barcode" />
+                       		Next Employee Number<field name="start_at" attrs="{'invisible':[('default_auto_generate_barcode', '=', False)]}" />
+                       </div>
+                   </group>
+                   <group string="Performance Review Notification" >
+                       <div class="o_row">
+                     		<field name="enable_first" />First Notification<field name="first_notif" />days
+                       		<field name="enable_second" />Second Notification<field name="second_notif" />days
+                       </div>
+                   </group>
+               </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

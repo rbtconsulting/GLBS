@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+	   
+	    <menuitem id="menu_hr_payroll_statutory_table" 
+	        	  parent="hr_payroll.menu_hr_payroll_configuration" 
+	        	  groups="menu_hide,base.group_erp_manager" sequence="22" name="Statutory Tables" />
+	    
+	    <!-- Payroll HDMF -->
+	    <record id="hr_payroll_hdmf_view_form" model="ir.ui.view">
+	        <field name="name">Pag-Ibig Contribution Table</field>
+	        <field name="model">payroll.hdmf.contribution</field>
+	        <field name="arch" type="xml">
+	            <form>
+	                <sheet>
+	                    <group>
+	                        <group>
+	                            <field name="code" />
+	                            <field name="name" />
+	                            <field name="min_range" />
+	    	        			<field name="max_range" />
+	                            <field name="employee_share" />
+	                            <field name="employer_share" />
+	                        </group>
+	                    </group>
+	                </sheet>
+	            </form>
+	        </field>
+	    </record>
+	    <record id="hr_payroll_hdmf_view_tree" model="ir.ui.view">
+	    	<field name="name">Pag-Ibig Contribution Table</field>
+	    	<field name="model">payroll.hdmf.contribution</field>
+	    	<field name="arch" type="xml">
+	    	    <tree editable="bottom">
+	    	        <field name="code" />
+	    	        <field name="name" />
+	    	        <field name="min_range" />
+	    	        <field name="max_range" />
+	    	        <field name="employee_share"  /> 
+	                <field name="employer_share"  /> 
+	    	    </tree>
+	    	</field>
+	    </record>
+	    <record id="action_hr_payroll_hdmf" model="ir.actions.act_window">
+	        <field name="name">Pag-Ibig Contribution Table</field>
+	        <field name="res_model">payroll.hdmf.contribution</field>
+	    	<field name="view_mode">tree,form</field>
+	    	<field name="view_type">form</field>
+	    	<field name="help" type="html">
+	    	    <p class="oe_view_nocontent_create">
+	    	        Click here to add new pag-ibig compensation bracket.
+	    	    </p>
+	    	</field>
+	    </record>
+	   
+	    <menuitem id="menu_hr_payroll_hdmf" 
+	        	  action="action_hr_payroll_hdmf" 
+	        	  parent="menu_hr_payroll_statutory_table" 
+	        	  sequence="1" 
+	        	  name="HDMF" />
+	   	<!-- Payroll HDMF -->
+	   	
+	   	<!-- Payroll SSS -->
+	   	<record id="hr_payroll_sss_view_form" model="ir.ui.view">
+	        <field name="name">SSS Contribution Table</field>
+	        <field name="model">payroll.sss.contribution</field>
+	        <field name="arch" type="xml">
+	            <form>
+	                <sheet>
+	                    <group>
+	                        <group>
+	                            <field name="code" />
+				    	        <field name="name" />
+				    	        <label for="min_range" string="Range of Compensation" />
+				    	        <div class="o_row">
+					    	        <field name="min_range"  /> 
+					                <field name="max_range"  />
+				                </div>
+				                <field name="salary_credit" />
+				                <field name="ss_er" /> 
+				                <field name="ss_ee" />
+				                <field name="amount_total" />
+				                <field name="ec_er" />
+				                <field name="contrib_er" />
+				                <field name="contrib_ee" />
+				                <field name="amount_total2" />
+	                        </group>
+	                    </group>
+	                </sheet>
+	            </form>
+	        </field>
+	    </record>
+	    <record id="hr_payroll_sss_view_tree" model="ir.ui.view">
+	    	<field name="name">SSS Contribution Table</field>
+	    	<field name="model">payroll.sss.contribution</field>
+	    	<field name="arch" type="xml">
+	    	    <tree editable="bottom">
+					<field name="effectivity_start" />
+					<field name="effectivity_end" />
+					<field name="dummy_end_date" invisible="1"/>
+	    	        <field name="code" />
+	    	        <field name="name" />
+                         <field name="mandatory_fund" />
+	    	        <field name="min_range"  /> 
+	                <field name="max_range"  />
+	                <field name="salary_credit" />
+	                <field name="ss_er" /> 
+	                <field name="ss_ee" />
+	                <field name="amount_total" />
+	                <field name="ec_er" />
+	                <field name="contrib_er" />
+	                <field name="contrib_ee" />
+	                <field name="amount_total2" />
+					<field name="mpf_ee" />
+	                <field name="mpf_er" />
+	    	    </tree>
+	    	</field>
+	    </record>
+	    <record id="action_hr_payroll_sss" model="ir.actions.act_window">
+	        <field name="name">SSS Contribution Table</field>
+	        <field name="res_model">payroll.sss.contribution</field>
+	    	<field name="view_mode">tree,form</field>
+	    	<field name="view_type">form</field>
+	    	<field name="help" type="html">
+	    	    <p class="oe_view_nocontent_create">
+	    	        Click here to add new social security system compensation bracket.
+	    	    </p>
+	    	</field>
+	    </record>
+	   
+	    <menuitem id="menu_hr_payroll_sss" 
+	        	  action="action_hr_payroll_sss" 
+	        	  parent="menu_hr_payroll_statutory_table" 
+	        	  sequence="2" 
+	        	  name="SSS" />
+	    <!-- Payroll SSS -->
+	    
+	    <!-- Payroll PHIC -->
+	   	<record id="hr_payroll_phic_view_form" model="ir.ui.view">
+	        <field name="name">PHIC Contribution Table</field>
+	        <field name="model">payroll.phic.contribution</field>
+	        <field name="arch" type="xml">
+	            <form>
+	                <sheet>
+	                    <group>
+	                        <group>
+	                            <field name="code" />
+				    	        <field name="name" />
+				    	        <label for="min_range" string="Monthly Basic Salary x2.75%" />
+				    	        <div class="o_row">
+					    	        <field name="min_range"  /> 
+					                <field name="max_range"  />
+				                </div>
+				                <field name="monthly_premium" />
+	                			<field name="personal_share" /> 
+	                			<field name="employer_share" />
+	                        </group>
+	                    </group>
+	                </sheet>
+	            </form>
+	        </field>
+	    </record>
+	    <record id="hr_payroll_phic_view_tree" model="ir.ui.view">
+	    	<field name="name">PHIC Contribution Table</field>
+	    	<field name="model">payroll.phic.contribution</field>
+	    	<field name="arch" type="xml">
+	    	    <tree editable="bottom">
+	    	        <field name="code" />
+	    	        <field name="name" />
+	    	        <field name="min_range"  /> 
+	                <field name="max_range"  />
+	                <field name="monthly_premium" />
+	                <field name="personal_share" /> 
+	                <field name="employer_share" />
+	    	    </tree>
+	    	</field>
+	    </record>
+	    <record id="action_hr_payroll_phic" model="ir.actions.act_window">
+	        <field name="name">PHIC Contribution Table</field>
+	        <field name="res_model">payroll.phic.contribution</field>
+	    	<field name="view_mode">tree,form</field>
+	    	<field name="view_type">form</field>
+	    	<field name="help" type="html">
+	    	    <p class="oe_view_nocontent_create">
+	    	        Click here to add new philhealth premium contributions.
+	    	    </p>
+	    	</field>
+	    </record>
+	   
+	    <menuitem id="menu_hr_payroll_phic" 
+	        	  action="action_hr_payroll_phic" 
+	        	  parent="menu_hr_payroll_statutory_table" 
+	        	  sequence="3" 
+	        	  name="PHIC" />
+	    
+	    <!-- Payroll PHIC -->
+	    
+	    <!-- Payroll PHIC -->
+	   	<record id="hr_payroll_wtax_view_form" model="ir.ui.view">
+	        <field name="name">Withholding Tax Contribution Table</field>
+	        <field name="model">payroll.withholding_tax.contribution</field>
+	        <field name="arch" type="xml">
+	            <form>
+	                <sheet>
+	                    <group>
+	                        <group>
+	                            <field name="code" />
+				    	        <field name="name" />
+				    	        <label for="min_range" string="Compensation Level" />
+				    	        <div class="o_row">
+					    	        <field name="min_range"  /> 
+					                <field name="max_range"  />
+				                </div>
+				                <field name="compensation_level" />
+	                			<field name="contrib_method" /> 
+	                			<field name="percentage" />
+	                			<field name="prescribed_tax" />
+	                        </group>
+	                    </group>
+	                </sheet>
+	            </form>
+	        </field>
+	    </record>
+	    <record id="hr_payroll_wtax_view_tree" model="ir.ui.view">
+	    	<field name="name">Withholding Tax Contribution Table</field>
+	    	<field name="model">payroll.withholding_tax.contribution</field>
+	    	<field name="arch" type="xml">
+	    	    <tree editable="bottom">
+	    	        <field name="code" />
+				   	<field name="name" />
+					<field name="min_range"  /> 
+					<field name="max_range"  />           
+	                <field name="compensation_level" />
+              		<field name="contrib_method" /> 
+              		<field name="percentage" />
+              		<field name="prescribed_tax" />
+	    	    </tree>
+	    	</field>
+	    </record>
+	    <record id="action_hr_payroll_wtax" model="ir.actions.act_window">
+	        <field name="name">Withholding Tax Contribution Table</field>
+	        <field name="res_model">payroll.withholding_tax.contribution</field>
+	    	<field name="view_mode">tree,form</field>
+	    	<field name="view_type">form</field>
+	    	<field name="help" type="html">
+	    	    <p class="oe_view_nocontent_create">
+	    	        Click here to add new withholding tax contribution range.
+	    	    </p>
+	    	</field>
+	    </record>
+	   
+	    <menuitem id="menu_hr_payroll_wtax" 
+	        	  action="action_hr_payroll_wtax" 
+	        	  parent="menu_hr_payroll_statutory_table" 
+	        	  sequence="4" 
+	        	  name="Withholding Tax" />
+	    <!-- Payroll Annual Income Tax -->
+	    <record id="hr_payroll_aic_view_form" model="ir.ui.view">
+	        <field name="name">Annual Income Tax</field>
+	        <field name="model">annual.income.tax</field>
+	        <field name="arch" type="xml">
+	            <form>
+	                <sheet>
+	                    <group>
+	                        <group>
+				    	        <field name="name" />
+				    	        <label for="min_range" string="Tax Range" />
+				    	        <div class="o_row">
+					    	        <field name="min_range"  /> 
+					                <field name="max_range"  />
+				                </div>
+				           
+	                			<field name="percentage" />
+	                			<field name="prescribed_tax" />
+	                        </group>
+	                    </group>
+	                </sheet>
+	            </form>
+	        </field>
+	    </record>
+	    <record id="hr_payroll_aic_view_tree" model="ir.ui.view">
+	    	<field name="name">Annual Income Tax</field>
+	    	<field name="model">annual.income.tax</field>
+	    	<field name="arch" type="xml">
+	    	    <tree editable="bottom">
+				   	<field name="name" />
+					<field name="min_range"  /> 
+					<field name="max_range"  />           	
+					<field name="percentage" />
+              		<field name="prescribed_tax" />
+	    	    </tree>
+	    	</field>
+	    </record>
+	    <record id="action_hr_payroll_aic" model="ir.actions.act_window">
+	        <field name="name">Annual Income Tax</field>
+	        <field name="res_model">annual.income.tax</field>
+	    	<field name="view_mode">tree,form</field>
+	    	<field name="view_type">form</field>
+	    	<field name="help" type="html">
+	    	    <p class="oe_view_nocontent_create">
+	    	        Click here to add new annual income tax contribution range.
+	    	    </p>
+	    	</field>
+	    </record>
+	   
+	    <menuitem id="menu_hr_payroll_aic" 
+	        	  action="action_hr_payroll_aic" 
+	        	  parent="menu_hr_payroll_statutory_table" 
+	        	  sequence="5" 
+	        	  name="Annual Income Tax" />
+	    <!-- Payroll Annual Income Tax -->
+	    <record id="hr_alphanumeric_tax_code_view_form" model="ir.ui.view">
+	    	<field name="name">Alphanumeric Tax Code</field>
+	    	<field name="model">alphanumeric.tax.code</field>
+	    	<field name="arch" type="xml">
+	    	    <form>
+	    	        <sheet>
+	    	            <group>
+	    	                <field name="description" />
+	    	                <field name="tax_rate" />
+	    	                <field name="atc_type" />
+	    	            	<field name="code" />
+	    	            </group>
+	    	        </sheet>
+	    	    </form>
+	    	</field>
+	    </record>
+	    <record id="hr_alphanumeric_tax_code_view_tree" model="ir.ui.view">
+	    	<field name="name">Alphanumeric Tax Code</field>
+	    	<field name="model">alphanumeric.tax.code</field>
+	    	<field name="arch" type="xml">
+	    	    <tree>
+   	                <field name="description" />
+   	                <field name="tax_rate" />
+   	                <field name="atc_type" />
+   	            	<field name="code" />
+	    	    </tree>
+	    	</field>
+	    </record>
+	    <record id="action_alphanumeric_tax_code" model="ir.actions.act_window">
+	    	<field name="name">Alphanumeric Tax Code</field>
+	    	<field name="res_model">alphanumeric.tax.code</field>
+	    	<field name="view_mode">tree,form</field>
+	    	<field name="view_type">form</field>
+	    </record>
+	    <menuitem id="menu_alphanumeric_tax_code" 
+	        	  action="action_alphanumeric_tax_code" 
+	        	  parent="menu_hr_payroll_statutory_table" 
+	        	  sequence="6" 
+	        	  name="Alphanumeric Tax Code" />
+	    
+	</data>
+</odoo>

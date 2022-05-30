@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="annual_column1" model="hr.annulization_structure.config">
+            <field name="name">BASIC SALARY</field>
+            <field name="annulization_type">1-non-taxable</field>
+            <field name="computation">27</field>
+            <field name="code"></field>
+            <field name="active">True</field>
+        </record>
+        <record id="annual_column2" model="hr.annulization_structure.config">
+            <field name="name">HOLIDAY PAY</field>
+            <field name="annulization_type">1-non-taxable</field>
+            <field name="computation">28</field>
+            <field name="code"></field>
+            <field name="active">True</field>
+        </record>
+        <record id="annual_column3" model="hr.annulization_structure.config">
+            <field name="name">OVERTIME PAY</field>
+            <field name="annulization_type">1-non-taxable</field>
+            <field name="computation">29</field>
+            <field name="code"></field>
+            <field name="active">True</field>
+        </record>
+        <record id="annual_column4" model="hr.annulization_structure.config">
+            <field name="name">NIGHT SHIFT DIFFERENTIAL</field>
+            <field name="annulization_type">1-non-taxable</field>
+            <field name="computation">30</field>
+            <field name="code"></field>
+            <field name="active">True</field>
+        </record>
+        <record id="annual_column5" model="hr.annulization_structure.config">
+            <field name="name">HAZARD PAY</field>
+            <field name="annulization_type">1-non-taxable</field>
+            <field name="computation">31</field>
+            <field name="code"></field>
+            <field name="active">True</field>
+        </record>
+        <record id="annual_column6" model="hr.annulization_structure.config">
+            <field name="name">13th MONTH PAY</field>
+            <field name="annulization_type">1-non-taxable</field>
+            <field name="computation">32</field>
+            <field name="code"></field>
+            <field name="active">True</field>
+        </record>
+        <record id="annual_column7" model="hr.annulization_structure.config">
+            <field name="name">DE MINIMIS BENEFIT</field>
+            <field name="annulization_type">1-non-taxable</field>
+            <field name="computation">33</field>
+            <field name="code"></field>
+            <field name="active">True</field>
+        </record>
+        <record id="annual_column8" model="hr.annulization_structure.config">
+            <field name="name">SSS,GSIS,PHIC and PAG-IBIG Contributions and Union Dues (Employee Share Only)</field>
+            <field name="annulization_type">1-non-taxable</field>
+            <field name="computation">34</field>
+            <field name="code"></field>
+            <field name="active">True</field>
+        </record>
+        <record id="annual_column9" model="hr.annulization_structure.config">
+            <field name="name">SALARIES AND OTHER FORMS OF COMPENSATION</field>
+            <field name="annulization_type">1-non-taxable</field>
+            <field name="computation">35</field>
+            <field name="code"></field>
+            <field name="active">True</field>
+        </record>
+        <record id="annual_column10" model="hr.annulization_structure.config">
+            <field name="name">TOTAL NON TAXABLE/EXEMPT COMPENSATION</field>
+            <field name="annulization_type">1-non-taxable</field>
+            <field name="computation">36</field>
+            <field name="code"></field>
+            <field name="active">True</field>
+        </record>
+        <record id="annual_column11" model="hr.annulization_structure.config">
+            <field name="name">BASIC SALARY</field>
+            <field name="annulization_type">2-taxable</field>
+            <field name="computation">37</field>
+            <field name="code"></field>
+            <field name="active">True</field>
+        </record>
+        <record id="annual_column12" model="hr.annulization_structure.config">
+            <field name="name">REPRESENTATION</field>
+            <field name="annulization_type">2-taxable</field>
+            <field name="computation">38</field>
+            <field name="code"></field>
+            <field name="active">True</field>
+        </record>
+        <record id="annual_column13" model="hr.annulization_structure.config">
+            <field name="name">TRANSPORTATION</field>
+            <field name="annulization_type">2-taxable</field>
+            <field name="computation">39</field>
+            <field name="code"></field>
+            <field name="active">True</field>
+        </record>
+        <record id="annual_column14" model="hr.annulization_structure.config">
+            <field name="name">COST O LIVING ALLOWANCE (COLA)</field>
+            <field name="annulization_type">2-taxable</field>
+            <field name="computation">40</field>
+            <field name="code"></field>
+            <field name="active">True</field>
+        </record>
+        <record id="annual_column15" model="hr.annulization_structure.config">
+            <field name="name">FIXED HOUSING ALLOWANCE</field>
+            <field name="annulization_type">2-taxable</field>
+            <field name="computation">41</field>
+            <field name="code"></field>
+            <field name="active">True</field>
+        </record>
+        <record id="annual_column16" model="hr.annulization_structure.config">
+            <field name="name">OTHERS</field>
+            <field name="annulization_type">2-taxable</field>
+            <field name="computation">42</field>
+            <field name="code"></field>
+            <field name="active">True</field>
+        </record>
+        <record id="annual_column17" model="hr.annulization_structure.config">
+            <field name="name">COMMISSION</field>
+            <field name="annulization_type">2-taxable</field>
+            <field name="computation">43</field>
+            <field name="code"></field>
+            <field name="active">True</field>
+        </record>
+        <record id="annual_column18" model="hr.annulization_structure.config">
+            <field name="name">PROFIT SHARING</field>
+            <field name="annulization_type">2-taxable</field>
+            <field name="computation">44</field>
+            <field name="code"></field>
+            <field name="active">True</field>
+        </record>
+        <record id="annual_column19" model="hr.annulization_structure.config">
+            <field name="name">FEES INCLUDING DRECTORS FEE</field>
+            <field name="annulization_type">2-taxable</field>
+            <field name="computation">45</field>
+            <field name="code"></field>
+            <field name="active">True</field>
+        </record>
+        <record id="annual_column20" model="hr.annulization_structure.config">
+            <field name="name">TAXABLE 13TH MONTH</field>
+            <field name="annulization_type">2-taxable</field>
+            <field name="computation">46</field>
+            <field name="code"></field>
+            <field name="active">True</field>
+        </record>
+        <record id="annual_column21" model="hr.annulization_structure.config">
+            <field name="name">HAZARD PAY</field>
+            <field name="annulization_type">2-taxable</field>
+            <field name="computation">47</field>
+            <field name="code"></field>
+            <field name="active">True</field>
+        </record>
+        <record id="annual_column22" model="hr.annulization_structure.config">
+            <field name="name">OVERTIME PAY</field>
+            <field name="annulization_type">2-taxable</field>
+            <field name="computation">48</field>
+            <field name="code"></field>
+            <field name="active">True</field>
+        </record>
+        <record id="annual_column23" model="hr.annulization_structure.config">
+            <field name="name">OTHERS</field>
+            <field name="annulization_type">2-taxable</field>
+            <field name="computation">49</field>
+            <field name="code"></field>
+            <field name="active">True</field>
+        </record>
+        <record id="annual_column24" model="hr.annulization_structure.config">
+            <field name="name">TOTAL TAXABLE COMPENSATION INCOME</field>
+            <field name="annulization_type">2-taxable</field>
+            <field name="computation">50</field>
+            <field name="code"></field>
+            <field name="active">True</field>
+        </record>
+        <record id="annual_column25" model="hr.annulization_structure.config">
+            <field name="name">GROSS COMPENSATION INCOME FROM PRESENT</field>
+            <field name="annulization_type">3-summary</field>
+            <field name="computation">19</field>
+            <field name="code"></field>
+            <field name="active">True</field>
+        </record>
+        <record id="annual_column26" model="hr.annulization_structure.config">
+            <field name="name">LESS : TOTAL NON TAXABLE/EXEMPT COMPENSATION INCOME FROM PRESENT EMPLOYER</field>
+            <field name="annulization_type">3-summary</field>
+            <field name="computation">20</field>
+            <field name="code"></field>
+            <field name="active">True</field>
+        </record>
+        <record id="annual_column27" model="hr.annulization_structure.config">
+            <field name="name">TAXABLE COMPENSATION INCOME FROM PRESENT EMPLOYER</field>
+            <field name="annulization_type">3-summary</field>
+            <field name="computation">21</field>
+            <field name="code"></field>
+            <field name="active">True</field>
+        </record>
+        <record id="annual_column28" model="hr.annulization_structure.config">
+            <field name="name">ADD:TAXABLE COMPENSATION INCOME FROM PREVIOUS EMPLOYER, if applicable</field>
+            <field name="annulization_type">3-summary</field>
+            <field name="computation">22</field>
+            <field name="code"></field>
+            <field name="active">True</field>
+        </record>
+        <record id="annual_column29" model="hr.annulization_structure.config">
+            <field name="name">GROSS TAXABLE COMPENSATION INCOME</field>
+            <field name="annulization_type">3-summary</field>
+            <field name="computation">23</field>
+            <field name="code"></field>
+            <field name="active">True</field>
+        </record>
+        <record id="annual_column30" model="hr.annulization_structure.config">
+            <field name="name">TAX DUE</field>
+            <field name="annulization_type">3-summary</field>
+            <field name="computation">24</field>
+            <field name="code"></field>
+            <field name="active">True</field>
+        </record>
+        <record id="annual_column31" model="hr.annulization_structure.config">
+            <field name="name">AMOUNT OF TAXES WITHHELD</field>
+            <field name="annulization_type">3-summary</field>
+            <field name="computation">25</field>
+            <field name="code"></field>
+            <field name="active">True</field>
+        </record>
+        <record id="annual_column32" model="hr.annulization_structure.config">
+            <field name="name">PRESENT </field>
+            <field name="annulization_type">3-summary</field>
+            <field name="computation">25A</field>
+            <field name="code"></field>
+            <field name="active">True</field>
+        </record>
+        <record id="annual_column33" model="hr.annulization_structure.config">
+            <field name="name">PREVIOUS</field>
+            <field name="annulization_type">3-summary</field>
+            <field name="computation">25B</field>
+            <field name="code"></field>
+            <field name="active">True</field>
+        </record>
+        <record id="annual_column34" model="hr.annulization_structure.config">
+            <field name="name">TAX DUE/TAX REFUND</field>
+            <field name="annulization_type">3-summary</field>
+            <field name="computation">26</field>
+            <field name="code"></field>
+            <field name="active">True</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    	 <record id="hr_emnployee_view_form_firstlvluser" model="ir.ui.view">
+              <field name="name">Hr Employee View Form First Level USer</field>
+              <field name="model">hr.employee</field>
+              <field name="inherit_id" ref="hr.view_employee_form"/>
+              <field name="groups_id" eval="[(4, [ref('group_approver'),ref('group_firstlevel')])]"/>
+              <field name="arch" type="xml">
+              	
+                  <xpath expr="//form[1]" position="attributes">
+                      <attribute name="edit">true</attribute>
+                  </xpath>
+                  <xpath expr="//field[@name='address_id']" position="attributes">
+                  	<attribute name="readonly">1</attribute>
+                  </xpath>
+                  <xpath expr="//field[@name='category_ids']" position="attributes">
+                  	<attribute name="readonly">0</attribute>
+                  </xpath>
+                    <xpath expr="//field[@name='department_id']" position="attributes">
+                  	<attribute name="readonly">0</attribute>
+                  </xpath>
+                     <xpath expr="//field[@name='job_id']" position="attributes">
+                  	<attribute name="readonly">0</attribute>
+                  </xpath>
+                     <xpath expr="//field[@name='parent_id']" position="attributes">
+                  	<attribute name="readonly">0</attribute>
+                  </xpath>
+                  
+                  <xpath expr="//field[@name='name']" position="attributes">
+                  	<attribute name="readonly">0</attribute>
+                  </xpath>
+                  <xpath expr="//field[@name='coach_id']" position="attributes">
+                  	<attribute name="readonly">0</attribute>
+                  </xpath>
+                
+                  <xpath expr="//field[@name='calendar_id']" position="attributes">
+                  	<attribute name="readonly">0</attribute>
+                  </xpath>
+                   <xpath expr="//field[@name='identification_id']" position="attributes">
+                 		<attribute name="readonly">0</attribute>
+                  </xpath>
+                   <xpath expr="//field[@name='birthday']" position="attributes">
+                 		<attribute name="readonly">0</attribute>
+                  </xpath>
+                   <xpath expr="//field[@name='gender']" position="attributes">
+                 		<attribute name="readonly">0</attribute>
+                  </xpath>
+                   <xpath expr="//field[@name='marital']" position="attributes">
+                 		<attribute name="readonly">0</attribute>
+                  </xpath>
+              </field>
+         </record>
+         
+            <record id="hr_employee_view3_form_firstlvluser" model="ir.ui.view">
+              <field name="name">Hr Employee View Form First Level USer</field>
+              <field name="model">hr.employee</field>
+              <field name="inherit_id" ref="hris.hr_employee_view_form"/>
+              <field name="groups_id" eval="[(4, [ref('group_approver'),ref('group_firstlevel')])]"/>
+              <field name="arch" type="xml">
+                  <xpath expr="//notebook[2]/page[2]" position="attributes">
+                      <attribute name="invisible">1</attribute>
+                  </xpath>
+                  
+                 <xpath expr="//page[@name='personal_information']" position="attributes">
+                      <attribute name="invisible">False</attribute>
+                  </xpath>
+                    <xpath expr="(//page[@name='personal_information']/group)[last()]/child::group[position()=last()-2]" position="attributes">
+                      <attribute name="invisible">1</attribute>
+                  </xpath>
+                  
+                      <xpath expr="//field[@name='passport_id']" position="attributes">
+                      <attribute name="readonly">0</attribute>
+                  </xpath>
+                  <xpath expr="//field[@name='bank_account_id']" position="attributes">
+                      <attribute name="readonly">True</attribute>
+                    
+                  </xpath>
+              </field>
+          </record>
+          <record id="hr_employee_view4_form_firstlvluser" model="ir.ui.view">
+              <field name="name">Hr Employee View Form First Level USer</field>
+              <field name="model">hr.employee</field>
+              <field name="inherit_id" ref="hris.hr_employee_information"/>
+              <field name="groups_id" eval="[(4, [ref('group_approver'),ref('group_firstlevel')])]"/>
+              <field name="arch" type="xml">
+                  <xpath expr="//field[@name='work_location_id']" position="attributes">
+                  	<attribute name="invisible">0</attribute>
+                  </xpath>
+                  <xpath expr="//field[@name='firstname']" position="attributes">
+                      <attribute name="readonly">0</attribute>
+                  </xpath>
+                    <xpath expr="//field[@name='middlename']" position="attributes">
+                      <attribute name="readonly">0</attribute>
+                  </xpath>
+                    <xpath expr="//field[@name='lastname']" position="attributes">
+                      <attribute name="readonly">0</attribute>
+                  </xpath>
+                   <xpath expr="//field[@name='sss_no']" position="attributes">
+                      <attribute name="readonly">0</attribute>
+                  </xpath>
+                   <xpath expr="//field[@name='phic_no']" position="attributes">
+                      <attribute name="readonly">0</attribute>
+                  </xpath>
+                   <xpath expr="//field[@name='hdmf_no']" position="attributes">
+                      <attribute name="readonly">0</attribute>
+                  </xpath>
+                  <xpath expr="//field[@name='country_id']" position="attributes">
+                      <attribute name="readonly">0</attribute>
+                  </xpath>
+              </field>
+          </record>
+          <!-- address -->
+             <record id="hr_employee_address_view_form_firstlvluser" model="ir.ui.view">
+              <field name="name">Hr Employee View Form First Level USer</field>
+              <field name="model">hr.employee</field>
+              <field name="inherit_id" ref="hris.hr_employee_view_form"/>
+              <field name="groups_id" eval="[(4, [ref('group_approver'),ref('group_firstlevel')])]"/>
+              <field name="arch" type="xml">
+                <xpath expr="//field[@name='work_phone']" position="after">
+                      <field name="address"/>
+                  </xpath>
+            
+              </field>
+          </record>
+         <record id="hr_employee_venue_view_form_firstlvluser" model="ir.ui.view">
+              <field name="name">Hr Employee View Form First Level USer</field>
+              <field name="model">hr.employee</field>
+              <field name="inherit_id" ref="hris.hr_employee_information"/>
+              <field name="groups_id" eval="[(4, [ref('group_approver'),ref('group_firstlevel')])]"/>
+              <field name="arch" type="xml">
+                <xpath expr="//field[@name='job_id']" position="before">
+                    <field name="barcode" string="Employee ID" readonly='0' groups="hr_attendance.group_hr_attendance_user,hris.group_hr_first_level_user"/>
+                  </xpath>
+          
+              </field>
+          </record>
+           <record id="hr_employee_barcode1_view_form_firstlvluser" model="ir.ui.view">
+              <field name="name">Hr Employee View Form First Level USer</field>
+              <field name="model">hr.employee</field>
+              <field name="inherit_id" ref="hr_attendance.view_employee_form_inherit_hr_attendance"/>
+              <field name="groups_id" eval="[(4, [ref('group_approver'),ref('group_firstlevel')])]"/>
+              <field name="arch" type="xml">
+                <xpath expr="//field[@name='barcode']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                  </xpath>
+              </field>
+          </record>
+       
+       <record id="hr_hr_employee_view_form2_inherit" model="ir.ui.view">
+              <field name="name">hr.employee.inherit</field>
+              <field name="model">hr.employee</field>
+              <field name="inherit_id" ref="hr_contract.hr_hr_employee_view_form2"/>
+              <field name="arch" type="xml">
+                  <xpath expr="//field[@name='bank_account_id']" position="attributes">
+                      <attribute name="invisible">1</attribute>
+                  </xpath>
+                  <xpath expr="//field[@name='bank_account_id']" position="after">
+                      <field name="bank_account_no"/>
+                  </xpath>
+              </field>
+       </record>
+
+       <record id="hr_employee_personal_view_form_firstlvluser" model="ir.ui.view">
+              <field name="name">Hr Employee View Form First Level USer</field>
+              <field name="model">hr.employee</field>
+              <field name="inherit_id" ref="hr_contract.hr_hr_employee_view_form2"/>
+              <field name="groups_id" eval="[(4, [ref('group_approver'),ref('group_firstlevel')])]"/>
+              <field name="arch" type="xml">
+                <xpath expr="//field[@name='bank_account_id']" position="attributes">
+                    <attribute name="readonly">0</attribute>
+                  </xpath>
+                  <xpath expr="//field[@name='place_of_birth']" position="attributes">
+                    <attribute name="readonly">0</attribute>
+                  </xpath>
+                    <xpath expr="//field[@name='children']" position="attributes">
+                    <attribute name="readonly">0</attribute>
+                  </xpath>
+              </field>
+          </record>
+    </data>
+</odoo>

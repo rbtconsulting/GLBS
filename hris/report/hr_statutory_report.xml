@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+	<data>
+	    <record id="paperformat_hr_payroll_registry" model="report.paperformat">
+        <field name="name">Payroll Registry</field>
+        <field name="default" eval="True"/>
+        <field name="format">custom</field>
+        <field name="page_height">297</field>
+        <field name="page_width">210</field>
+        <field name="orientation">Landscape</field>
+        <field name="margin_top">30</field>
+        <field name="margin_bottom">23</field>
+        <field name="margin_left">5</field>
+        <field name="margin_right">5</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">20</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <report 
+        id="report_hrpayrollregistry"
+        string="Payroll Registry"
+        model="hr.payroll.registry"
+        report_type="qweb-pdf"
+        file="hris.report_hrpayrollregistry_template"
+        name="hris.report_hrpayrollregistry_template"
+        paperformat="paperformat_hr_payroll_registry" />
+    
+	    <record id="paperformat_statutoty_contribution_report" model="report.paperformat">
+	        <field name="name">Contribution Report</field>
+	        <field name="default" eval="True"/>
+	        <field name="format">custom</field>
+	        <field name="page_height">297</field>
+	        <field name="page_width">210</field>
+	        <field name="orientation">Landscape</field>
+	        <field name="margin_top">2</field>
+	        <field name="margin_bottom">23</field>
+	        <field name="margin_left">5</field>
+	        <field name="margin_right">5</field>
+	        <field name="header_line" eval="False"/>
+	        <field name="header_spacing">20</field>
+	        <field name="dpi">90</field>
+	    </record>
+		<!-- file is the name of template and id is the name of model.id -->
+	    <report 
+	        id="report_phic"
+	        string="Philhealth Contribution"
+	        model="report.hris.report_phic"
+	        report_type="qweb-pdf"
+	        file="hris.report_phic" 
+	        name="hris.report_phic"
+	        paperformat="paperformat_statutoty_contribution_report" />
+
+
+		<record id="paperformat_hdmf" model="report.paperformat">
+            <field name="name">Legal Portrait</field>
+            <field name="default" eval="True" />
+            <field name="format">Legal</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">5</field>
+            <field name="margin_bottom">5</field>
+            <field name="margin_left">1</field>
+            <field name="margin_right">1</field>
+            <field name="header_line" eval="False" />
+            <field name="header_spacing">20</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <report
+            id="hdmf_contribution_reports"
+            string="HDMF Contribution"
+            model="hr.hdmf.contribution"
+            report_type="qweb-pdf"
+            name="hris.report_hdmf_contribution_template"
+            file="hris.report_hdmf_contribution_template"
+            paperformat="paperformat_hdmf" />
+        
+
+        <report
+            id="sss_contribution_reports"
+            string="SSS Contribution"
+            model="hr.sss.contribution"
+            report_type="qweb-pdf"
+            name="hris.report_sss_contribution_template"
+            file="hris.report_sss_contribution_template"
+            paperformat="paperformat_statutoty_contribution_report" />
+        
+
+        <report
+            id="tax_contribution_reports"
+            string="Withholding Tax"
+            model="hr.tax.contribution"
+            report_type="qweb-pdf"
+            name="hris.report_tax_contribution_template"
+            file="hris.report_tax_contribution_template"
+            paperformat="paperformat_statutoty_contribution_report" />
+
+
+
+		<report
+            id="emp13th_month_reports"
+            string="13th Month"
+            model="hr.13th.month"
+            report_type="qweb-pdf"
+            name="hris.report_13thmonth_template"
+            file="hris.report_13thmonth_template"
+            paperformat="paperformat_statutoty_contribution_report" />
+
+
+
+        <record id="paperformat_hr_alphalist_report" model="report.paperformat">
+	        <field name="name">Legal Landscape</field>
+	        <field name="default" eval="True"/>
+	        <field name="format">custom</field>
+	        <field name="page_height">500</field>
+	        <field name="page_width">300</field>
+	        <field name="orientation">Landscape</field>
+	        <field name="margin_top">15</field>
+	        <field name="margin_bottom">15</field>
+	        <field name="margin_left">2</field>
+	        <field name="margin_right">2</field>
+	        <field name="header_line" eval="False"/>
+	        <field name="header_spacing">20</field>
+	        <field name="dpi">90</field>
+        </record>
+
+        <report
+            id="alphalist_reports"
+            string="Alpha list"
+            model="hr.alphalist.report"
+            report_type="qweb-pdf"
+            name="hris.report_alphalist_template"
+            file="hris.report_alphalist_template"
+            paperformat="paperformat_hr_alphalist_report" />
+
+
+          <record id="paperformat_payslips_report" model="report.paperformat">
+            <field name="name">Legal Portrait</field>
+            <field name="default" eval="True" />
+            <field name="format">Legal</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">20</field>
+            <field name="margin_bottom">20</field>
+            <field name="margin_left">1</field>
+            <field name="margin_right">1</field>
+            <field name="header_line" eval="False" />
+            <field name="header_spacing">35</field>
+            <field name="dpi">90</field>
+        </record>
+
+      <report
+            id="action_report_payslip"
+            model="hr.payslip"
+            string="Payslip"
+            report_type="qweb-pdf"
+            name="hris.report_payslipdetails"
+            file="hris.report_payslipdetails"
+            paperformat="paperformat_payslips_report"
+			menu = "False"
+
+        />
+      
+     <report
+            id="action_report_payslip_two"
+            model="hr.payslip"
+            string="Payslip"
+            report_type="qweb-pdf"
+            name="hris.report_payslipdetails_template_two"
+            file="hris.report_payslipdetails_template_two"
+            paperformat="paperformat_payslips_report"
+     />
+     
+	 <report
+            id="action_report_payslip_three"
+            model="hr.payslip"
+            string="Payslip"
+            report_type="qweb-pdf"
+            name="hris.report_payslipdetails_template_three"
+            file="hris.report_payslipdetails_template_three"
+            paperformat="paperformat_payslips_report"
+            menu="False"
+     />
+	 
+	 <record id="paperformat_certificate_of_employee" model="report.paperformat">
+       <field name="name">CNY LS Paper Format</field>
+       <field name="default" eval="True" />
+       <field name="format">A4</field>
+       <field name="page_height">0</field>
+       <field name="page_width">0</field>
+       <field name="orientation">Portrait</field>
+       <field name="margin_top">10</field>
+       <field name="margin_bottom">10</field>
+       <field name="margin_left">10</field>
+       <field name="margin_right">10</field>
+       <field name="header_line" eval="False" />
+       <field name="header_spacing">0</field>
+       <field name="dpi">90</field>
+     </record>
+
+     <report
+         id="action_certicate_of_employment_report1"
+         model="employee.coe"
+         string="Certificate Of Employment-1"
+         report_type="qweb-pdf"
+         name="hris.report_employee_coe_template1"
+         file="hris.report_employee_coe_template1" />
+
+    <report
+         id="action_certicate_of_employment_report2"
+         model="employee.coe"
+         string="Certificate Of Employment-2"
+         report_type="qweb-pdf"
+         name="hris.report_employee_coe_template2"
+         file="hris.report_employee_coe_template2" />
+    
+    <record id="action_certicate_of_employment_report1" model="ir.actions.report.xml">
+        <field name="paperformat_id" ref="paperformat_certificate_of_employee" />
+    </record>
+
+    <record id="action_certicate_of_employment_report2" model="ir.actions.report.xml">
+        <field name="paperformat_id" ref="paperformat_certificate_of_employee" />
+    </record>
+     </data>
+</odoo>

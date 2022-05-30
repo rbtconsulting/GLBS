@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+   <data>
+    	<record model="ir.ui.view" id="view_clearance_tree">
+		     <field name="name">hr.employee.clearance</field>
+		     <field name="model">hr.employee.clearance</field>
+		     <field name="type">tree</field>
+		     <field name="arch" type="xml">
+		         <tree>
+		         	 <field name="employee_id"/>
+		         	 <field name="cleared"/>
+		             <field name="date_cleared"/>
+		         </tree>
+	     	 </field>
+     	</record>
+	     <record model="ir.ui.view" id="view_clearance_form">
+	        <field name="name">hr.employee.clearance</field>
+	        <field name="model">hr.employee.clearance</field>
+	        <field name="arch" type="xml">
+	            <form string="Clearance">
+	                  <sheet>
+	                  	<div class="oe_button_box" name="button_box">
+			                <button name="action_start_survey"
+			                    class="oe_stat_button"
+			                    icon="fa-user"
+			                    type="object"
+			                    help="Answer related job question"
+			                    context="{'survey_id': survey_id}"
+			                    attrs="{'invisible':[('survey_id','=',False)]}">
+			                    <div class="o_form_field o_stat_info">
+			                        <span class="o_stat_text">Start</span>
+			                        <span class="o_stat_text">Interview</span>
+			                    </div>
+			                </button>
+			                <button name="action_print_survey"
+			                    class="oe_stat_button"
+			                    icon="fa-print"
+			                    type="object"
+			                    help="Print interview report"
+			                    attrs="{'invisible':[('survey_id','=',False)]}">
+			                    <div class="o_form_field o_stat_info">
+			                        <span class="o_stat_text">Print</span>
+			                        <span class="o_stat_text">Interview</span>
+			                    </div>
+			                </button>
+			            </div>
+	                    <group name="main" col="4">
+	                        <separator string="Clearance" colspan="4"/>
+	                    </group>
+	                    <group>
+	                        <group>
+	                        	<field name="employee_id" options="{'no_open':True,'no_create':True,'no_create_edit':True}" required="1"/>
+	                            <field name="date_cleared" attrs="{'invisible':[('cleared','=',False)]}"/>
+	                            <field name="cleared"/>
+	                        </group>
+	                        <group>
+	                        <label for="survey_id"/>
+	                        	<div class="o_row">
+	                        		<field name="survey_id" options="{'no_open':True,'no_create':True,'no_create_edit':True}"/>
+	                        		<button name="action_print_survey" string="Exit Interview Form"  type="object" class="oe_link"/>
+	                        	</div>
+	                        </group>
+	                    </group>
+	                    <notebook>
+	                    <page string="Approvers">
+	                    	<field name="clearance_approver_line">
+	                    		<tree editable="bottom" delete="false" create="false">
+	                    			<field name="department_id" readonly="1" options="{'no_open':True,'no_create':True,'no_create_edit':True}"/>
+	                    			<field name="approver_id" readonly="1" options="{'no_open':True,'no_create':True,'no_create_edit':True}"/>
+	                    			<field name="cleared"/>
+	                    			<field name="date_cleared" attrs="{'required':[('cleared','=',True)],'invisible':[('cleared','=',False)]}" />
+	                    			<field name = "remarks"/>
+	                    		</tree>
+	                    	</field>
+	                    </page>
+	                    
+	                    </notebook>
+	                </sheet>
+	            </form>
+	      </field>
+	    </record>
+    	<!-- Menu -->
+    	<record model="ir.actions.act_window" id="action_clearance_action">
+      		<field name="name">Clearance</field>
+      		<field name="res_model">hr.employee.clearance</field>
+      		<field name="view_type">form</field>
+      		<field name="view_mode">tree,form</field>
+    		<field name="domain">[('employee_id','=',active_id)]</field>
+    	</record>
+
+		<record id="hr_employee_clearance_action" model="ir.ui.view">
+    	    <field name="name">HR.Employee.Clearance</field>
+    	    <field name="model">hr.employee</field>
+    	    <field name="inherit_id" ref="hr.view_employee_form" />
+    	    <field name="arch" type="xml">
+    	        
+    	        <xpath expr="//div[@name='button_box']" position="inside">
+    	            <button name="%(hris.action_clearance_action)d" string="Clearance Action"
+    	                context="{'default_employee_id':id}" 
+    	                icon="fa-file-o" type="action" groups="hr.group_hr_manager,hris.group_hr_user" class="oe_stat_button"
+    	                attrs="{'invisible': [('active', '=', True)]}"/>                
+    	        </xpath>
+    	   	</field>
+    	  </record>
+	</data>
+</odoo>

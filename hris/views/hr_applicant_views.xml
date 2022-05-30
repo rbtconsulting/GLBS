@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--contract info-->
+		<record id="hr_contract_information" model="ir.ui.view">
+		    <field name="name">Contract</field>
+		    <field name="model">hr.contract</field>
+		    <field name="inherit_id" ref="hr_contract.hr_contract_view_form" />
+		    <field name="arch" type="xml">
+			<xpath expr="//field[@name='employee_id']" position="attributes">
+				<attribute name="required">1</attribute>
+			</xpath>
+		    </field>
+		</record>
+		<!--start of applicants-->	
+        <record id="hr_applicant_information" model="ir.ui.view">
+    	    <field name="name">Applicant</field>
+    	    <field name="model">hr.applicant</field>
+    	    <field name="inherit_id" ref="hr_recruitment.crm_case_form_view_job" />
+    	    <field name="arch" type="xml">
+    	        
+		    	<xpath expr="//field[@name='partner_name']" position="attributes">
+		   	 	 	<attribute name="invisible">1</attribute>
+		   	 	</xpath>
+
+				<xpath expr="//label[@for='partner_name']" position="attributes">
+				 	<attribute name="invisible">1</attribute>
+				</xpath>
+
+		        <xpath expr="//button[@name='archive_applicant']" position="attributes">
+		          	<attribute name="string" >For pool</attribute>
+		        </xpath>
+
+                <xpath expr="//field[@name='categ_ids']" position="attributes">
+	         	 	<attribute name="invisible">1</attribute>
+                </xpath>
+
+		        <xpath expr="//label[@for='categ_ids']" position="attributes">
+		         	<attribute name="invisible">1</attribute>
+		        </xpath>
+
+	            <xpath expr="//field[@name='salary_expected_extra']" position="attributes">
+		        	<attribute name="placeholder">Other benefits</attribute>
+		        </xpath>
+			
+		        <xpath expr="//field[@name='salary_proposed_extra']" position="attributes">
+			        <attribute name="placeholder">Other benefits</attribute>
+		        </xpath>
+
+		        <xpath expr="//field[@name='partner_id']" position="attributes">
+		        	<attribute name="invisible">1</attribute>
+		        </xpath>
+
+				<xpath expr="//field[@name='availability']" position="attributes">
+					<attribute name="string">Availability to start</attribute>
+				</xpath>
+
+    	       	<xpath expr="//field[@name='partner_id']" position="before">
+       	            <field name="firstname" />
+       	            <field name="middlename" />
+       	            <field name="lastname" />
+    	       	</xpath>
+    	       	<xpath expr="//field[@name='type_id']" position="after">
+    	       	   <field name="employee_number"/>
+    	       	</xpath>
+    	       	<!--start Job offer -->  
+    	       	<xpath expr="//button[@name='action_get_attachment_tree_view']" position="after">
+              		<button type="object"
+                            name="action_view_job_offer"
+                            class="oe_stat_button"
+                            string="Job Offer"
+                            icon="fa-briefcase"
+                			>
+                        	</button>
+              	</xpath>
+              	<!-- end Job offer -->
+    	    </field>
+    	</record>
+		<!--End of Applicants--> 
+    	<record id="hr_recruitment.action_hr_job" model="ir.actions.act_window">
+            <field name="view_mode">tree,form,kanban</field>
+        </record>
+    </data>
+</odoo>

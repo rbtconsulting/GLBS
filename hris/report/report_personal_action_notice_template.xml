@@ -1,0 +1,262 @@
+<odoo>
+	<data>
+		<template id="hris.report_personal_action_notice_template">
+	    	<t t-call="report.html_container">
+	          	<div class="page">
+		          	<style>
+		                 
+						table {
+		    				font-family: arial, sans-serif;
+		    				border-collapse: collapse;
+		    				width: 100% !important;
+		    				table-layout:fixed;
+							}
+		
+						th,td {
+		   					border: 1px solid #dddddd;
+		    				text-align: left;
+		    				padding: 8px;
+						}
+			
+		            </style>
+		                             
+	                <t t-set="data_source" t-value="job_offer" />
+	                <t t-set="gen_info" t-value="gen_info" />
+	                <t t-set="positions" t-value="positions" />
+	                <t t-set="other_det" t-value="other_det" />
+	                <!--<t t-set="action_details" t-value="action_details" />-->
+	                <t t-set="item_des" t-value="item_des" />
+	                <t t-set="positions" t-value="positions" />
+	                <t t-foreach="docs" t-as="o"> 
+		            	<table style="height:60px;text-align:center">
+		            		<tr>
+		            			<td rowspan="3" style="text-align:center;width: 50%;"><h3>PERSONNEL ACTION NOTICE</h3></td>
+		                		<td height="5px"><br/></td>
+		            		</tr>
+		            		<tr>
+		                		<td height="5px">Effective Date:<t t-esc="other_det['EFF_DATE']"/></td> 
+		            		</tr>
+		            		<tr>
+		                		<td height="5px">Revision No.<t t-esc="other_det['REV_NO']"/></td>
+		            		</tr>
+		        		</table>
+			
+						<table>
+						    <tr>
+						        <td colspan="4">I. GENERAL INFORMATION</td>
+						    </tr>
+							<tr>
+								<td>Employee No.</td>
+								<td><t t-esc="gen_info['EMP_NO']" /></td>
+								<td>Date Hired</td>
+								<td>
+									<t t-esc="gen_info['DATE_HIRED']" />
+							 	
+								</td>
+							</tr>
+							<tr>
+								<tr>
+								<td rowspan="2">Name</td>
+								<td rowspan="2">
+									<t t-esc="gen_info['FN']" />
+							 		<t t-esc="gen_info['LN']" />
+							 		<t t-esc="gen_info['MN']" />
+								</td>
+								<td>Date Regularized</td>
+								<td><t t-esc="gen_info['DATE_REG']" /></td>
+								</tr>
+								<tr>
+									<td>SSS No.</td>
+									<td><t t-esc="gen_info['SSS']" /></td>
+								</tr>
+							</tr>
+							<tr>
+								<td>
+									Address
+								</td>
+								<td>
+									<t t-esc="gen_info['ST_1']" />
+							 		<t t-esc="gen_info['ST_2']" />
+							 		<t t-esc="gen_info['CITY']" />
+							 		<t t-esc="gen_info['STATE']" />
+								</td>
+								<td>
+									TIN No.
+								</td>
+								<td>
+									<t t-esc="gen_info['TIN']" />
+								</td>
+							</tr>
+							<tr>
+								
+							    <td>
+									SEX
+								</td>
+								<td>
+									<t t-esc="gen_info['GENDER']" />
+								</td>
+							    
+								<td>
+									PHIC No.
+								</td>
+								<td>
+									<t t-esc="gen_info['PHIC']" />
+								</td>
+							</tr>
+						</table>
+						<table class="table table-condensed,table-hover">
+		                    <tr>
+		                        <td colspan="4">II. TYPE OF MOVEMENT</td>
+		                    </tr>
+		                    <tr bgcolor="#dddddd">
+		                        <td class="text-center" colspan="2">From</td>
+		                        <td class="text-center" colspan="2">To</td>
+		                    </tr>
+		                    <tr>
+		                        <td>Department</td>
+		                        <td><span t-field="o.dep.name" /></td>
+		                        <td>Department</td>
+		                        <td><span t-field="o.to_dep.name" /></td>
+		                    </tr>
+		                    <tr>
+		                        <td>Position</td>
+		                        <td><span t-field="o.pos.name" /></td>
+		                        <td>Position</td>
+		                        <td><span t-field="o.to_pos.name" /></td>
+		                    </tr>
+		                    <tr>
+		                        <td>Employment Status</td>
+		                        <td><span t-field="o.emp_typ.name" /></td>
+		                        <td>Employment Status</td>
+		                        <td><span t-field="o.to_emp_typ.name" /></td>
+		                    </tr>
+		                    <tr>
+		                        <td>Salary</td>
+		                        <td><t t-if="o.wage > 0"><span t-field="o.wage" /></t></td>
+		                        <td>Salary</td>
+		                        <td><t t-if="o.to_wage > 0"><span t-field="o.to_wage" /></t></td>
+		                    </tr>
+		                   
+		                    <!--<tr bgcolor="#dddddd">
+		                        <th class="text-center" width="20%" overflow="hidden">a.Hiring</th>
+		                        <th class="text-center" width="20%">b.Salary Changes</th>
+		                        <th class="text-center" width="20%">c.Position Changes</th>   
+		                        <th class="text-center" width="20%">d.Leave Of Absences</th>
+		                        <th class="text-center" width="20%">e. Separation</th>
+							</tr>
+							<tr>
+								<td height="250"><t t-esc="action_details['HIRING']" /></td>
+								<td height="250"><t t-esc="action_details['SAL_CHANGES']" /></td>
+								<td height="250"><t t-esc="action_details['POS_CHANGES']" /></td>
+								<td height="250"><t t-esc="action_details['LEAVE_ABS']" /></td>
+								<td height="250"><t t-esc="action_details['SEPARATION']" /></td>
+							</tr>-->
+							
+						</table>
+						<!--
+						<table class="table table-condensed,table-hover">
+						    <tr>
+						        <td colspan="5">III. ITEM DESCRIPTION</td>
+						    </tr>
+		                    <tr bgcolor="#dddddd">
+		                        <th class="text-center" width="20%"></th>
+		                        <th class="text-center" width="20%">From</th>
+		                        <th class="text-center" width="20%">To</th>   
+		                        <th class="text-center" width="20%">Effectivity Date</th>
+		                        <th class="text-center" width="20%">REMARKS</th>
+							</tr>
+							<tr>
+								<td>Group</td>
+								<td></td>
+								<td></td>
+								<td style="text-align:center;" rowspan="10"><t t-esc="other_det['EFF_DATE']"/></td>
+								<td style="text-align:center;" rowspan="10"><t t-esc="item_des['REMARKS']"/></td>
+							</tr>
+								<tr>
+								<td>Busines<br/>
+									Unit/Department</td>
+								<td><t t-esc="item_des['DEPARTMENT']" /></td>
+								<td></td>
+							</tr>
+								<tr>
+								<td>Position</td>
+								<td><t t-esc="item_des['POSITION']" /></td>
+								<td></td>
+							</tr>
+								<tr>
+								<td>Level</td>
+								<td><t t-esc="item_des['LEVEL']" /></td>
+								<td></td>
+							</tr>
+								<tr>
+								<td>Reporting To<br/>
+									(Name and Position)</td>
+								<td><t t-esc="item_des['REP_TO']" /></td>
+								<td></td>
+							</tr>
+								<tr>
+								<td>Employement Type</td>
+								<td><t t-esc="item_des['EMP_TYP']" /></td>
+								<td></td>
+							</tr>
+								<tr>
+								<td>Basic Salary</td>
+								<td><t t-esc="'{:,.2f}'.format(item_des['BASIC'])" /></td>
+								<td></td>
+							</tr>
+								<tr>
+								<td>De Minimis</td>
+								<td><t t-esc="'{:,.2f}'.format(item_des['DEMINIMIS'])" /></td>
+								<td></td>
+							</tr>
+								<tr>
+								<td>Other Allowances</td>
+								<td><t t-esc="'{:,.2f}'.format(item_des['ALLOWANCE'])" /></td>
+								<td></td>
+							</tr>
+								<tr>
+								<td><b>Total Gross Pay</b></td>
+								<td><t t-esc="'{:,.2f}'.format(item_des['GROSS'])" /></td>
+								<td></td>
+							</tr>
+						</table>-->
+						<table>
+						    <tr>
+						        <td>Remarks</td>
+						        <td colspan="2"><span t-field="o.remarks" /></td>
+						    </tr>
+						</table>
+						<br />
+						<table>
+							<tr bgcolor="#dddddd">
+		                        <th class="text-center" width="20%">Prepared By:</th>
+		                        <th class="text-center" width="20%">Reviewed By:</th>
+		                        <th class="text-center" width="20%">Approved By:</th>   
+							</tr>
+							<tr>
+								<td align="center" margin-top="50">
+								<p style="text-decoration: underline;text-align:center;margin-top:40px;" t-esc="other_det['PREP_BY']" />
+									<t t-if="positions.has_key('PREPARED')">
+				              			<p style="text-align:center;" t-esc="positions['PREPARED']"/>
+				              		</t>
+				              	</td>
+				              	<td align="center">
+				              	<p style=" text-decoration: underline;text-align:center;margin-top:40px;" t-esc="other_det['REV_BY']" />
+									<t t-if="positions.has_key('REVISED')">
+				              			<p style="text-align:center;" t-esc="positions['REVISED']"/>
+				              		</t>
+				              	</td>
+				              	<td align="center">
+				              	<p style="text-decoration: underline;margin-top:40px;text-align:center;" t-esc="other_det['APP_BY']" />
+									<t t-if="positions.has_key('APPROVED')">
+				              			<p style="text-align:center;" t-esc="positions['APPROVED']"/>
+				              		</t>
+				              	</td>
+							</tr>
+						</table>
+		             </t>            
+	            	</div>
+	            </t>
+			</template>
+	</data>
+</odoo>

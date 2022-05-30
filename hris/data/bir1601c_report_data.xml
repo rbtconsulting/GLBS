@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="bir1601c_report_item_14" model="bir.1601c.report.config">
+            <field name="code">14</field>
+            <field name="name">Total Amount of Compensation</field>
+        </record>
+
+        <record id="bir1601c_report_item_14a" model="bir.1601c.report.config">
+            <field name="code">14</field>
+            <field name="name">Total Basic Amount</field>
+        </record>
+
+        <record id="bir1601c_report_item_15" model="bir.1601c.report.config">
+            <field name="code">15</field>
+            <field name="name">Statutory Minimum Wage for MWE</field>
+        </record>
+
+        <record id="bir1601c_report_item_16" model="bir.1601c.report.config">
+            <field name="code">16</field>
+            <field name="name">Holiday Pay, Overtime Pay, Night Shift Differential Pay, Hazard Pay (MWE only)</field>
+        </record>
+
+        <record id="bir1601c_report_item_17" model="bir.1601c.report.config">
+            <field name="code">17</field>
+            <field name="name">13th Month Pay and Other Benefits</field>
+        </record>
+
+        <record id="bir1601c_report_item_18" model="bir.1601c.report.config">
+            <field name="code">18</field>
+            <field name="name">De Minimis Benefits</field>
+        </record>
+
+        <record id="bir1601c_report_item_19" model="bir.1601c.report.config">
+            <field name="code">19</field>
+            <field name="name">SSS, GSIS, PHIC, HDMF Mandatory Contributions &amp; Union Dues (Employee's share only)</field>
+        </record>
+
+        <record id="bir1601c_report_item_20" model="bir.1601c.report.config">
+            <field name="code">20</field>
+            <field name="name">Other Non-Taxable Compensation</field>
+        </record>
+
+        <record id="bir1601c_report_item_25" model="bir.1601c.report.config">
+            <field name="code">25</field>
+            <field name="name">Total Taxes Withheld</field>
+        </record>
+
+        <record id="bir1601c_report_item_32" model="bir.1601c.report.config">
+            <field name="code">32</field>
+            <field name="name">Surcharge</field>
+        </record>
+
+        <record id="bir1601c_report_item_33" model="bir.1601c.report.config">
+            <field name="code">33</field>
+            <field name="name">Interest</field>
+        </record>
+
+        <record id="bir1601c_report_item_34" model="bir.1601c.report.config">
+            <field name="code">34</field>
+            <field name="name">Compromise</field>
+        </record>
+    </data>
+</odoo>

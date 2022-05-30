@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+
+        <record id="action_res_users" model="ir.actions.act_window">
+            <field name="name">Users</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.users</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="base.view_users_tree"/>
+            <field name="search_view_id" ref="base.view_users_search"/>
+            <field name="context">{'search_default_no_share': 1}</field>
+            <field name="help">Create and manage users that will connect to the system. Users can be deactivated should there be a period of time during which they will/should not connect to the system. You can assign them groups in order to give them specific access to the applications they need to use in the system.</field>
+        </record>
+        <record id="action_res_users_view1" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="base.view_users_tree"/>
+            <field name="act_window_id" ref="action_res_users"/>
+        </record>
+        <record id="action_res_users_view2" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="base.view_users_form"/>
+            <field name="act_window_id" ref="action_res_users"/>
+        </record>
+
+
+        <menuitem id="main_create_user"
+                  name="Create User"
+                  web_icon="hris,static/src/img/icon.png"/>
+
+        <menuitem id="user_account"
+                  name="User Account"
+                  parent="main_create_user"
+                  action="action_res_users"/>
+
+
+
+        <!-- menu access for groups-->
+        <record id="no_access_menu_view_groups_form" model="ir.ui.view" >
+            <field name="name">no.access.menu.view.groups.form</field>
+            <field name="model">res.groups</field>
+            <field name="inherit_id" ref="base.view_groups_form"/>
+            <field name="arch" type="xml">
+                <field name="menu_access" position="before" >
+                    <separator string="Allow Access"/>
+                </field>
+                <field name="menu_access" position="after" >
+                    <separator string="Deny Access"/>
+                    <field name="menu_no_access" />
+                </field>
+            </field>
+        </record>
+
+        <!-- hidden admin-->
+        <record id="admin_user_hidden" model="ir.rule">
+            <field name="name">only admin can see admin user</field>
+            <field name="model_id" ref="base.model_res_users"/>
+            <field name="global" eval="1"/>
+            <field name="domain_force">[('id' ,'!=',1)]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+            <!--<field name="protected" eval="True"/>-->
+        </record>
+        <record id="admin_user_hidden" model="ir.rule">
+            <field name="name">only admin can see admin partner</field>
+            <field name="model_id" ref="base.model_res_partner"/>
+            <field name="global" eval="1"/>
+            <field name="domain_force">[('user_ids','not in',[1])]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+            <!--<field name="protected" eval="True"/>-->
+        </record>
+
+
+
+
+    </data>
+</odoo>

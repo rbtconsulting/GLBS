@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_hrsalaryemployee2316_template">
+        <t t-call="report.html_container">
+            <t t-foreach="value_dict" t-as="values">
+                <t t-call="report.external_layout">
+                    <div class="page">
+                      <style>
+                          div.main-div{
+                                      background-image: url('/hris/static/src/img/2316.png');
+                                      background-size: cover;
+                                      height: 1344px;
+                                      width: 816px;
+                                      background-position: center center;
+                                      background-repeat: no-repeat;
+                                      margin: auto;
+                                  }
+                      </style>
+                        <!-- background-color:rgb(204,204,204); -->
+                        <div class="main-div">
+                            <!-- 1. For the year -->
+                            <div style="position: absolute; top:187px; left:230px; letter-spacing:16px; font-size:15px;"><span t-esc="datetime.datetime.strptime(start_date, '%Y-%m-%d').strftime('%Y')"/></div>
+                            <!-- 2. For the period -->
+                            <div style="position: absolute; top:187px; left:592px; letter-spacing:16px; font-size:15px;"><span t-esc="datetime.datetime.strptime(start_date, '%Y-%m-%d').strftime('%m')"/></div>
+                            <div style="position: absolute; top:187px; left:645px; letter-spacing:16px; font-size:15px;"><span t-esc="datetime.datetime.strptime(start_date, '%Y-%m-%d').strftime('%d')"/></div>
+                            <t t-set="val" t-value="str(end_date or ' - ').split('-')"></t>
+                            <div style="position: absolute; top:187px; left:770px; letter-spacing:16px; font-size:15px;"><span t-esc="val[0]"></span></div>
+                            <div style="position: absolute; top:187px; left:820px; letter-spacing:16px; font-size:15px;"><span t-esc="val[1]"></span></div>
+                            <!-- 3. TIN no -->
+                            <t t-set="tin" t-value="str(values.get('employee_id').identification_id)"></t>
+                            <div style="position: absolute; top:225px; left:172px; letter-spacing:10px; font-size:15px;"><t t-if="tin and len(tin) &gt; 3" t-esc="tin[:3]"></t></div>
+                            <div style="position: absolute; top:225px; left:242px; letter-spacing:10px; font-size:15px;"><t t-if="tin and len(tin) &gt;= 6" t-esc="tin[3:6]"/><t t-elif="tin and len(tin) &gt; 3" t-esc="tin[3:]"></t></div>
+                            <div style="position: absolute; top:225px; left:310px; letter-spacing:10px; font-size:15px;"><t t-if="tin and len(tin) &gt;= 9" t-esc="tin[6:9]"/><t t-elif="tin and len(tin) &gt; 6" t-esc="tin[6:]"></t></div>
+                            <div style="position: absolute; top:225px; left:382px; letter-spacing:10px; font-size:15px;"><t t-if="tin and len(tin) &gt;= 14" t-esc="tin[9:14]"/><t t-elif="tin and len(tin) &gt; 9" t-esc="tin[9:]"></t></div>
+                            <!-- 4. Employee name -->
+                            <div style="position: absolute; top:262px; left:107px; letter-spacing:2px; font-size:13px; width: 290px;"><span t-field="values.get('employee_id').name"/></div>
+                            <!-- 5. Employee's RDO Code -->
+                            <div style="position: absolute; top:262px; left:420px; font-size:13px;"><span t-field="values.get('employee_id').id_company.rdo_code"></span></div>
+                            <!-- 6. Registered Address -->
+                            <div style="position: absolute; top:299px; left:107px; line-spacing: 0; font-size:9px; width: 290px;"><span t-esc="values.get('emp_addr')"></span></div>
+                            <!-- 6A. Zip code -->
+                            <div style="position: absolute; top:300px; left:430px; font-size:13px;"><span t-field="values.get('employee_id').zip"></span></div>
+                            <!-- 6B. Local Home Address -->
+                            <!-- 6C. Zip Code -->
+                            <!-- 6D. Foreign Address -->
+                            <!-- 7. Date of Birth -->
+                            <t t-if="values.get('employee_id').birthday">
+                                <t t-set="val" t-value="str(values.get('employee_id').birthday or ' - ').split('-')"></t>
+                                <div style="position: absolute; top:410px; left:118px; letter-spacing:10px; font-size:13px;"><span t-esc="val[1]"></span></div>
+                                <div style="position: absolute; top:410px; left:151px; letter-spacing:10px; font-size:13px;"><span t-esc="val[2]"></span></div>
+                                <div style="position: absolute; top:410px; left:190px; letter-spacing:10px; font-size:13px;"><span t-esc="val[0]"></span></div>
+                            </t>
+                            <!-- 8. Contact Number -->
+                            <div style="position: absolute; top:410px; left:285px; letter-spacing:11px; font-size:13px;"><span t-field="values.get('employee_id').mobile_phone"/></div>
+                            <!-- 9. Statutory Minimum Wage rate per day -->
+                            <!-- 10. Statutory Minimum Wage rate per month -->
+                            <!-- 11. Minimum Wage Earner (MWE) -->
+                            <div style="position: absolute; top:485px; left:118px; font-size:13px;"><span style="text-align: center;" t-if="values.get('employee_id').contract_id.earner_type == 'mmw'">X</span></div>
+                            <!-- 12. TIN number -->
+                            <t t-if="values.get('employee_id').id_company.vat">
+                                <t t-set="tin" t-value="str(values.get('employee_id').id_company.vat)"></t>
+                                <div style="position: absolute; top:520px; left:171px; letter-spacing:10px; font-size:15px;"><t t-if="tin and len(tin) &gt; 3" t-esc="tin[:3]"></t></div>
+                                <div style="position: absolute; top:520px; left:241px; letter-spacing:10px; font-size:15px;"><t t-if="tin and len(tin) &gt;= 6" t-esc="tin[3:6]"/><t t-elif="tin and len(tin) &gt; 3" t-esc="tin[3:]"></t></div>
+                                <div style="position: absolute; top:520px; left:309px; letter-spacing:10px; font-size:15px;"><t t-if="tin and len(tin) &gt;= 9" t-esc="tin[6:9]"/><t t-elif="tin and len(tin) &gt; 6" t-esc="tin[6:]"></t></div>
+                                <div style="position: absolute; top:520px; left:382px; letter-spacing:10px; font-size:15px;"><t t-if="tin and len(tin) &gt;= 14" t-esc="tin[9:14]"/><t t-elif="tin and len(tin) &gt; 9" t-esc="tin[9:]"></t></div>
+                            </t>
+                            <!-- 13. Employer's Name -->
+                            <div style="position: absolute; top:560px; left:107px; letter-spacing:2px; font-size:13px; width: 290px;">
+                                <span t-field="values.get('employee_id').id_company.name"></span>
+                            </div>
+                            <!-- 14. Registered Address -->
+                            <div style="position: absolute; top:592px; left:107px; line-spacing: 0; font-size:9px; width: 290px;">
+                                <span t-esc="','.join(filter(lambda r: r !='',[values.get('employee_id').id_company.street or '',
+                                            values.get('employee_id').id_company.city or '',values.get('employee_id').id_company.street2 or '',
+                                            values.get('employee_id').id_company.state_id.name or '', values.get('employee_id').id_company.country_id.name or '']))">
+                                </span>
+                            </div>
+                            <!-- 14A. Zip Code -->
+                            <div style="position: absolute; top:595px; left:424px; font-size:13px;"><span t-esc="values.get('employee_id').id_company.zip"></span></div>
+                            <!-- 15. Type of Employer -->
+                            <div style="position: absolute; top:620px; left:215px; font-size:13px;"><span style="text-align: center;">X</span></div>
+                            <!-- 16. TIN number -->
+                            <t t-set="tin" t-value="values.get('ytd').previous_employer_tin"/>
+                            <div style="position: absolute; top:654px; left:171px; letter-spacing:10px; font-size:15px;"><t t-if="tin and len(tin) &gt; 3" t-esc="tin[:3]"></t></div>
+                            <div style="position: absolute; top:654px; left:241px; letter-spacing:10px; font-size:15px;"><t t-if="tin and len(tin) &gt;= 6" t-esc="tin[3:6]"/><t t-elif="tin and len(tin) &gt; 3" t-esc="tin[3:]"></t></div>
+                            <div style="position: absolute; top:654px; left:309px; letter-spacing:10px; font-size:15px;"><t t-if="tin and len(tin) &gt;= 9" t-esc="tin[6:9]"/><t t-elif="tin and len(tin) &gt; 6" t-esc="tin[6:]"></t></div>
+                            <div style="position: absolute; top:654px; left:382px; letter-spacing:10px; font-size:15px;"><t t-if="tin and len(tin) &gt;= 14" t-esc="tin[9:14]"/><t t-elif="tin and len(tin) &gt; 9" t-esc="tin[9:]"></t></div>
+                            <!-- 17. Employer's Name -->
+                            <div style="position: absolute; top:692px; left:107px; letter-spacing:2px; font-size:13px; width: 290px;"><span t-esc="values.get('ytd').previous_employer"/></div>
+                            <!-- 18. Registered Address -->
+                            <div style="position: absolute; top:730px; left:107px; line-spacing: 0; font-size:9px; width: 290px;"><span t-esc="values.get('ytd').previous_employer_address"/></div>
+                            <!-- 18A. Zip Code -->
+                            <div style="position: absolute; top:728px; left:424px; font-size:13px;"><span t-esc="values.get('ytd').zip_code"/></div>
+                            <!-- 19. -->
+                            <div style="position: absolute; top:770px; left:395px; font-size:13px;">
+                                <span t-esc="'{:.2f}'.format(values.get('19') or 0.0)"></span>
+                            </div>
+                            <!-- 20. -->
+                            <div style="position: absolute; top:795px; left:395px; font-size:13px;">
+                                <span t-esc="'{:.2f}'.format(values.get('20') or 0.0)"></span>
+                            </div>
+                            <!-- 21. -->
+                            <div style="position: absolute; top:825px; left:395px; font-size:13px;">
+                                <span t-esc="'{:.2f}'.format(values.get('21') or 0.0)"></span>
+                            </div>
+                            <!-- 22. -->
+                            <div style="position: absolute; top:850px; left:395px; font-size:13px;">
+                                <span t-esc="'{:.2f}'.format(values.get('22') or 0.0)"></span>
+                            </div>
+                            <!-- 23. -->
+                            <div style="position: absolute; top:878px; left:395px; font-size:13px;">
+                                <span t-esc="'{:.2f}'.format(values.get('23') or 0.0)"></span>
+                            </div>
+                            <!-- 24. -->
+                            <div style="position: absolute; top:905px; left:395px; font-size:13px;">
+                                <span t-esc="'{:.2f}'.format(values.get('24') or 0.0)"></span>
+                            </div>
+                            <!-- 25A. -->
+                            <div style="position: absolute; top:932px; left:395px; font-size:13px;">
+                                <span t-esc="'{:.2f}'.format(values.get('25A'))"></span>
+                            </div>
+                            <!-- 25B. -->
+                            <div style="position: absolute; top:960px; left:395px; font-size:13px;">
+                                <span t-esc="'{:.2f}'.format(values.get('25B'))"/>
+                            </div>
+                            <!-- 26. -->
+                            <div style="position: absolute; top:988px; left:395px; font-size:13px;">
+                                <span t-esc="'{:.2f}'.format(values.get('26') or 0.0)"></span>
+                            </div>
+
+                            <!-- 27. -->
+                            <div style="position: absolute; top:254px; left:780px; font-size:13px;">
+                                <span t-esc="'{:.2f}'.format(values.get('27') or 0.0)"></span>
+                            </div>
+                            <!-- 28. -->
+                            <div style="position: absolute; top:280px; left:780px; font-size:13px;">
+                                <span t-esc="'{:.2f}'.format(values.get('28') or 0.0)"></span>
+                            </div>
+                            <!-- 29. -->
+                            <div style="position: absolute; top:308px; left:780px; font-size:13px;">
+                                <span t-esc="'{:.2f}'.format(values.get('29') or 0.0)"></span>
+                            </div>
+                            <!-- 30. -->
+                            <div style="position: absolute; top:335px; left:780px; font-size:13px;">
+                                <span t-esc="'{:.2f}'.format(values.get('30') or 0.0)"></span>
+                            </div>
+                            <!-- 31. -->
+                            <div style="position: absolute; top:365px; left:780px; font-size:13px;">
+                                <span t-esc="'{:.2f}'.format(values.get('31') or 0.0)"></span>
+                            </div>
+                            <!-- 32. -->
+                            <div style="position: absolute; top:390px; left:780px; font-size:13px;">
+                                <span t-esc="'{:.2f}'.format(values.get('32') or 0.0)"></span>
+                            </div>
+                            <!-- 33. -->
+                            <div style="position: absolute; top:418px; left:780px; font-size:13px;">
+                                <span t-esc="'{:.2f}'.format(values.get('33') or 0.0)"></span>
+                            </div>
+                            <!-- 34. -->
+                            <div style="position: absolute; top:444px; left:780px; font-size:13px;">
+                                <span t-esc="'{:.2f}'.format(values.get('34') or 0.0)"></span>
+                            </div>
+                            <!-- 35. -->
+                            <div style="position: absolute; top:470px; left:780px; font-size:13px;">
+                                <span t-esc="'{:.2f}'.format(values.get('35') or 0.0)"></span>
+                            </div>
+                            <!-- 36. -->
+                            <div style="position: absolute; top:498px; left:780px; font-size:13px;">
+                                <span t-esc="'{:.2f}'.format(values.get('36') or 0.0)"></span>
+                            </div>
+                            <!-- 37. -->
+                            <div style="position: absolute; top:550px; left:780px; font-size:13px;">
+                                <span t-esc="'{:.2f}'.format(values.get('37') or 0.0)"></span>
+                            </div>
+                            <!-- 38. -->
+                            <div style="position: absolute; top:578px; left:780px; font-size:13px;">
+                                <span t-esc="'{:.2f}'.format(values.get('38') or 0.0)"></span>
+                            </div>
+                            <!-- 39. -->
+                            <div style="position: absolute; top:602px; left:780px; font-size:13px;">
+                                 <span t-esc="'{:.2f}'.format(values.get('39') or 0.0)"></span>
+                            </div>
+                            <!-- 40. -->
+                            <div style="position: absolute; top:630px; left:780px; font-size:13px;">
+                                 <span t-esc="'{:.2f}'.format(values.get('40') or 0.0)"></span>
+                            </div>
+                            <!-- 41. -->
+                            <div style="position: absolute; top:658px; left:780px; font-size:13px;">
+                                 <span t-esc="'{:.2f}'.format(values.get('41') or 0.0)"></span>
+                            </div>
+                            <!-- 42A. -->
+                            <div style="width: 182px; text-align: center; position: absolute; top:695px; left:525px; font-size:13px;">
+                                 <span t-esc="values.get('42A-text')"></span>
+                            </div>
+                            <div style="position: absolute; top:695px; left:780px; font-size:13px;">
+                                 <span t-esc="'{:.2f}'.format(values.get('42A') or 0.0)"></span>
+                            </div>
+                            <!-- 42B. -->
+                            <div style="width: 182px; text-align: center; position: absolute; top:720px; left:525px; font-size:13px;">
+                                 <span t-esc="values.get('42B-text')"></span>
+                            </div>
+                            <div style="position: absolute; top:720px; left:780px; font-size:13px;">
+                                 <span t-esc="'{:.2f}'.format(values.get('42A') or 0.0)"></span>
+                            </div>
+                            <!-- 43. -->
+                            <div style="position: absolute; top:758px; left:780px; font-size:13px;">
+                                <span t-esc="'{:.2f}'.format(values.get('43') or 0.0)"></span>
+                            </div>
+                            <!-- 44. -->
+                            <div style="position: absolute; top:785px; left:780px; font-size:13px;">
+                                 <span t-esc="'{:.2f}'.format(values.get('44') or 0.0)"></span>
+                            </div>
+                            <!-- 45. -->
+                            <div style="position: absolute; top:810px; left:780px; font-size:13px;">
+                                 <span t-esc="'{:.2f}'.format(values.get('45') or 0.0)"></span>
+                            </div>
+                            <!-- 46. -->
+                            <div style="position: absolute; top:838px; left:780px; font-size:13px;">
+                                 <span t-esc="'{:.2f}'.format(values.get('46') or 0.0)"></span>
+                            </div>
+                            <!-- 47. -->
+                            <div style="position: absolute; top:865px; left:780px; font-size:13px;">
+                                 <span t-esc="'{:.2f}'.format(values.get('47') or 0.0)"></span>
+                            </div>
+                            <!-- 48. -->
+                            <div style="position: absolute; top:892px; left:780px; font-size:13px;">
+                                 <span t-esc="'{:.2f}'.format(values.get('48') or 0.0)"></span>
+                            </div>
+                            <!-- 49A. -->
+                            <div style="width: 182px; text-align: center; position: absolute; top:932px; left:525px; font-size:13px;">
+                                 <span t-esc="values.get('49A-text')"></span>
+                            </div>
+                            <div style="position: absolute; top:932px; left:780px; font-size:13px;">
+                                 <span t-esc="'{:.2f}'.format(values.get('49A') or 0.0)"></span>
+                            </div>
+                            <!-- 49B. -->
+                            <div style="width: 182px; text-align: center; position: absolute; top:960px; left:525px; font-size:13px;">
+                                 <span t-esc="values.get('49B-text')"></span>
+                            </div>
+                            <div style="position: absolute; top:960px; left:780px; font-size:13px;">
+                                 <span t-esc="'{:.2f}'.format(values.get('49B') or 0.0)"></span>
+                            </div>
+                            <!-- 50. -->
+                            <div style="position: absolute; top:988px; left:780px; font-size:13px;">
+                                <span t-esc="'{:.2f}'.format(values.get('50') or 0.0)"></span>
+                            </div>
+                            <!-- 51. -->
+                            <div style="position: absolute; top:1052px; left:140px; font-size:10px;">
+                                <span t-field="values.get('employee_id').id_company.company_representative"></span>
+                            </div>
+                            <!-- 52. -->
+                            <div style="position: absolute; top:1100px; left:140px; font-size:10px;">
+                                <span t-field="values.get('employee_id').name"></span>
+                            </div>
+                            <!-- 53. -->
+                            <div style="position: absolute; top:1210px; left:140px; font-size:10px;">
+                                <span t-field="values.get('employee_id').id_company.company_representative"></span>
+                            </div>
+                            <!-- 54. -->
+                            <div style="position: absolute; top:1235px; left:580px; font-size:8px;">
+                                <span t-field="values.get('employee_id').name"></span>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>
+

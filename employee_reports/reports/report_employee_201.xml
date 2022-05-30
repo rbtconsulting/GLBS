@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<odoo>
+  <record id="paperformat_employee_reports_portrait"
+        model="report.paperformat">
+      <field name="name">Legal Portrait</field>
+      <field name="default" eval="True" />
+      <field name="format">A4</field>
+      <field name="page_height">0</field>
+      <field name="page_width">0</field>
+      <field name="orientation">Portrait</field>
+      <field name="margin_top">40</field>
+      <field name="margin_bottom">20</field>
+      <field name="margin_left">7</field>
+      <field name="margin_right">7</field>
+      <field name="header_line" eval="False" />
+      <field name="header_spacing">35</field>
+      <field name="dpi">90</field>
+  </record>
+
+  <report id="action_employee_201_report"
+          string="201"
+          model="hr.employee"
+          report_type="qweb-html"
+          name="employee_reports.report_employee_201"
+          paperformat="paperformat_employee_reports_portrait"
+  />
+
+  <template id="report_employee_201">
+    <t t-call="report.html_container">
+      <t t-call="report.external_layout">
+        <div class="page">
+          <style>
+            .table-borderless > tbody > tr > td,
+            .table-borderless > tbody > tr > th,
+            .table-borderless > tfoot > tr > td,
+            .table-borderless > tfoot > tr > th,
+            .table-borderless > thead > tr > td,
+            .table-borderless > thead > tr > th {
+              border: none;
+            }
+
+            .table-borderless > tbody > tr > td {
+              padding: 0px;
+            }
+
+            .bottom-border {
+              border-bottom: 1px solid #DCDCDC;
+            }
+          </style>
+          <t t-foreach="docs" t-as="o">
+            <h4 class="text-center font-weight-bold"><span t-field="o.name" /></h4>
+            <table class="table">
+              <tbody>
+                <tr>
+                  <td width="210px"><img class="media-object"
+                      t-att-src="'data:image/png;base64,%s' % o.image"
+                      style="height: 300px; width:200px;" />
+                  </td>
+                  <td>
+                    <table class="table table-sm table-borderless">
+                      <tbody>
+                        <tr>
+                          <td width="24%">SSN:</td>
+                          <td><span t-field="o.ssnid" /></td>
+                        </tr>
+                        <tr>
+                          <td>Employee Number:</td>
+                          <td><span t-field="o.identification_id" /></td>
+                        </tr>
+                        <tr class="bottom-border">
+                          <td class="align-text-top">Address:</td>
+                          <td>
+                            <div t-field="o.address_id"
+                             t-field-options='{
+                               "widget": "contact",
+                               "fields": ["address", "name", "phone", "fax"],
+                               "no_marker": true}' />                            
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Home Phone:</td>
+                          <td><span t-field="o.work_phone" /></td>
+                        </tr>
+                        <tr>
+                          <td>Work Phone:</td>
+                          <td><span t-field="o.work_phone" /></td>
+                        </tr>
+                        <tr>
+                          <td>Mobile Number:</td>
+                          <td><span t-field="o.mobile_phone" /></td>
+                        </tr>
+                        <tr>
+                          <td>Fax:</td>
+                          <td><span t-field="o.mobile_phone" /></td>
+                        </tr>
+                        <tr class="bottom-border">
+                          <td>Email:</td>
+                          <td><span t-field="o.work_email" /></td>
+                        </tr>
+                        <tr>
+                          <td>Gender:</td>
+                          <td><span t-field="o.gender" /></td>
+                        </tr>
+                        <tr>
+                          <td>Status:</td>
+                          <td><span t-field="o.marital" /></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="bottom-border" style="width: 100%;"></div>
+            <table class="table table-borderless">
+              <tbody>
+                <tr>
+                  <td>Job Title:</td>
+                  <td><span t-field="o.job_id.name" /></td>
+                  <td>Department:</td>
+                  <td><span t-field="o.department_id.name" /></td>
+                </tr>
+                <tr class="bottom-border">
+                  <td>Location:</td>
+                  <td><span t-field="o.work_location" /></td>
+                  <td>Manager:</td>
+                  <td><span t-field="o.parent_id.name" /></td>
+                </tr>
+              </tbody>
+            </table>
+            <h4>Contract</h4>
+            <t t-foreach="o.contract_ids" t-as="c">
+              <table class="table table-sm table-borderless">
+                <tbody>
+                  <tr class="bottom-border">
+                    <td>Start Date:</td>
+                    <td><span t-field="c.date_start" /></td>
+                    <td>End Date:</td>
+                    <td><span t-field="c.date_end" /></td>
+                    <td>Salary:</td>
+                    <td><span t-field="c.wage" /></td>
+                  </tr>
+                </tbody>
+              </table>
+            </t>              
+            <h4>Emergency Contact</h4>
+            <table class="table table-sm table-borderless">
+              <tr>
+                <td>Home Phone</td>
+                <td><span t-field="o.work_phone" /></td>
+              </tr>
+            </table>
+            <div class="bottom-border" style="width: 100%;"></div>
+            <h4>Latest Wage</h4>
+            <table class="table table-sm table-borderless">
+              <thead>
+                <tr>
+                  <th>Category</th>
+                  <th>Amount</th>
+                </tr>
+              </thead>
+              <t t-foreach="o.slip_ids" t-as="payslip">
+                <t t-foreach="payslip.line_ids" t-as="payslip_line">                  
+                    <tr>
+                      <span t-if="payslip_line.category_id.name in ['Gross', 'Basic', 'Net']">
+                      <td><span t-field="payslip_line.category_id.name" /></td>
+                      <td><span t-field="payslip_line.amount" /></td>
+                      </span>
+                    </tr>
+                </t>
+              </t>
+            </table>
+            <div class="bottom-border" style="width: 100%;"></div>
+            <h4>Benefits</h4>
+            <table class="table table-sm table-borderless">
+              <t t-foreach="o.contract_ids" t-as="contract">
+                <t t-foreach="contract.struct_id" t-as="salrule">
+                  <t t-foreach="salrule.rule_ids" t-as="rule">                  
+                      <tr>
+                        <td><span t-if="rule.category_id.name=='Contribution'"><span t-field="rule.name" /></span></td>
+                      </tr>                  
+                  </t>
+                </t>
+              </t>
+            </table>
+            <div class="bottom-border" style="width: 100%;"></div>
+            <h4>Certification</h4>
+            <table class="table table-sm table-borderless">
+              <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th># Certification</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                  </tr>
+                </thead>
+                <t t-foreach="o.certification_ids" t-as="cert">
+                <tr>
+                  <td><span t-field="cert.name" /></td>
+                  <td><span t-field="cert.certification" /></td>
+                  <td><span t-field="cert.start_date" /></td>
+                  <td><span t-field="cert.end_date" /></td>
+                </tr>
+              </t>
+            </table>
+            <div class="bottom-border" style="width: 100%;"></div>
+            <h4>Latest Training</h4>
+            <table class="table table-sm table-borderless">
+              <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th># Training</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                  </tr>
+                </thead>
+                <t t-foreach="o.training_ids" t-as="train">
+                <tr>
+                  <td><span t-field="train.name" /></td>
+                  <td><span t-field="train.training" /></td>
+                  <td><span t-field="train.start_date" /></td>
+                  <td><span t-field="train.end_date" /></td>
+                </tr>
+              </t>
+            </table>
+            <div class="bottom-border" style="width: 100%;"></div>
+            <h4>Latest Evaluation</h4>
+            <div class="bottom-border" style="width: 100%;"></div>
+          </t>
+        </div>
+      </t>
+    </t>
+  </template>
+</odoo>

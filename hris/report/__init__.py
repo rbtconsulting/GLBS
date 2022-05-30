@@ -1,0 +1,17 @@
+
+import report_hr_salary_employee_1601c
+import report_hr_salary_employee_1601e
+import report_hr_salary_employee_2307
+import report_hr_salary_employee_2316
+import report_hr_phic
+import report_hr_hdmf
+import report_hr_sss
+import report_hr_tax
+#import report_hr_alphalist
+import report_hr_payroll_registry
+import report_13th_month
+import hr_payslip_report
+import certificate_of_employment
+#import hr_job_offer_template
+import report_job_offer
+import report_personal_action_notice

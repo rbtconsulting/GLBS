@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+      <record id="academic_exp_extend2" model="ir.ui.view">
+              <field name="name">academic.form2</field>
+              <field name="model">hr.employee</field>
+              <field name="inherit_id" ref="hr_experience.view_employee_form_inherit"/>
+             <field name="arch" type="xml">
+                 <xpath expr="//field[@name='academic_ids']" position="replace">
+                    <field name="academic_ids" context="{'default_employee_id': active_id}">
+                        <tree string="Academic Experiences">
+                           <field name="academic_exp"  string="Academic Experiences"/>
+                            <field name="partner_id" string="School"/>
+                            <field name="diploma"/>
+                            <field name="study_field"/>
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                        </tree>
+                        <form string="Academic Experience">
+                            <group name="main" col="4">
+                                <field name="academic_exp"  string="Academic Experiences"/>
+                                 <field name="name" invisible="1" />
+                                <separator string="Dates" colspan="4"/>
+                                <field name="start_date"/>
+                                <field name="expire" invisible="1"/>
+                                <field name="end_date"/>
+                                <separator string="Partner" colspan="4"/>
+                                <field name="partner_id" string="School"/>
+                                <field name="location"/>
+                                <separator string="Academic Information" colspan="4"/>
+                                <field name="diploma"/>
+                                <field name="study_field"/>
+                                <field name="activities"/>
+                                <separator string="Description" colspan="4"/>
+                                <field name="description" colspan="4" nolabel="1"/>
+                            </group>
+                        </form>
+                    </field>
+                 </xpath>
+             </field>
+      </record>
+
+        <record id="professional_exp_extend2" model="ir.ui.view">
+              <field name="name">academic.form1</field>
+              <field name="model">hr.employee</field>
+              <field name="inherit_id" ref="hr_experience.view_employee_form_inherit"/>
+             <field name="arch" type="xml">
+                 <xpath expr="//field[@name='experience_ids']" position="replace">
+
+           <field name="experience_ids" context="{'default_employee_id': active_id}">
+                        <tree string="Professional Experiences">
+                            <field name="name" string="Position"/>
+                            <field name="partner_id" string="Employer"/>
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                        </tree>
+                        <form string="Professional Experience">
+                            <group name="main" col="4">
+                                <field name="name" string="Position"/>
+                                <separator string="Dates" colspan="4"/>
+                                <field name="start_date"/>
+                                <field name="expire" invisible="1"/>
+                                <field name="end_date" />
+                                <separator string="Partner" colspan="4"/>
+                                <field name="partner_id" string="Employer"/>
+                                <field name="location"/>
+                                <separator string="Description" colspan="4"/>
+                                <field name="description" colspan="4" nolabel="1"/>
+                            </group>
+                        </form>
+                    </field>
+               </xpath>
+             </field>
+      </record>
+
+
+    </data>
+</odoo>

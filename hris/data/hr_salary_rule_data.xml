@@ -1,0 +1,1277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+     <!---disabled salary rules-->
+        <record id="hr_payroll.hr_rule_basic" model="hr.salary.rule">
+            <field name="name">Basic</field>
+            <field name="sequence" eval="1"/>
+            <field name="code">BASIC</field>
+            <field name="category_id" ref="hr_payroll.BASIC"/>
+            <field name="active">False</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">wage = contract.get_wage(payslip,contract)
+result = wage</field>
+        </record>
+
+        <record id="hr_payroll.hr_rule_taxable" model="hr.salary.rule">
+            <field name="name">Gross</field>
+            <field name="sequence" eval="100"/>
+            <field name="code">GROSS</field>
+            <field name="category_id" ref="hr_payroll.GROSS"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="active">False</field>
+            <field name="amount_python_compute">result = categories.BASIC + categories.ALW</field>
+        </record>
+
+        <record id="hr_payroll.hr_rule_net" model="hr.salary.rule">
+            <field name="name">Net</field>
+            <field name="sequence" eval="200"/>
+            <field name="code">NET</field>
+            <field name="category_id" ref="hr_payroll.NET"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="active">False</field>
+            <field name="amount_python_compute">result = categories.BASIC + categories.ALW + categories.DED</field>
+        </record>
+   <!---end of disable salary rules-->
+
+        <record id="hr_rule_DM-SM" model="hr.salary.rule">
+            <field name="name">De Minimis Semi-Monthly</field>
+            <field name="sequence" eval="141"/>
+            <field name="code">DM-SM</field>
+            <field name="category_id" ref="hris.ONTXINC"/>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result=contract.get_other_income('DM', payslip,employee,contract)/2.0</field>
+            <field name="note"></field>
+            <field name="is_loan_payment">False</field>
+        </record>
+        <record id="hr_rule_DM-M" model="hr.salary.rule">
+            <field name="name">De Minimis-Monthly</field>
+            <field name="sequence" eval="142"/>
+            <field name="code">DM-M</field>
+            <field name="category_id" ref="hris.ONTXINC"/>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result=contract.get_other_income('DM', payslip,employee,contract)</field>
+            <field name="note"></field>
+            <field name="is_loan_payment">False</field>
+        </record>
+        <record id="hr_rule_MT-SM" model="hr.salary.rule">
+            <field name="name">Meal and Transpo Semi-Monthly</field>
+            <field name="sequence" eval="143"/>
+            <field name="code">MT-SM</field>
+            <field name="category_id" ref="hris.ONTXINC"/>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result=contract.get_other_income('MT', payslip,employee,contract)/2.0</field>
+            <field name="note"></field>
+            <field name="is_loan_payment">False</field>
+        </record>
+        <record id="hr_rule_MT-M" model="hr.salary.rule">
+            <field name="name">Meal and Transpo-Monthly</field>
+            <field name="sequence" eval="144"/>
+            <field name="code">MT-M</field>
+            <field name="category_id" ref="hris.ONTXINC"/>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result=contract.get_other_income('MT', payslip,employee,contract)</field>
+            <field name="note"></field>
+            <field name="is_loan_payment">False</field>
+        </record>
+
+        <!-- salary adjustment -->
+        <record id="hr_rule_EarTax" model="hr.salary.rule">
+            <field name="name">Salary Adjustment Earnings(Taxable)</field>
+            <field name="sequence" eval="105"/>
+            <field name="code">EarTax</field>
+            <field name="category_id" ref="hris.OtherTaxInc"/>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">input_line_amount = payslip.input_line_ids and sum(r.amount for r in payslip.input_line_ids if r.code in ('EarTax')) or 0
+adjustment_earning = contract.salary_adjustment_earnings(payslip)
+result = adjustment_earning + input_line_amount
+            </field>
+            <field name="appears_on_payslip" eval="True"/>
+            <field name="note"></field>
+            <field name="is_loan_payment">False</field>
+        </record>
+        <record id="hr_rule_input_EarTax" model="hr.rule.input">
+            <field name="code">EarTax</field>
+            <field name="name">Salary Adjustment Earnings(Taxable)</field>
+            <field name="input_id" ref="hr_rule_EarTax"/>
+        </record>
+
+
+        <record id="hr_rule_EarNonTax" model="hr.salary.rule">
+            <field name="name">Salary Adjustment Earnings(Non Taxable)</field>
+            <field name="sequence" eval="124"/>
+            <field name="code">EarNonTax</field>
+            <field name="category_id" ref="hris.ONTXINC"/>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result  = payslip.input_line_ids and sum(r.amount for r in payslip.input_line_ids if r.code in ('EarNonTax')) or 0</field>
+            <field name="appears_on_payslip" eval="True"/>
+            <field name="note"></field>
+            <field name="is_loan_payment">False</field>
+        </record>
+        <record id="hr_rule_input_EarNonTax" model="hr.rule.input">
+            <field name="code">EarNonTax</field>
+            <field name="name">Salary Adjustment Earnings(Non Taxable)</field>
+            <field name="input_id" ref="hr_rule_EarNonTax"/>
+        </record>
+
+        <record id="hr_rule_DedTAx" model="hr.salary.rule">
+            <field name="name">Salary Adjustment Deductions(Taxable)</field>
+            <field name="sequence" eval="203"/>
+            <field name="code">DedTax</field>
+            <field name="category_id" ref="hris.OtherTaxDed"/>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">input_amount = payslip.input_line_ids and sum(r.amount for r in payslip.input_line_ids if r.code in ('DedTax')) or 0
+adjustment_deduction = contract.salary_adjustment_deductions(payslip)
+result = adjustment_deduction + input_amount
+            </field>
+            <field name="appears_on_payslip" eval="True"/>
+            <field name="note"></field>
+            <field name="is_loan_payment">False</field>
+        </record>
+        <record id="hr_rule_input_DedTAx" model="hr.rule.input">
+            <field name="code">DedTax</field>
+            <field name="name">Salary Adjustment Deductions(Taxable)</field>
+            <field name="input_id" ref="hr_rule_DedTAx"/>
+        </record>
+
+
+        <record id="hr_rule_DedNonTax" model="hr.salary.rule">
+            <field name="name">Salary Adjustment Deductions(Non Taxable)</field>
+            <field name="sequence" eval="146"/>
+            <field name="code">DedNonTax</field>
+            <field name="category_id" ref="hris.ONTXDED"/>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result  =payslip.input_line_ids and sum(r.amount for r in payslip.input_line_ids if r.code in ('DedNonTax')) or 0</field>
+            <field name="appears_on_payslip" eval="True"/>
+            <field name="note"></field>
+            <field name="is_loan_payment">False</field>
+        </record>
+        <record id="hr_rule_input_DedNonTax" model="hr.rule.input">
+            <field name="code">DedNonTax</field>
+            <field name="name">Salary Adjustment Deductions(Non Taxable)</field>
+            <field name="input_id" ref="hr_rule_DedNonTax"/>
+        </record>
+
+
+
+        <record id="hr_rule_Tot Ear" model="hr.salary.rule">
+            <field name="name">TOTAL EARNINGS</field>
+            <field name="sequence" eval="450"/>
+            <field name="code">TotEar</field>
+            <field name="category_id" ref="hris.TOTEAR"/>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result=categories.BSC + categories.OtherTaxInc + categories.ALW + categories.MTH13 + categories.BON + categories.ONTXINC</field>
+            <field name="note"></field>
+            <field name="is_loan_payment">False</field>
+        </record>
+        <record id="hr_rule_TotDed" model="hr.salary.rule">
+            <field name="name">TOTAL DEDUCTIONS</field>
+            <field name="sequence" eval="451"/>
+            <field name="code">TotDed</field>
+            <field name="category_id" ref="hris.TOTDED"/>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result=categories.DED + categories.WTX + categories.LON + categories.EMPCTRB + categories.OtherTaxDed + categories.ONTXDED</field>
+            <field name="note"></field>
+            <field name="is_loan_payment">False</field>
+        </record>
+        
+        <record id="hr_rule_GROSS" model="hr.salary.rule">
+            <field name="name">GROSS TAXABLE PAY</field>
+            <field name="sequence" eval="200"/>
+            <field name="code">GROSS</field>
+            <field name="category_id" ref="hris.GTP"/>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result=(categories.BSC + categories.OtherTaxInc)</field>
+            <field name="note"></field>
+            <field name="is_loan_payment">False</field>
+        </record>
+    
+        <record id="hr_rule_NTP" model="hr.salary.rule">
+            <field name="name">NET TAXABLE PAY</field>
+            <field name="sequence" eval="300"/>
+            <field name="code">NTP</field>
+            <field name="category_id" ref="hris.NTP"/>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = categories.GTP - categories.EMPCTRB - categories.DED  - categories.ONTXDED</field>
+            <field name="note"></field>
+            <field name="is_loan_payment">False</field>
+        </record>
+    
+        <record id="hr_rule_BASIC-M" model="hr.salary.rule">
+            <field name="name">Basic Pay or Salary(Monthly)</field>
+            <field name="sequence" eval="102"/>
+            <field name="code">BASIC-M</field>
+            <field name="category_id" ref="hris.BSC"/>
+            
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">wage = contract.get_wage(payslip,contract)
+result = wage</field>
+            <field name="note"></field>
+            <field name="is_loan_payment">False</field>
+        </record>
+    
+        <record id="hr_rule_BASIC-SM" model="hr.salary.rule">
+            <field name="name">Basic Pay or Salary(Semi-Monthly)</field>
+            <field name="sequence" eval="103"/>
+            <field name="code">BASIC-SM</field>
+            <field name="category_id" ref="hris.BSC"/>
+            
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">wage = contract.get_wage(payslip,contract)
+result = wage/2</field>
+            <field name="note"></field>
+            <field name="is_loan_payment">False</field>
+        </record>
+        
+        <record id="hr_rule_RegWrk" model="hr.salary.rule">
+            <field name="name">Regular Work</field>
+            <field name="sequence" eval="103"/>
+            <field name="code">RegWrk</field>
+            <field name="category_id" ref="hris.OtherTaxInc"/>
+            
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">wage = contract.get_wage(payslip,contract)
+result = worked_days.RegWrk.number_of_hours * ((wage/contract.average_working_days)/8.0)</field>
+            <field name="note">worked rendered with 8 hrs</field>
+            <field name="is_loan_payment">False</field>
+        </record>
+        <record id="hr_rule_OB" model="hr.salary.rule">
+            <field name="name">Official Business</field>
+            <field name="sequence" eval="103"/>
+            <field name="code">OB</field>
+            <field name="category_id" ref="hris.OtherTaxInc"/>
+            
+            <field name="condition_select">python</field>
+            <field name="condition_python">result=worked_days.OB and worked_days.OB.number_of_hours > 0</field>
+            
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">wage = contract.get_wage(payslip,contract)
+result = worked_days.OB.number_of_hours * ((wage/contract.average_working_days)/8.0)</field>
+            <field name="note">worked rendered during official business</field>
+            <field name="is_loan_payment">False</field>
+        </record>
+        <record id="hr_rule_RegOT" model="hr.salary.rule">
+            <field name="name">Regular Overtime</field>
+            <field name="sequence" eval="104"/>
+            <field name="code">RegOT</field>
+            <field name="category_id" ref="hris.OtherTaxInc"/>
+            
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">wage = contract.get_wage(payslip,contract)
+result = worked_days.RegOT.number_of_hours * ((wage/contract.average_working_days)/8.0) * 1.25</field>
+            <field name="note">worked rendered beyond 8 hrs</field>
+            <field name="is_loan_payment">False</field>
+        </record>
+        
+        <record id="hr_rule_RestOT" model="hr.salary.rule">
+            <field name="name">Rest Day Overtime</field>
+            <field name="sequence" eval="107"/>
+            <field name="code">RestOT</field>
+            <field name="category_id" ref="hris.OtherTaxInc"/>
+            
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">wage = contract.get_wage(payslip,contract)
+result = worked_days.RestOT.number_of_hours * ((wage/contract.average_working_days)/8.0) * 1.69</field>
+            <field name="note">Worked rendered beyond 8 hrs during rest day</field>
+            <field name="is_loan_payment">False</field>
+        </record>
+    
+        <record id="hr_rule_RegHolOT" model="hr.salary.rule">
+            <field name="name">Regular Holiday Overtime</field>
+            <field name="sequence" eval="106"/>
+            <field name="code">RegHolOT</field>
+            <field name="category_id" ref="hris.OtherTaxInc"/>
+            
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">wage = contract.get_wage(payslip,contract)
+result = worked_days.RegHolOT.number_of_hours * (wage/contract.average_working_days/8.0) * 1.69</field>
+            <field name="note">worked rendered beyond 8 hrs during regular holiday
+    </field>
+            <field name="is_loan_payment">False</field>
+        </record>
+    
+        <record id="hr_rule_SpeHolOT" model="hr.salary.rule">
+            <field name="name">Special Holiday Overtime</field>
+            <field name="sequence" eval="108"/>
+            <field name="code">SpeHolOT</field>
+            <field name="category_id" ref="hris.OtherTaxInc"/>
+            
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">wage = contract.get_wage(payslip,contract)
+result = worked_days.SpeHolOT.number_of_hours * (wage/contract.average_working_days/8.0) * 1.69</field>
+            <field name="note">Worked rendered beyond 8 hrs during special holiday</field>
+            <field name="is_loan_payment">False</field>
+        </record>
+    
+        <record id="hr_rule_NightShiftDiff" model="hr.salary.rule">
+            <field name="name">Night Shift Differential</field>
+            <field name="sequence" eval="109"/>
+            <field name="code">NightShiftDiff</field>
+            <field name="category_id" ref="hris.OtherTaxInc"/>
+            
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">wage = contract.get_wage(payslip,contract)
+result = worked_days.NightShiftDiff.number_of_hours * (wage/contract.average_working_days/8.0) * 0.10</field>
+            <field name="note">Additional premium paid to employees working from 10 pm to 6 am</field>
+            <field name="is_loan_payment">False</field>
+        </record>
+    
+        <record id="hr_rule_NightDiff" model="hr.salary.rule">
+            <field name="name">Night Differential</field>
+            <field name="sequence" eval="110"/>
+            <field name="code">NightDiff</field>
+            <field name="category_id" ref="hris.OtherTaxInc"/>
+            
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">wage = contract.get_wage(payslip,contract)
+result = worked_days.NightDiff.number_of_hours * (((wage/contract.average_working_days)/8.0) * 1.25) * 0.10</field>
+            <field name="note">Additional premium paid to employees working as overtime staring at 10 Pm</field>
+            <field name="is_loan_payment">False</field>
+        </record>
+    
+        <record id="hr_rule_RestDayWrk" model="hr.salary.rule">
+            <field name="name">Rest Day Work</field>
+            <field name="sequence" eval="111"/>
+            <field name="code">RestDayWrk</field>
+            <field name="category_id" ref="hris.OtherTaxInc"/>
+            
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">wage = contract.get_wage(payslip,contract)
+result = worked_days.RestDayWrk.number_of_hours * ((wage/contract.average_working_days)/8.0) * 1.30</field>
+            <field name="note">Worked rendered during rest day</field>
+            <field name="is_loan_payment">False</field>
+        </record>
+    
+        <record id="hr_rule_RegHolWrk" model="hr.salary.rule">
+            <field name="name">Regular Holiday Work</field>
+            <field name="sequence" eval="112"/>
+            <field name="code">RegHolWrk</field>
+            <field name="category_id" ref="hris.OtherTaxInc"/>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">wage = contract.get_wage(payslip,contract)
+result = ((wage/contract.average_working_days)/8.0) * worked_days.RegHolWrk.number_of_hours</field>
+            <field name="note">Worked rendered during regular holiday</field>
+            <field name="is_loan_payment">False</field>
+        </record>
+    
+        <record id="hr_rule_SpeHolWrk" model="hr.salary.rule">
+            <field name="name">Special Holiday Work</field>
+            <field name="sequence" eval="113"/>
+            <field name="code">SpeHolWrk</field>
+            <field name="category_id" ref="hris.OtherTaxInc"/>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">wage = contract.get_wage(payslip,contract)
+result = (((wage/contract.average_working_days)/8.0) * worked_days.SpeHolWrk.number_of_hours) * 0.30</field>
+            <field name="note">Worked rendered during special holiday</field>
+            <field name="is_loan_payment">False</field>
+        </record>
+    
+        <record id="hr_rule_ALL" model="hr.salary.rule">
+            <field name="name">Allowances</field>
+            <field name="sequence" eval="114"/>
+            <field name="code">ALL</field>
+            <field name="category_id" ref="hris.OtherTaxInc"/>
+            
+            <field name="note">Taxable allowances (Transportation, meal, etc) -company dependent</field>
+            <field name="is_loan_payment">False</field>
+        </record>
+        
+        <record id="hr_rule_ConvVL" model="hr.salary.rule">
+            <field name="name">Vacation Leave-Conversion</field>
+            <field name="sequence" eval="115"/>
+            <field name="code">ConvVL</field>
+            
+            <field name="condition_select">python</field>
+            <field name="condition_python">result=worked_days.ConvVL and worked_days.ConvVL.number_of_hours > 0</field>
+            
+            <field name="category_id" ref="hris.OtherTaxInc"/>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">wage = contract.get_wage(payslip,contract)
+result = worked_days.ConvVL.number_of_hours * ((wage/contract.average_working_days)/8.0)</field>
+            <field name="note"></field>
+            <field name="is_loan_payment">False</field>
+        </record>
+        
+        <record id="hr_rule_ConvSL" model="hr.salary.rule">
+            <field name="name">Sick Leave-Conversion</field>
+            <field name="sequence" eval="115"/>
+            <field name="code">ConvSL</field>
+            
+            <field name="condition_select">python</field>
+            <field name="condition_python">result=worked_days.ConvSL and worked_days.ConvSL.number_of_hours > 0</field>
+            
+            <field name="category_id" ref="hris.OtherTaxInc"/>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">wage = contract.get_wage(payslip,contract)
+result = worked_days.ConvSL.number_of_hours * ((wage/contract.average_working_days)/8.0)</field>
+            <field name="note"></field>
+            <field name="is_loan_payment">False</field>
+        </record>
+        
+        <record id="hr_rule_SSS-SM" model="hr.salary.rule">
+            <field name="name">SSS Deduction - Semi Monthly</field>
+            <field name="sequence" eval="115"/>
+            <field name="code">SSS-SM</field>
+            <field name="category_id" ref="hris.EMPCTRB"/>
+            
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result=contract.get_contrib_value_by_model('payroll.sss.contribution', contract.wage).contrib_ee/2</field>
+            
+            <field name="note">SSS Employee Contribution; refer to the 2018 SSS Contribution Table ; divide the amount by 2</field>
+            <field name="is_loan_payment">False</field>
+        </record>
+    
+        <record id="hr_rule_PHIC-SM" model="hr.salary.rule">
+            <field name="name">PHIC Deduction - Semi Monthly</field>
+            <field name="sequence" eval="116"/>
+            <field name="code">PHIC-SM</field>
+            <field name="category_id" ref="hris.EMPCTRB"/>
+            
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = ((contract.wage*0.0275)/2.0  &gt; 550 and 550 or (contract.wage*0.0275)/2.0)/2.0 </field>
+            
+            <field name="note">PHIC Employee Contribution; 2.75 % of the basic pay; divide the amount by 2</field>
+            <field name="is_loan_payment">False</field>
+        </record>
+    
+        <record id="hr_rule_HDMF-SM" model="hr.salary.rule">
+            <field name="name">HDMF Deduction-Semi Monthly</field>
+            <field name="sequence" eval="117"/>
+            <field name="code">HDMF-SM</field>
+            <field name="category_id" ref="hris.EMPCTRB"/>
+            
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result=100/2.0</field>
+            
+            <field name="note">HDMF Employee Contribution; PHP 100.00 per month; divide the amount by 2</field>
+            <field name="is_loan_payment">False</field>
+        </record>
+    
+        <record id="hr_rule_SSS-M" model="hr.salary.rule">
+            <field name="name">SSS Deduction-Monthly</field>
+            <field name="sequence" eval="118"/>
+            <field name="code">SSS-M</field>
+            <field name="category_id" ref="hris.EMPCTRB"/>
+            
+            <field name="condition_select">python</field>
+            <field name="condition_python">result=16 &lt;=contract.format_datetime(payslip.date_release) and 31 &gt;= contract.format_datetime(payslip.date_release)</field>
+            
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result=contract.get_contrib_value_by_model('payroll.sss.contribution', contract.wage).contrib_ee</field>
+            
+            <field name="note">SSS Employee Contribution; refer to the 2018 SSS Contribution Table</field>
+            <field name="is_loan_payment">False</field>
+        </record>
+
+        <record id="hr_rule_PHIC-M" model="hr.salary.rule">
+            <field name="name">PHIC Deduction-Monthly</field>
+            <field name="sequence" eval="119"/>
+            <field name="code">PHIC-M</field>
+            <field name="category_id" ref="hris.EMPCTRB"/>
+            
+            <field name="condition_select">python</field>
+            <field name="condition_python">result=16 &lt;=contract.format_datetime(payslip.date_release) and 31 &gt;= contract.format_datetime(payslip.date_release)</field>
+            
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = ((contract.wage*0.0275)/2.0  &gt; 550 and 550 or (contract.wage*0.0275)/2.0)</field>
+            
+            <field name="note">PHIC Employee Contribution; 2.75 % of the basic pay</field>
+            <field name="is_loan_payment">False</field>
+        </record>
+    
+        <record id="hr_rule_HDMF-M" model="hr.salary.rule">
+            <field name="name">HDMF Deduction-Monthly</field>
+            <field name="sequence" eval="120"/>
+            <field name="code">HDMF-M</field>
+            <field name="category_id" ref="hris.EMPCTRB"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result=16 &lt;=contract.format_datetime(payslip.date_release) and 31 &gt;= contract.format_datetime(payslip.date_release)</field>
+            
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result=100</field>
+            
+            <field name="note">HDMF Employee Contribution; PHP 100.00 per month</field>
+            <field name="is_loan_payment">False</field>
+        </record>
+
+        <record id="hr_rule_ABS" model="hr.salary.rule">
+            <field name="name">Absences</field>
+            <field name="sequence" eval="121"/>
+            <field name="code">ABS</field>
+            <field name="category_id" ref="hr_payroll.DED"/>
+            
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = worked_days.ABS and worked_days.ABS.number_of_hours&gt;0</field>
+            
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">wage = contract.get_wage(payslip,contract)
+result = ((wage/contract.average_working_days)/ 8.0) * worked_days.ABS.number_of_hours</field>
+            <field name="note"></field>
+            <field name="is_loan_payment">False</field>
+        </record>
+        <record id="hr_rule_LWOP" model="hr.salary.rule">
+            <field name="name">Leave Without Pay</field>
+            <field name="sequence" eval="122"/>
+            <field name="code">LWOP</field>
+            <field name="category_id" ref="hr_payroll.DED"/>
+            
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = worked_days.LWOP and worked_days.LWOP.number_of_hours&gt;0</field>
+            
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">wage = contract.get_wage(payslip,contract)
+result = ((wage/contract.average_working_days)/ 8.0) * worked_days.LWOP.number_of_hours</field>
+            <field name="note"></field>
+            <field name="is_loan_payment">False</field>
+        </record>
+        
+        
+    
+        <record id="hr_rule_UT" model="hr.salary.rule">
+            <field name="name">Undertime</field>
+            <field name="sequence" eval="122"/>
+            <field name="code">UT</field>
+            <field name="category_id" ref="hr_payroll.DED"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = worked_days.UT and worked_days.UT.number_of_hours&gt;0</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">wage = contract.get_wage(payslip,contract)
+result = ((wage/contract.average_working_days)/ 8.0) * worked_days.UT.number_of_hours</field>
+            <field name="note"></field>
+            <field name="is_loan_payment">False</field>
+        </record>
+    
+        <record id="hr_rule_TD" model="hr.salary.rule">
+            <field name="name">Tardiness</field>
+            <field name="sequence" eval="123"/>
+            <field name="code">TD</field>
+            <field name="category_id" ref="hr_payroll.DED"/>
+            
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = worked_days.TD and worked_days.TD.number_of_hours&gt;0</field>
+            
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">wage = contract.get_wage(payslip,contract)
+result = ((wage/contract.average_working_days)/ 8.0) * worked_days.TD.number_of_hours</field>
+            <field name="note"></field>
+            <field name="is_loan_payment">False</field>
+        </record>
+    
+        <record id="hr_rule_WTHTAX-M" model="hr.salary.rule">
+            <field name="name">BIR Tax-M</field>
+            <field name="sequence" eval="350"/>
+            <field name="code">WTHTAX-M</field>
+            <field name="category_id" ref="hris.WTX"/>
+            
+            <field name="condition_select">python</field>
+            <field name="condition_python">result=20&lt;=contract.format_datetime(payslip.date_release) and 31 &gt;= contract.format_datetime(payslip.date_release)</field>
+            
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result=categories.NTP &gt;= 20833 and (((categories.NTP - (contract.get_column_value('payroll.withholding_tax.contribution',categories.NTP, [('contrib_method', '=', 'monthly')]).min_range)) * ((contract.get_column_value('payroll.withholding_tax.contribution',categories.NTP, [('contrib_method', '=', 'monthly')]).percentage)/100.0)) + (contract.get_column_value('payroll.withholding_tax.contribution',categories.NTP, [('contrib_method', '=', 'monthly')]).prescribed_tax))  or 0</field>
+            
+            <field name="note"></field>
+            <field name="is_loan_payment">False</field>
+        </record>
+    
+        <record id="hr_rule_RiceSub-M" model="hr.salary.rule">
+            <field name="name">Rice Subsidy-Monthly</field>
+            <field name="sequence" eval="125"/>
+            <field name="code">RiceSub-M</field>
+            <field name="category_id" ref="hris.ONTXINC"/>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result=contract.get_other_income('RS', payslip,employee,contract)</field>
+            <field name="note"></field>
+            <field name="is_loan_payment">False</field>
+        </record>
+
+        <record id="hr_rule_HouseAll-M" model="hr.salary.rule">
+            <field name="name">Housing Allowances-Monthly</field>
+            <field name="sequence" eval="125"/>
+            <field name="code">HouseAll-M</field>
+            <field name="category_id" ref="hris.ONTXINC"/>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result=contract.get_other_income('HA', payslip,employee,contract)</field>
+            <field name="note"></field>
+            <field name="is_loan_payment">False</field>
+        </record>
+    
+        <record id="hr_rule_ClotAll-M" model="hr.salary.rule">
+            <field name="name">Clothing Allowances-Monthly</field>
+            <field name="sequence" eval="126"/>
+            <field name="code">ClotAll-M</field>
+            <field name="category_id" ref="hris.ONTXINC"/>
+            
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result=contract.get_other_income('CA', payslip,employee,contract)</field>
+            
+            <field name="note"></field>
+            <field name="is_loan_payment">False</field>
+        </record>
+    
+        <record id="hr_rule_MedAll-M" model="hr.salary.rule">
+            <field name="name">Medical Allowances-Monthly</field>
+            <field name="sequence" eval="127"/>
+            <field name="code">MedAll-M</field>
+            <field name="category_id" ref="hris.ONTXINC"/>
+
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result=contract.get_other_income('MA', payslip,employee,contract)</field>
+             <field name="note">de minimis, non taxable until ceiling amount</field>
+             <field name="is_loan_payment">False</field>
+        </record>
+    
+        <record id="hr_rule_ConAll-M" model="hr.salary.rule">
+            <field name="name">Conveyance Allowance-Monthly</field>
+            <field name="sequence" eval="128"/>
+            <field name="code">ConAll-M</field>
+            <field name="category_id" ref="hris.ONTXINC"/>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result=contract.get_other_income('CON', payslip,employee,contract)</field>
+             <field name="note">de minimis, non taxable until ceiling amount</field>
+             <field name="is_loan_payment">False</field>
+        </record>
+    
+        <record id="hr_rule_RiceSub-SM" model="hr.salary.rule">
+            <field name="name">Rice Subsidy-Semi Monthly</field>
+            <field name="sequence" eval="129"/>
+            <field name="code">RiceSub-SM</field>
+            <field name="category_id" ref="hris.ONTXINC"/>
+            
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result=contract.get_other_income('RS', payslip,employee,contract)/2.0</field>
+            
+            <field name="note">de minimis, non taxable until ceiling amount</field>
+            <field name="is_loan_payment">False</field>
+        </record>
+    
+        <record id="hr_rule_ClotAll-SM" model="hr.salary.rule">
+            <field name="name">Clothing Allowances-Semi Monthly</field>
+            <field name="sequence" eval="130"/>
+            <field name="code">ClotAll-SM</field>
+            <field name="category_id" ref="hris.ONTXINC"/>
+            
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result=contract.get_other_income('CA', payslip,employee,contract)/2.0</field>
+            
+            <field name="note">de minimis, non taxable until ceiling amount</field>
+            <field name="is_loan_payment">False</field>
+        </record>
+    
+        <record id="hr_rule_MedAll-SM" model="hr.salary.rule">
+            <field name="name">Medical Allowances-Semi Monthly</field>
+            <field name="sequence" eval="131"/>
+            <field name="code">MedAll-SM</field>
+            <field name="category_id" ref="hris.ONTXINC"/>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result=contract.get_other_income('MA', payslip,employee,contract)/2.0</field>
+             <field name="note">de minimis, non taxable until ceiling amount</field>
+             <field name="is_loan_payment">False</field>
+        </record>
+    
+        <record id="hr_rule_ConAll-SM" model="hr.salary.rule">
+            <field name="name">Conveyance Allowances-Semi Monthly</field>
+            <field name="sequence" eval="132"/>
+            <field name="code">ConAll-SM</field>
+            <field name="category_id" ref="hris.ONTXINC"/>
+
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result=contract.get_other_income('CON', payslip,employee,contract)/2.0</field>
+             <field name="note">de minimis, non taxable until ceiling amount</field>
+             <field name="is_loan_payment">False</field>
+        </record>
+        
+        <record id="hr_rule_BasicAll-M" model="hr.salary.rule">
+            <field name="name">Basic Allowances-Monthly</field>
+            <field name="sequence" eval="130"/>
+            <field name="code">BasicAll-M</field>
+            <field name="category_id" ref="hris.ONTXINC"/>
+        
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result=contract.get_other_income('BA', payslip,employee,contract)</field>
+             <field name="note"></field>
+             <field name="is_loan_payment">False</field>
+        </record>
+        
+        
+        <record id="hr_rule_BasicAll-SM" model="hr.salary.rule">
+            <field name="name">Basic Allowances-Semi Monthly</field>
+            <field name="sequence" eval="131"/>
+            <field name="code">BasicAll-SM</field>
+            <field name="category_id" ref="hris.ONTXINC"/>
+        
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result=contract.get_other_income('BA', payslip,employee,contract)/2.0</field>
+        
+            <field name="note"></field>
+            <field name="is_loan_payment">False</field>
+        </record>
+        
+        <record id="hr_rule_DayShiftAll-M" model="hr.salary.rule">
+            <field name="name">Dayshift Allowances-Monthly</field>
+            <field name="sequence" eval="132"/>
+            <field name="code">DayShiftAll-M</field>
+            <field name="category_id" ref="hris.ONTXINC"/>
+        
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result=contract.get_other_income('DSA', payslip,employee,contract)</field>
+             <field name="note"></field>
+             <field name="is_loan_payment">False</field>
+        </record>
+        
+        
+        <record id="hr_rule_DayShiftAll-SM" model="hr.salary.rule">
+            <field name="name">Dayshift Allowances-Semi Monthly</field>
+            <field name="sequence" eval="133"/>
+            <field name="code">DayShiftAll-SM</field>
+            <field name="category_id" ref="hris.ONTXINC"/>
+        
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result=contract.get_other_income('DSA', payslip,employee,contract)/2.0</field>
+        
+            <field name="note"></field>
+            <field name="is_loan_payment">False</field>
+        </record>
+        
+        <record id="hr_rule_NightShiftAll-M" model="hr.salary.rule">
+            <field name="name">Night Shift Allowances-Monthly</field>
+            <field name="sequence" eval="134"/>
+            <field name="code">NightShiftAll-M</field>
+            <field name="category_id" ref="hris.ONTXINC"/>
+        
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result=contract.get_other_income('NSA', payslip,employee,contract)</field>
+             <field name="note"></field>
+             <field name="is_loan_payment">False</field>
+        </record>
+        
+        
+        <record id="hr_rule_NightShiftAll-SM" model="hr.salary.rule">
+            <field name="name">Night Shift Allowances-Semi Monthly</field>
+            <field name="sequence" eval="135"/>
+            <field name="code">NightShiftAll-SM</field>
+            <field name="category_id" ref="hris.ONTXINC"/>
+        
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result=contract.get_other_income('NSA', payslip,employee,contract)/2.0</field>
+        
+            <field name="note"></field>
+            <field name="is_loan_payment">False</field>
+        </record>
+        
+        <record id="hr_rule_TrnsAll-M" model="hr.salary.rule">
+            <field name="name">Transportation Allowances-Monthly</field>
+            <field name="sequence" eval="136"/>
+            <field name="code">TrnsAll-M</field>
+            <field name="category_id" ref="hris.ONTXINC"/>
+        
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result=contract.get_other_income('TA', payslip,employee,contract)</field>
+             <field name="note"></field>
+             <field name="is_loan_payment">False</field>
+        </record>
+        
+        
+        <record id="hr_rule_TrnsAll-SM" model="hr.salary.rule">
+            <field name="name">Transportation Allowances-Semi Monthly</field>
+            <field name="sequence" eval="137"/>
+            <field name="code">Trns-SM</field>
+            <field name="category_id" ref="hris.ONTXINC"/>
+        
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result=contract.get_other_income('TA', payslip,employee,contract)/2.0</field>
+        
+            <field name="note"></field>
+            <field name="is_loan_payment">False</field>
+        </record>
+        
+        <record id="hr_rule_PhoneAll-M" model="hr.salary.rule">
+            <field name="name">Phone Allowances-Monthly</field>
+            <field name="sequence" eval="138"/>
+            <field name="code">PhoneAll-M</field>
+            <field name="category_id" ref="hris.ONTXINC"/>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result=contract.get_other_income('PA', payslip, employee, contract)</field>
+             <field name="note"></field>
+             <field name="is_loan_payment">False</field>
+        </record>
+        
+        <record id="hr_rule_PhoneAll-SM" model="hr.salary.rule">
+            <field name="name">Phone Allowances-Semi Monthly</field>
+            <field name="sequence" eval="139"/>
+            <field name="code">PhoneAll-SM</field>
+            <field name="category_id" ref="hris.ONTXINC"/>
+        
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result=contract.get_other_income('PA', payslip, employee, contract)/2.0</field>
+        
+            <field name="note"></field>
+            <field name="is_loan_payment">False</field>
+        </record>
+        
+        <record id="hr_rule_CompLoan" model="hr.salary.rule">
+            <field name="name">Company Loan(Semi-Monthly)</field>
+            <field name="sequence" eval="133"/>
+            <field name="code">CompLoan-SM</field>
+            <field name="category_id" ref="hris.LON"/>
+            
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = -employee.get_installment_loan(employee.id, payslip.date_from, payslip.date_to)/2.0</field>
+            
+            <field name="note">amout employee borrowed from the company</field>
+            <field name="is_loan_payment">True</field>
+        </record>
+    
+        <record id="hr_rule_CompLoanInt" model="hr.salary.rule">
+            <field name="name">Company Loan Interest(Semi-Monthly)</field>
+            <field name="sequence" eval="134"/>
+            <field name="code">CompLoanInt-SM</field>
+            <field name="category_id" ref="hris.LON"/>
+            
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = -employee.get_interest_loan(employee.id, payslip.date_from, payslip.date_to)/2.0</field>
+            
+            <field name="note">interest the company puts on top of the loan</field>
+            <field name="is_loan_payment">False</field>
+        </record>
+        
+        <record id="hr_rule_CompLoan-M" model="hr.salary.rule">
+            <field name="name">Company Loan(Monthly)</field>
+            <field name="sequence" eval="133"/>
+            <field name="code">CompLoan-M</field>
+            <field name="category_id" ref="hris.LON"/>
+            
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = -employee.get_installment_loan(employee.id, payslip.date_from, payslip.date_to)</field>
+            
+            <field name="note">amout employee borrowed from the company</field>
+            <field name="is_loan_payment">True</field>
+        </record>
+    
+        <record id="hr_rule_CompLoanInt-M" model="hr.salary.rule">
+            <field name="name">Company Loan Interest(Monthly)</field>
+            <field name="sequence" eval="134"/>
+            <field name="code">CompLoanInt-M</field>
+            <field name="category_id" ref="hris.LON"/>
+            
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = -employee.get_interest_loan(employee.id, payslip.date_from, payslip.date_to)</field>
+            
+            <field name="note">interest the company puts on top of the loan</field>
+            <field name="is_loan_payment">False</field>
+        </record>
+    
+        <record id="hr_rule_GovtLoan" model="hr.salary.rule">
+            <field name="name">Government Loan(Semi-Monthly)</field>
+            <field name="sequence" eval="135"/>
+            <field name="code">GovtLoan-SM</field>
+            <field name="category_id" ref="hris.LON"/>
+            
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = -employee.get_installment_loan(employee.id, payslip.date_from, payslip.date_to)/2.0</field>
+            
+            <field name="note">amount employee borrowed from govt agencies</field>
+            <field name="is_loan_payment">False</field>
+        </record>
+    
+        <record id="hr_rule_GovtLoanInt" model="hr.salary.rule">
+            <field name="name">Government Loan Interest(Semi-Monthly)</field>
+            <field name="sequence" eval="136"/>
+            <field name="code">GovtLoanInt-SM</field>
+            <field name="category_id" ref="hris.LON"/>
+            
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = -employee.get_interest_loan(employee.id, payslip.date_from, payslip.date_to)/2.0</field>
+            
+            <field name="note">interest the govt agencies put on top of the loan</field>
+            <field name="is_loan_payment">False</field>
+        </record>
+        <record id="hr_rule_GovtLoan-M" model="hr.salary.rule">
+            <field name="name">Government Loan(Monthly)</field>
+            <field name="sequence" eval="135"/>
+            <field name="code">GovtLoan-M</field>
+            <field name="category_id" ref="hris.LON"/>
+            
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = -employee.get_installment_loan(employee.id, payslip.date_from, payslip.date_to)</field>
+            
+            <field name="note">amount employee borrowed from govt agencies</field>
+            <field name="is_loan_payment">False</field>
+        </record>
+    
+        <record id="hr_rule_GovtLoanInt-M" model="hr.salary.rule">
+            <field name="name">Government Loan Interest(Monthly)</field>
+            <field name="sequence" eval="136"/>
+            <field name="code">GovtLoanInt-M</field>
+            <field name="category_id" ref="hris.LON"/>
+            
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = -employee.get_interest_loan(employee.id, payslip.date_from, payslip.date_to)</field>
+            
+            <field name="note">interest the govt agencies put on top of the loan</field>
+            <field name="is_loan_payment">False</field>
+        </record>
+    
+        <record id="hr_rule_PerfBasBon" model="hr.salary.rule">
+            <field name="name">Performance Based Bonus</field>
+            <field name="sequence" eval="137"/>
+            <field name="code">PerfBasBon</field>
+            <field name="category_id" ref="hris.BON"/>
+            
+            <field name="note">bonus given to employees based on their annual performance review</field>
+            <field name="is_loan_payment">False</field>
+        </record>
+    
+        <record id="hr_rule_ChrstBon" model="hr.salary.rule">
+            <field name="name">Christmas Bonus</field>
+            <field name="sequence" eval="138"/>
+            <field name="code">ChrstBon</field>
+            <field name="category_id" ref="hris.BON"/>
+            
+            <field name="note">Christmas Bonus</field>
+            <field name="is_loan_payment">False</field>
+        </record>
+    
+        <record id="hr_rule_13thBP" model="hr.salary.rule">
+            <field name="name">13th Month Pay Based on Basic Pay</field>
+            <field name="sequence" eval="139"/>
+            <field name="code">13thBP</field>
+            <field name="category_id" ref="hris.MTH13"/>
+            
+            <field name="note">pay equal to one month basic pay of the employee</field>
+            <field name="is_loan_payment">False</field>
+        </record>
+    
+        <record id="hr_rule_13thAI" model="hr.salary.rule">
+            <field name="name">13th Month Pay Based on Actual Income</field>
+            <field name="sequence" eval="140"/>
+            <field name="code">13thAI</field>
+            <field name="category_id" ref="hris.MTH13"/>
+            
+            <field name="note">pay equal to the average of the actual monthly income of the employee</field>
+            <field name="is_loan_payment">False</field>
+        </record>
+    
+        <record id="hr_rule_NPAT" model="hr.salary.rule">
+            <field name="name">NET PAY AFTER TAX</field>
+            <field name="sequence" eval="400"/>
+            <field name="code">NPAT</field>
+            <field name="category_id" ref="hris.NPAT"/>
+            
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result=categories.NTP - categories.WTX</field>
+            
+            <field name="note"></field>
+            <field name="is_loan_payment">False</field>
+        </record>
+    
+        <record id="hr_rule_WTHTAX-SM" model="hr.salary.rule">
+            <field name="name">BIR Tax-SM</field>
+            <field name="sequence" eval="350"/>
+            <field name="code">WTHTAX-SM</field>
+            <field name="category_id" ref="hris.WTX"/>
+            
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result=categories.NTP &gt;= 10417.0 and (((categories.NTP - (contract.get_column_value('payroll.withholding_tax.contribution',categories.NTP, [('contrib_method', '=', 'semi_monthly')]).min_range)) * ((contract.get_column_value('payroll.withholding_tax.contribution',categories.NTP, [('contrib_method', '=', 'semi_monthly')]).percentage)/100.0)) + (contract.get_column_value('payroll.withholding_tax.contribution',categories.NTP, [('contrib_method', '=', 'semi_monthly')]).prescribed_tax))  or 0</field>
+            
+            <field name="note"></field>
+            <field name="is_loan_payment">False</field>
+        </record>
+    
+        <record id="hr_rule_FNP" model="hr.salary.rule">
+            <field name="name">FINAL NET PAY</field>
+            <field name="sequence" eval="500"/>
+            <field name="code">FNP</field>
+            <field name="category_id" ref="hris.FNP"/>
+            
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result=(categories.NPAT + categories.ONTXINC ) - (categories.LON + categories.OtherTaxDed) </field>
+            
+            <field name="note"></field>
+            <field name="is_loan_payment">False</field>
+        </record>
+    
+        <record id="hr_rule_SSSER-SM" model="hr.salary.rule">
+            <field name="name">SSS Employer Contribution - Semi Monthly</field>
+            <field name="sequence" eval="700"/>
+            <field name="code">SSSER-SM</field>
+            <field name="category_id" ref="hris.EMRCTRB"/>
+            
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result=contract.get_contrib_value_by_model('payroll.sss.contribution', contract.wage).contrib_er/2.0</field>
+            
+            <field name="note">SSS Employee Contribution; refer to the 2018 SSS Contribution Table ; divide the amount by 2</field>
+            <field name="is_loan_payment">False</field>
+        </record>
+    
+        <record id="hr_rule_PHICER-SM" model="hr.salary.rule">
+            <field name="name">PHIC Employer Contribution - Semi Monthly</field>
+            <field name="sequence" eval="701"/>
+            <field name="code">PHICER-SM</field>
+            <field name="category_id" ref="hris.EMRCTRB"/>
+            
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = ((contract.wage*0.0275)/2.0  &gt; 550.0 and 550.0 or (contract.wage*0.0275)/2)/2 </field>
+            
+            <field name="note">PHIC Employee Contribution; 2.75 % of the basic pay; divide the amount by 2</field>
+            <field name="is_loan_payment">False</field>
+        </record>
+    
+        <record id="hr_rule_HDMFER-SM" model="hr.salary.rule">
+            <field name="name">HDMF Employer Contribution-Semi Monthly</field>
+            <field name="sequence" eval="702"/>
+            <field name="code">HDMFER-SM</field>
+            <field name="category_id" ref="hris.EMRCTRB"/>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result=100/2.0</field>
+            
+            <field name="note">HDMF Employee Contribution; PHP 100.00 per month; divide the amout by 2</field>
+            <field name="is_loan_payment">False</field>
+        </record>
+    
+        <record id="hr_rule_SSSER-M" model="hr.salary.rule">
+            <field name="name">SSS Employer Contribution-Monthly</field>
+            <field name="sequence" eval="704"/>
+            <field name="code">SSSER-M</field>
+            <field name="category_id" ref="hris.EMRCTRB"/>
+            
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result=contract.get_contrib_value_by_model('payroll.sss.contribution', contract.wage).contrib_er</field>
+            
+            <field name="note">SSS Employee Contribution; refer to the 2018 SSS Contribution Table</field>
+            <field name="is_loan_payment">False</field>
+        </record>
+    
+        <record id="hr_rule_PHICER-M" model="hr.salary.rule">
+            <field name="name">PHIC Employer Contribution-Monthly</field>
+            <field name="sequence" eval="705"/>
+            <field name="code">PHICER-M</field>
+            <field name="category_id" ref="hris.EMRCTRB"/>
+            
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = ((contract.wage*0.0275)/2.0  &gt; 550.0 and 550.0 or (contract.wage*0.0275)/2)</field>
+            
+            <field name="note">PHIC Employee Contribution; 2.75 % of the basic pay</field>
+            <field name="is_loan_payment">False</field>
+        </record>
+    
+        <record id="hr_rule_HDMFER-M" model="hr.salary.rule">
+            <field name="name">HDMF Employer Contribution-Monthly</field>
+            <field name="sequence" eval="706"/>
+            <field name="code">HDMFER-M</field>
+            <field name="category_id" ref="hris.EMRCTRB"/>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result=100</field>
+            <field name="note">HDMF Employee Contribution; PHP 100.00 per month</field>
+            <field name="is_loan_payment">False</field>
+        </record>
+
+        <!-- for sagesoft only-->
+        <record id="hr_rule_SSS-M_1" model="hr.salary.rule">
+            <field name="name">SSS Deduction-Monthly(date release: 1-15)</field>
+            <field name="sequence" eval="150"/>
+            <field name="code">SSS-M</field>
+            <field name="category_id" ref="hris.EMPCTRB"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result=1 &lt;=contract.format_datetime(payslip.date_release) and 15 &gt;= contract.format_datetime(payslip.date_release)</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result=contract.get_contrib_value_by_model('payroll.sss.contribution', contract.wage).contrib_ee</field>
+            <field name="note">SSS Employee Contribution; refer to the 2018 SSS Contribution Table</field>
+            <field name="is_loan_payment">False</field>
+        </record>
+
+        <record id="hr_rule_PHIC-M_1" model="hr.salary.rule">
+            <field name="name">PHIC Deduction-Monthly(date release: 1-15)</field>
+            <field name="sequence" eval="151"/>
+            <field name="code">PHIC-M</field>
+            <field name="category_id" ref="hris.EMPCTRB"/>
+             <field name="condition_select">python</field>
+            <field name="condition_python">result=1  &lt;=contract.format_datetime(payslip.date_release) and 15 >= contract.format_datetime(payslip.date_release)</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = ((contract.wage*0.0275)/2.0  &gt; 550 and 550 or (contract.wage*0.0275)/2.0)</field>
+
+            <field name="note">PHIC Employee Contribution; 2.75 % of the basic pay</field>
+            <field name="is_loan_payment">False</field>
+        </record>
+
+        <record id="hr_rule_HDMF-M_1" model="hr.salary.rule">
+            <field name="name">HDMF Deduction-Monthly(date release: 1-15)</field>
+            <field name="sequence" eval="152"/>
+            <field name="code">HDMF-M</field>
+            <field name="category_id" ref="hris.EMPCTRB"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result=1 &lt;=contract.format_datetime(payslip.date_release) and 15 >= contract.format_datetime(payslip.date_release)</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result=100</field>
+
+            <field name="note">HDMF Employee Contribution; PHP 100.00 per month</field>
+            <field name="is_loan_payment">False</field>
+        </record>
+
+        <record id="hr_rule_PHICER-SM_1" model="hr.salary.rule">
+            <field name="name">PHIC Employer Contribution - Semi Monthly(date release: 1-15)</field>
+            <field name="sequence" eval="708"/>
+            <field name="code">PHICER-SM</field>
+            <field name="category_id" ref="hris.EMRCTRB"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result=1 &lt;=contract.format_datetime(payslip.date_release) and 15 >= contract.format_datetime(payslip.date_release)</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = ((contract.wage*0.0275)/2.0  &gt; 550.0 and 550.0 or (contract.wage*0.0275)/2)/2 </field>
+
+            <field name="note">PHIC Employee Contribution; 2.75 % of the basic pay; divide the amount by 2</field>
+            <field name="is_loan_payment">False</field>
+        </record>
+
+        <record id="hr_rule_HDMFER-SM_1" model="hr.salary.rule">
+            <field name="name">HDMF Employer Contribution-Semi Monthly(date release: 1-15)</field>
+            <field name="sequence" eval="709"/>
+            <field name="code">HDMFER-SM</field>
+            <field name="category_id" ref="hris.EMRCTRB"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result=1 &lt;=contract.format_datetime(payslip.date_release) and 15 >= contract.format_datetime(payslip.date_release)</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result=100/2.0</field>
+
+            <field name="note">HDMF Employee Contribution; PHP 100.00 per month; divide the amout by 2</field>
+            <field name="is_loan_payment">False</field>
+        </record>
+
+        <record id="hr_rule_SSSER-M_1" model="hr.salary.rule">
+            <field name="name">SSS Employer Contribution-Monthly(date release: 1-15)</field>
+            <field name="sequence" eval="710"/>
+            <field name="code">SSSER-M</field>
+            <field name="category_id" ref="hris.EMRCTRB"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result=1 &lt;=contract.format_datetime(payslip.date_release) and 15 >= contract.format_datetime(payslip.date_release)</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result=contract.get_contrib_value_by_model('payroll.sss.contribution', contract.wage).contrib_er</field>
+
+            <field name="note">SSS Employee Contribution; refer to the 2018 SSS Contribution Table</field>
+            <field name="is_loan_payment">False</field>
+        </record>
+
+        <record id="hr_rule_PHICER-M_1" model="hr.salary.rule">
+            <field name="name">PHIC Employer Contribution-Monthly(date release: 1-15)</field>
+            <field name="sequence" eval="711"/>
+            <field name="code">PHICER-M</field>
+            <field name="category_id" ref="hris.EMRCTRB"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result=1 &lt;=contract.format_datetime(payslip.date_release) and 15 >= contract.format_datetime(payslip.date_release)</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = ((contract.wage*0.0275)/2.0  &gt; 550.0 and 550.0 or (contract.wage*0.0275)/2)</field>
+
+            <field name="note">PHIC Employee Contribution; 2.75 % of the basic pay</field>
+            <field name="is_loan_payment">False</field>
+        </record>
+
+        <record id="hr_rule_MedClothAll-M" model="hr.salary.rule">
+            <field name="name">Medical and Clothing Allowances Monthly</field>
+            <field name="sequence" eval="148"/>
+            <field name="code">MedClothAll-M</field>
+            <field name="category_id" ref="hris.ONTXINC"/>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result=contract.get_other_income('MC', payslip,employee,contract)</field>
+            <field name="note"></field>
+            <field name="is_loan_payment">False</field>
+        </record>
+         <record id="hr_rule_MedClothAll-SM" model="hr.salary.rule">
+            <field name="name">Medical and Clothing Allowances Semi-Monthly</field>
+            <field name="sequence" eval="149"/>
+            <field name="code">MedClothAll-SM</field>
+            <field name="category_id" ref="hris.ONTXINC"/>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result=contract.get_other_income('MC', payslip,employee,contract)/2</field>
+            <field name="note"></field>
+            <field name="is_loan_payment">False</field>
+        </record>
+
+          <!-- for epi only-->
+        <record id="hr_rule_NonTaxAll-SM" model="hr.salary.rule">
+                <field name="name">Non Taxable Allowance(semi-monthly)</field>
+                <field name="sequence" eval="145"/>
+                <field name="code">NonTaxAll-SM</field>
+                <field name="category_id" ref="hris.ONTXINC"/>
+                <field name="amount_select">code</field>
+                <field name="amount_python_compute">result=contract.get_other_income('NonTaxAll', payslip,employee,contract)/2</field>
+                <field name="note"></field>
+                <field name="is_loan_payment">False</field>
+        </record>
+        <record id="hr_rule_NonTaxAll-M" model="hr.salary.rule">
+                <field name="name">Non Taxable Allowance(Monthly)</field>
+                <field name="sequence" eval="147"/>
+                <field name="code">NonTaxAll-M</field>
+                <field name="category_id" ref="hris.ONTXINC"/>
+                <field name="amount_select">code</field>
+                <field name="amount_python_compute">result=contract.get_other_income('NonTaxAll', payslip,employee,contract)</field>
+                <field name="note"></field>
+                <field name="is_loan_payment">False</field>
+        </record>
+
+        <record id="hr_rule_TaxDue" model="hr.salary.rule">
+            <field name="name">TAX DUE</field>
+            <field name="sequence" eval="153" />
+            <field name="active">True</field>
+            <field name="code">TAXDUE</field>
+            <field name="category_id" ref="hris.TaxDue" />
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result=0</field>
+            <field name="note"></field>
+            <field name="is_loan_payment">False</field>
+        </record>
+
+        <record id="hr_rule_LOB" model="hr.salary.rule">
+            <field name="name">Late Official Business</field>
+            <field name="sequence" eval="103"/>
+            <field name="code">LOB</field>
+            <field name="category_id" ref="hris.OtherTaxInc"/>
+
+            <field name="condition_select">python</field>
+            <field name="condition_python">result=worked_days.LOB and worked_days.LOB.number_of_hours &gt; 0</field>
+
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">wage = contract.get_wage(payslip,contract)
+result = worked_days.LOB and (worked_days.LOB.number_of_hours * ((wage/contract.average_working_days)/8.0)) or 0</field>
+            <field name="is_loan_payment">False</field>
+        </record>
+
+        <record id="hr_rule_LOT" model="hr.salary.rule">
+            <field name="name">Late Overtime</field>
+            <field name="sequence" eval="104"/>
+            <field name="code">LOT</field>
+            <field name="category_id" ref="hris.OtherTaxInc"/>
+
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">wage = contract.get_wage(payslip,contract)
+result = worked_days.LOT and (worked_days.LOT.number_of_hours * ((wage/contract.average_working_days)/8.0) * 1.25) or 0</field>
+            <field name="note">worked rendered beyond 8 hrs</field>
+            <field name="is_loan_payment">False</field>
+        </record>
+
+        <record id="hr_rule_LateLWP" model="hr.salary.rule">
+            <field name="sequence" eval="106"/>
+            <field name="code">LateLWP</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="name">Late Leave With Pay</field>
+            <field name="amount_python_compute">wage = contract.get_wage(payslip,contract)
+result = worked_days.LateLWP and (worked_days.LateLWP.number_of_hours * ((wage/contract.average_working_days)/8.0)) or 0
+            </field>
+            <field name="category_id" ref="hris.OtherTaxInc"/>
+        </record>
+
+        <record id="hr_rule_LateLWOP" model="hr.salary.rule">
+            <field name="sequence" eval="105"/>
+            <field name="code">LateLWOP</field>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="name">Late Leave Without Pay</field>
+            <field name="amount_python_compute">wage = contract.get_wage(payslip,contract)
+result = worked_days.LateLWOP and (worked_days.LateLWOP.number_of_hours * ((wage/contract.average_working_days)/8.0)) or 0
+            </field>
+            <field name="category_id" ref="hris.OtherTaxInc"/>
+        </record>
+
+    </data>
+</odoo>

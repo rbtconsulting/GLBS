@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+        <!--<record id="paperformat_hr_employee_bir_reports"
+            model="report.paperformat">
+            <field name="name">Legal Portrait</field>
+            <field name="default" eval="True" />
+            <field name="format">Legal</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">20</field>
+            <field name="margin_bottom">20</field>
+            <field name="margin_left">7</field>
+            <field name="margin_right">7</field>
+            <field name="header_line" eval="False" />
+            <field name="header_spacing">35</field>
+            <field name="dpi">90</field>
+        </record>-->
+		<record id="paperformat_hr_employee_bir_reports"
+            model="report.paperformat">
+            <field name="name">Legal Portrait</field>
+            <field name="default" eval="True" />
+            <field name="format">Legal</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">0</field>
+            <field name="margin_bottom">0</field>
+            <field name="margin_left">0</field>
+            <field name="margin_right">0</field>
+            <field name="header_line" eval="False" />
+            <field name="header_spacing">35</field>
+            <field name="dpi">90</field>
+        </record>
+        
+        <report 
+            id="report_hrsalaryemployee1601c"
+            string="BIR 1601-C Report"
+            model="hr.salary.employee.1601c"
+            report_type="qweb-pdf"
+            file="hris.report_hrsalaryemployee1601c"
+            name="hris.report_hrsalaryemployee1601c"
+            paperformat="paperformat_hr_employee_bir_reports" />
+
+        <report 
+            id="report_hrsalaryemployee1601e"
+            string="BIR 1601-E Report"
+            model="hr.salary.employee.1601e"
+            report_type="qweb-pdf"
+            file="hris.report_hrsalaryemployee1601e"
+            name="hris.report_hrsalaryemployee1601e"
+            paperformat="paperformat_hr_employee_bir_reports" />
+
+        <report 
+            id="report_hrsalaryemployee2307"
+            string="BIR 2307 Report"
+            model="hr.salary.employee.2307"
+            report_type="qweb-pdf"
+            file="hris.report_hrsalaryemployee2307"
+            name="hris.report_hrsalaryemployee2307"
+            paperformat="paperformat_hr_employee_bir_reports" />
+            
+         <report 
+            id="report_hrsalaryemployee2316"
+            string="BIR 2316 Report"
+            model="hr.salary.employee.2316"
+            report_type="qweb-pdf"
+            file="hris.report_hrsalaryemployee2316"
+            name="hris.report_hrsalaryemployee2316"
+            paperformat="paperformat_hr_employee_bir_reports" />
+            
+
+</odoo>

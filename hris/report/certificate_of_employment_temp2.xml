@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="hris.report_employee_coe_template2">
+        <t t-call="report.html_container">
+            <t t-foreach="docs" t-as="o">
+                <div class="page">
+                    <style>
+                        .container-fluid {
+                        margin-left: auto;
+                        margin-right: auto;}
+
+                        .header_coe {
+                        font-size:20px;
+                        margin-top:10%;}
+
+                        .image {
+                        height: 10%;
+                        width:10%
+                        margin:auto;
+                        z-index: -100!important
+                        opacity:0.5;}
+
+                        .header_comp {
+                        font-size: 20px;
+                        margin-left: 15px;
+                        margin-top: 40;}
+
+                        .cert_title{
+                        font-size: 30px;
+                        margin-top: 15%;}
+
+                        .borders {
+                        border-width: 3px;
+                        border-style: solid;
+                        -webkit-border-image:
+                        -webkit-gradient(linear, 0 0, 0 100%, from(black), to(rgba(0, 0, 0, 0))) 1 100%;
+                        -webkit-border-image:
+                        -webkit-linear-gradient(black, rgba(0, 0, 0, 0)) 1 100%;
+                        -moz-border-image:
+                        -moz-linear-gradient(black, rgba(0, 0, 0, 0)) 1 100%;
+                        -o-border-image:
+                        -o-linear-gradient(black, rgba(0, 0, 0, 0)) 1 100%;
+                        border-image:
+                        linear-gradient(to bottom, black, rgba(0, 0, 0, 0)) 1 100%;
+                        }
+
+                        .body_style {
+                        margin:auto;
+                        font-size:20px;
+                        margin-top: 50px;
+                        margin-left:60xp;
+                        margin-right:40px;}
+
+                        .comp_info > span{
+                        font-size: 15px;
+                        margin-top:-100px!important;}
+
+                    </style>
+                    <t t-set="fm" t-value="form_data" />
+                    <t t-set="dates" t-value="dates" />
+                    <t t-set="approver" t-value="get_approved_by" />
+                    <div class="container-fluid">
+                        <div style="text-align:center;">
+                            <img t-if="o.employee_id.id_company.logo"
+                                t-att-src="'data:image/png;base64,%s' %o.employee_id.id_company.logo"
+                                width="100px" height="100px"/>
+                            <div class="header_coe">
+                                <t t-if="o.employee_id.id_company.name">
+                                    <b>
+                                        <span class="header_comp" t-esc="o.employee_id.id_company.name" />
+                                    </b>
+                                </t>
+                                <div class="comp_info">
+                                    <span t-esc="o.employee_id.id_company.street" />
+                                    <span t-esc="o.employee_id.id_company.street2" />
+                                    ,
+                                    <span t-esc="o.employee_id.id_company.city" />
+                                    <br />
+                                    <span t-esc="o.employee_id.id_company.phone" />
+                                    <br />
+                                    <span t-esc="o.employee_id.id_company.website" />
+                                </div>
+                            </div>
+                            <div class="cert_title">
+                                <b>CERTIFICATE OF EMPLOYMENT</b>
+                            </div>
+                            <br />
+                            <br />
+                            <br />
+                            <div class="text-left">
+                                To Whom It May Concern:
+                                <br />
+                                <br />
+                                <br />
+                                <p>
+                                    <span>
+                                        This is to certify that
+                                        <b>
+                                            Mr./Ms.
+                                            <span t-esc="o.employee_id.name" />
+                                        </b>
+                                        <t t-if="o.state == 'resigned'">
+                                            <span> was employed at </span>
+                                        </t>
+                                        <t t-if="o.state == 'employed'">
+                                            <span> is currently employed with </span>
+                                        </t>
+                                    </span>
+                                    <b>
+                                        <span t-esc="o.employee_id.id_company.name" />
+                                    </b>
+                                    <t t-if="o.state == 'employed'">
+
+                                        as of
+                                        <b>
+                                            <span t-esc="dates['date_start']" />
+                                        </b>
+                                    </t>
+                                    <t t-if="o.state != 'employed'">
+                                        from
+                                        <b>
+                                            <span t-esc="dates['date_start']" />
+                                        </b>
+                                        to
+                                        <b>
+                                            <span t-esc="dates['date_end']" />
+                                        </b>
+                                    </t>
+                                    with the position of
+                                    <b>
+                                        <span t-esc="o.employee_id.job_id.name" />
+                                    </b>
+                                    and a monthly wage of
+                                    <b>
+                                        <span t-esc="o.employee_id.contract_id.wage" />
+                                    </b>
+                                    .
+                                    <br />
+                                    <br />
+                                    <br />
+                                    This certificate is issued upon the request of
+                                    <b>
+                                        Mr/Ms.
+                                        <span t-esc="o.employee_id.name" />
+                                    </b>
+                                    for the purpose of
+                                    <span t-esc="o.purpose" />
+                                    and is not valid for any other purpose.
+                                    <br />
+                                    <br />
+                                    <br />
+                                    Done this
+                                    <b>
+                                        <span
+                                            t-esc="context_timestamp(datetime.datetime.now()).strftime('%B')" />
+                                        <span
+                                            t-esc="context_timestamp(datetime.datetime.now()).strftime('%d %Y')" />
+                                    </b>
+                                    at
+                                    <b>
+                                        <span t-esc="o.employee_id.id_company.name" />
+                                    </b>
+                                    ,
+                                    <span t-esc="o.employee_id.work_location_id.name" />
+                                </p>
+                                <div style="margin-top:30px;">
+                                    <br />
+                                    <p>
+                                        <b>
+                                            <span t-esc="o.approved_by.name" />
+                                        </b>
+                                    </p>
+                                    <span t-esc="o.approved_by.job_id.name" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- end of page -->
+            </t>
+        </t>
+    </template>
+</odoo>
+

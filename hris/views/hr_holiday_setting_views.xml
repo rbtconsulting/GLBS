@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="hr_holiday_setting_form_view" model="ir.ui.view">
+            <field name="name">hr.holiday.setting.form.view</field>
+            <field name="model">hr.holiday.setting</field>
+            <field name="arch" type="xml">
+                <form string="Holiday Setting">
+                    <sheet>
+                        <group string="Required Attendance On Holiday">
+                            <field name="holiday_type" required="1"/>
+                            <newline/>
+                            <field name="before"/>
+                            <newline/>
+                            <field name="after"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="hr_holiday_setting_tree_view" model="ir.ui.view">
+            <field name="name">hr.holiday.setting.tree.view</field>
+            <field name="model">hr.holiday.setting</field>
+            <field name="arch" type="xml">
+                <tree string="Holiday Setting">
+                    <field name="holiday_type"/>
+                    <field name="before"/>
+                    <field name="after"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_hr_holiday_setting" model="ir.actions.act_window">
+            <field name="name">Holiday Setting</field>
+            <field name="res_model">hr.holiday.setting</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="hr_holiday_setting_tree_view"/>
+          </record>
+
+          <menuitem id="menu_hr_holiday_setting" 
+            name="Holiday Settings" 
+            action="action_hr_holiday_setting"
+            sequence="16" 
+            parent="menu_hris_attendance_device"/>
+    </data>
+</odoo>

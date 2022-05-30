@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+		<!--Start of HR Leave Type-->
+	   	<record id="hr_leave_type_view_form" model="ir.ui.view">
+	   	    <field name="name">HR Leave Automation</field>
+	   	    <field name="model">hr.leave.type</field>
+	   	    <field name="arch" type="xml">
+	   	        <form>
+	   	            <header>
+	   	                <button name="btn_activate" type="object" 
+	   	                    attrs="{'invisible': [('state', '=', 'activate')]}"
+	   	                    class="btn-primary" string="ACTIVATE"/>
+	   	                
+	   	                <button name="btn_deactivate" type="object" 
+	   	                    class="btn-primary" string="DEACTIVATE" />
+	   	                
+	   	                <button name="btn_make_leaves" type="object" 
+	   	                    attrs="{'invisible': [('state', '=', 'deactivate')]}"
+	   	                    class="btn-primary" string="CREATE LEAVES" />
+	   	                 	                
+	   	                <button name="btn_make_conversion_carry_over" 
+	   	                    attrs="{'invisible': ['|',('state', '=', 'deactivate')]}" 
+	   	                    type="object" class="btn-primary" string="CREATE LEAVE CONVERSION AND CARRY OVER" />
+	   	                
+	   	                <button name="btn_expire_leaves" 
+	   	                    attrs="{'invisible': ['|',('state', '=', 'deactivate')]}" 
+	   	                    type="object" class="btn-primary" string="EXPIRE LEAVES" />
+	   	                
+	   	            	<field name="state" widget="statusbar" statusbar_visible="activate,deactivate" />
+	   	            </header>
+	   	            <sheet>
+	   	                <group>
+	   	                    <group>
+	   	                        
+	   	                		<field name="holiday_status_id" 
+	   	                		    attrs="{'readonly': [('state', '=', 'activate')]}"
+	   	                		    options="{'no_open':True,'no_create_edit':True, 'no_create':True}" />
+	   	                		<field name="amount" string="Leave Amount" attrs="{'readonly': [('state', '=', 'activate')]}" />
+	   	                		<field name="basis_entitlement" attrs="{'readonly': [('state', '=', 'activate')]}" />
+	   	                		<field name="basis_earning" attrs="{'readonly': [('state', '=', 'activate')]}" />
+	   	                		<label for="carry_over" string="Max to Carry Over" attrs="{'readonly': [('state', '=', 'activate')]}" />
+	   	                		<div class="o_row">
+	   	                			<field name="carry_over" attrs="{'readonly': [('state', '=', 'activate')]}"/>
+	   	                			<field name="priority" attrs="{'readonly': [('state', '=', 'activate')]}"/>
+	   	                		</div>
+	   	                		<label for="leave_conversion" string="Max Leave Conversion" />
+	   	                		<div class="o_row">
+	   	                			<field name="leave_conversion" attrs="{'readonly': [('state', '=', 'activate')]}" />
+	   	                			<field name="priority2" attrs="{'readonly': [('state', '=', 'activate')]}" />
+	   	                		</div>
+	   	                		<field name="force_create"/>
+	   	                		<field name="cron_id" 
+	   	                		    context="{'default_name': 'Leave Allocation', 
+	   	                		    'default_model': 'hr.leave.type', 
+	   	                		    'default_function': 'cron_make_leaves'}" attrs="{'readonly': [('state', '=', 'activate')]}" />
+	   	                	</group>
+	   	                	
+	   	               	</group>
+	   	               	<notebook>
+   	                		<page name="emp_tag" string="Employee Tag">
+   	                			<field name="categ_ids" nolabel="1" attrs="{'readonly': [('state', '=', 'activate')]}"/>
+   	                		</page>
+   	                		<page name="gender" string="Gender">
+   	                		    <group>
+   	                		    	<field name="gender" widget="radio" attrs="{'readonly': [('state', '=', 'activate')]}"/>
+   	                		    </group>
+   	                		</page>
+   	                		<page name="expiration" string="Expiration">
+   	                		    <group>
+	   	                		    <label for="with_expiration" />
+	   	                			<div class="o_row">
+	   	                			    <field name="with_expiration" attrs="{'readonly': [('state', '=', 'activate')]}" />
+	   	                			    <field name="expiration_date"
+	   	                			           options="{'showType': 'months'}" 
+	   	                			           attrs="{'readonly': [('state', '=', 'activate')], 
+	   	                			           		   'invisible': [('with_expiration', '=', False)], 
+	   	                			           		   'required': [('with_expiration', '=', True)]}" />
+	   	                			</div>
+   	                			</group>
+   	                		</page>
+	   	               </notebook>
+	   	            </sheet>
+	   	        </form>
+	   	    </field>
+	   	</record>
+		   	
+	   	<record id="hr_leave_type_view_tree" model="ir.ui.view">
+	   	    <field name="name">HR Leave Automation</field>
+	   	    <field name="model">hr.leave.type</field>
+	   	    <field name="arch" type="xml">
+	   	        <tree>
+	   	        	<field name="holiday_status_id" />
+               		<field name="amount" />
+               		<field name="basis_entitlement" />
+               		<field name="basis_earning" />
+               		<field name="carry_over" />
+               		<field name="leave_conversion" />
+	   	        </tree>
+	   	    </field>
+	   	</record>
+	   	
+	   	<record id="action_hr_leave_type" model="ir.actions.act_window">
+	   	    <field name="name">HR Leave Automation</field>
+	   	    <field name="res_model">hr.leave.type</field>
+	   	    <field name="view_mode">tree,form</field>
+	   	    <field name="view_type">form</field>
+	   	    <field name="help" type="html">
+	   	        <p class="oe_nocontent_create_view">
+	   	        	Click here to add new leave type.
+	   	        </p>
+	   	    </field>
+	   	</record>
+	   	
+	   	<menuitem
+            id="hr_holidays.menu_hr_holidays_configuration"
+            name="Configuration"
+            parent="hr_holidays.menu_hr_holidays_root"
+            sequence="100"
+            groups="hr_holidays.group_hr_holidays_manager"/>
+	   	
+	   	<menuitem
+            id="menu_hr_holidays_leaves_type"
+            name="Leave Types"
+            parent="hr_holidays.menu_hr_holidays_configuration"
+            sequence="70"
+            groups="hr_holidays.group_hr_holidays_manager"
+            action="hr_holidays.open_view_holiday_status"/>
+	   	
+	   	<menuitem
+	           id="menu_hr_leave_type"
+	           action="action_hr_leave_type"
+	           name="Leave Automations"
+	           parent="hr_holidays.menu_hr_holidays_configuration"
+	           sequence="80"/>
+		 
+		 <record id="hr_holidays_leave_status_remarks" model="ir.ui.view">
+		     <field name="name">Holidays Status Remarks</field>
+		     <field name="model">hr.holidays.status</field>
+		     <field name="inherit_id" ref="hr_holidays.edit_holiday_status_form" />
+		     <field name="arch" type="xml">
+		        <xpath expr="//field[@name='name']" position="before">
+		       		<field name="code" groups="hr_holidays.group_hr_holidays_manager" />
+		        </xpath>
+		        <xpath expr="//group[1]" position="inside" >
+		     		
+		     		<group name="leave_remarks" >
+			     		<field name="leave_remarks" groups="hr_holidays.group_hr_holidays_manager" 
+			     		       widget="radio" options="{'horizontal':True}" />
+						<field name="leave_type_selection"/>
+		     		</group>
+		     		<group name="lockout">
+		     		    <label for="lockout" />
+		     		    <div class="o_row">
+		     		    	<field name="lockout" groups="hr_holidays.group_hr_holidays_manager"/>
+		     				<field name="lockout_period" attrs="{'invisible': [('lockout','=',False)]}" />payroll cutoff
+		     			</div>
+		     		</group>
+		     		<group name="notice">
+		     		    <label for="notice" />
+		     		    <div class="o_row">
+		     		    	<field name="notice" groups="hr_holidays.group_hr_holidays_manager"/>
+		     				<field name="notice_period" attrs="{'invisible': [('notice','=',False)]}" /> days
+		     			</div>
+		     		</group>
+		     		<group name="ob">
+		     		    <label for="is_ob" />
+		     		    <div class="o_row">
+		     		    	<field name="is_ob" groups="hr_holidays.group_hr_holidays_manager"/>
+		     			</div>
+		     		</group>
+		     		<group name="expiration">
+		     		    <label for="expiration_date" />
+		     		    <div class="o_row">
+		     		    	<field name="expiration_date" options="{'showType': 'months'}" groups="hr_holidays.group_hr_holidays_manager"/>
+		     			</div>
+		     		</group>
+		     		<group name="cdo">
+		     		    <label for="is_cdo" />
+		     		    <div class="o_row">
+		     		    	<field name="is_cdo" groups="hr_holidays.group_hr_holidays_manager"/>
+		     		    	Entitled for <field name="job_ids" options="{'no_create':True, 'no_create_edit':True}" widget="many2many_tags" attrs="{'invisible': [('is_cdo', '=', False)]}" />
+		     			</div>
+		     		</group>
+		     	</xpath>
+		     </field>
+		 </record>
+		 <record id="hr_holidays_leave_conversion" model="ir.ui.view">
+		     <field name="name">Holidays Conversion</field>
+		     <field name="model">hr.holidays</field>
+		     <field name="inherit_id" ref="hr_holidays.edit_holiday_new" />
+		     <field name="arch" type="xml">
+		        <!--<xpath expr="//field[@name='date_from']" position="replace" >
+		     		<field name="date_from" attrs="{'required':[('type', '=', 'remove'), ('process_type', '=', False)], 'invisible':[('type', '=', 'remove'), ('process_type', '!=', False)]}" class="oe_inline"/>
+		     	</xpath>
+		     	<xpath expr="//field[@name='date_to']" position="replace" >
+		     		<field name="date_to" attrs="{'required':[('type', '=', 'remove'), ('process_type', '=', False)], 'invisible':[('type', '=', 'remove'), ('process_type', '!=', False)]}" class="oe_inline"/>
+		     	</xpath>-->
+		     	<xpath expr="//group[1]/group[1]" position="inside" >
+	     	       <field name="process_type" attrs="{'invisible': [('type', '=', 'add')], 
+	     	           								  'readonly': [('state', 'not in', ('draft', 'confirm'))]}" />
+	     	       <!--<field name="date_processed" attrs="{'invisible': [('type', '=', 'add')], 
+	     	           									'readonly': [('state', 'not in', ('draft', 'confirm'))], 
+	     	           									'required':[('type', '=', 'remove'), 
+	     	           									('process_type', '!=', False)]}"/>-->
+		     	</xpath>
+				 <xpath expr="//field[@name='number_of_days_temp']" position="attributes">
+		     		<attribute name="attrs">{'invisible':[('type', '=', 'remove'), ('can_modify', '=', False)]}</attribute>
+		     	</xpath>
+		     	<xpath expr="//field[@name='number_of_days_temp']" position="after">
+		     		<field name="actual_number_of_days" attrs="{'invisible':[('type', '=', 'add')]}" />
+		     		<field name="can_modify" invisible="1" />
+		     		
+		     	</xpath>
+		     	<xpath expr="//field[@name='department_id']" position="after" >
+		     	    <field name="date_approved" groups="hris.group_approver" attrs="{'readonly': [('state', 'not in', ('draft', 'confirm'))]}" />
+		     	</xpath>
+		     	
+		     	<xpath expr="//group[1]/group[1]/div[1]/div[1]" position="replace" >
+		     	  <div attrs="{'invisible': ['|',('process_type', '!=', False),('type', '=', 'add')]}">
+                      <field name="date_from" attrs="{'required':[('type', '=', 'remove'), ('process_type', '=', False)]}" class="oe_inline"/>
+					  <label string="-" class="oe_inline"/>
+                      <field name="date_to" attrs="{'required':[('type', '=', 'remove'), ('process_type', '=', False)]}" class="oe_inline"/>
+		     	  </div>
+		     	</xpath>
+		     	<xpath expr="//field[@name='name']" position="attributes">
+					<attribute name="string">Reason</attribute>
+		     	</xpath>
+		     </field>
+		 </record>
+
+
+		<act_window
+            id="hr_holidays.act_hr_leave_request_to_meeting"
+            name="Leave Meetings"
+            src_model="hr.holidays"
+            res_model="calendar.event"
+            view_mode="tree,form,calendar"
+			groups="hris.hide"
+            view_type="form"/>
+	 </data>
+</odoo>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+	<template id="report_tax_contribution_template">
+	    <t t-call="report.html_container">
+			<t t-foreach="docs" t-as="o">
+	  	      <t t-call="report.external_layout">
+	             <div class="page">
+					<style>
+
+					table {
+						font-family: arial, sans-serif;
+						border-collapse: collapse;
+						width: 100%;
+						}
+
+					table {
+						font-family: arial, sans-serif;
+						border-collapse: collapse;
+						width: 100%;
+						white-space:nowrap;
+
+						}
+
+					td, th {
+						border: 1px solid #dddddd;
+						text-align: left;
+						white-space:nowrap;
+						padding:0 !important;
+						font-size: 18px;
+						}
+
+					tr:nth-child(even) {
+						background-color: #dddddd;
+						}
+					</style>
+                <t t-set = "get_company" t-value = "get_company"/>
+                <t t-set="data_source" t-value="get_tax_contribution_details" />
+                <t t-set="totals" t-value="totals" />
+                <t t-set="dates" t-value="dates" />
+                <header>
+                    <tr>
+                        <h3><p align = "center" ><b>WITHHOLDING TAX CONTRIBUTIONS REPORT</b></p></h3>
+                    </tr>
+                    <p align = "center">
+                    		<b>Period:</b>
+                         	<b t-esc="dates['DATE_FROM']" /> -
+                            <b t-esc="dates['DATE_TO']" />
+                	</p>
+				</header>
+                <table class="table table-condensed,table-hover">
+                    <tr>
+                        <th class="text-center">EMP. NO.</th>
+						<th class="text-center">TIN NO.</th>
+                        <th class="text-center">NAME</th>
+                        <th class="text-center">AMOUNT</th>
+					 </tr>
+                    <t t-foreach="data_source" t-as="ds">
+	                    <tr>
+	              			<td class="text-center"><span t-esc="ds['EMP_NUM']" /></td>
+							<td class="text-center"><span t-esc="ds['EMP_TIN']" /></td>
+				  			 <td class="text-center"><span t-esc="ds['EMP_NAME']" /></td>
+	                         <td class="text-right"><span t-esc="'{:,.2f}'.format(ds['WTHTAX'])" /></td>
+                    	</tr>
+                    </t>
+                    <!-- get totals -->
+                    <tr>
+						<td class="text-center" colspan="2"></td>
+						<td class="text-center">Total</td>
+						<td class="text-right"><span t-esc="'{:,.2f}'.format(totals['TOTAL_TAX_CON'])"/></td>
+                    </tr>
+                </table>
+                <p align="right"><b>Grand Total</b></p>
+                <footer>
+                	<div class="o_row">
+						<div class="col-xs-3"><b>Prepared by:</b></div>
+						<div class="col-xs-3"><b>Approved by:</b></div>
+						<div class="col-xs-3"><b>Cheked by:</b></div>
+					</div>
+                </footer>
+            </div>
+            </t>
+        	</t>
+    		</t>
+		</template>
+	</data>
+</odoo>
+

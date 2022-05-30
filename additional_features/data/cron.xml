@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+
+        <record id="ir_cron_generate_leave_conversion" model="ir.cron">
+            <field name="name">Generate Leave Conversion and Carry Over</field>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">12</field>
+            <field name="interval_type">months</field>
+            <field name="priority">3</field>
+            <field name="numbercall">-1</field>
+            <field eval="False" name="doall"/>
+            <field eval="'hr.leave.type'" name="model"/>
+            <field eval="'btn_carry_over_leave_convert'" name="function"/>
+        </record>
+
+        <record id="ir_cron_generate_create_leaves_record" model="ir.cron">
+            <field name="name">Generate Create Leaves</field>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="priority">3</field>
+            <field name="numbercall">-1</field>
+            <field eval="False" name="doall"/>
+            <field eval="'hr.leave.type'" name="model"/>
+            <field eval="'cron_create_leaves'" name="function"/>
+        </record>
+
+
+        <record id="default_01" model="hr.work_sched_time">
+            <field name="month_date">01</field>
+            <field name="is_month_date">1</field>
+        </record>
+        <record id="default_02" model="hr.work_sched_time">
+            <field name="month_date">02</field>
+            <field name="is_month_date">1</field>
+        </record>
+        <record id="default_03" model="hr.work_sched_time">
+            <field name="month_date">03</field>
+            <field name="is_month_date">1</field>
+        </record>
+        <record id="default_04" model="hr.work_sched_time">
+            <field name="month_date">04</field>
+            <field name="is_month_date">1</field>
+        </record>
+        <record id="default_05" model="hr.work_sched_time">
+            <field name="month_date">05</field>
+            <field name="is_month_date">1</field>
+        </record>
+        <record id="default_06" model="hr.work_sched_time">
+            <field name="month_date">06</field>
+            <field name="is_month_date">1</field>
+        </record>
+        <record id="default_07" model="hr.work_sched_time">
+            <field name="month_date">07</field>
+            <field name="is_month_date">1</field>
+        </record>
+        <record id="default_08" model="hr.work_sched_time">
+            <field name="month_date">08</field>
+            <field name="is_month_date">1</field>
+        </record>
+                <record id="default_09" model="hr.work_sched_time">
+            <field name="month_date">09</field>
+            <field name="is_month_date">1</field>
+        </record>
+                <record id="default_10" model="hr.work_sched_time">
+            <field name="month_date">10</field>
+            <field name="is_month_date">1</field>
+        </record>
+                <record id="default_11" model="hr.work_sched_time">
+            <field name="month_date">11</field>
+            <field name="is_month_date">1</field>
+        </record>
+                <record id="default_12" model="hr.work_sched_time">
+            <field name="month_date">12</field>
+            <field name="is_month_date">1</field>
+        </record>
+                <record id="default_13" model="hr.work_sched_time">
+            <field name="month_date">13</field>
+            <field name="is_month_date">1</field>
+        </record>
+                <record id="default_14" model="hr.work_sched_time">
+            <field name="month_date">14</field>
+            <field name="is_month_date">1</field>
+        </record>
+                <record id="default_15" model="hr.work_sched_time">
+            <field name="month_date">15</field>
+            <field name="is_month_date">1</field>
+        </record>
+                <record id="default_16" model="hr.work_sched_time">
+            <field name="month_date">16</field>
+            <field name="is_month_date">1</field>
+        </record>
+                <record id="default_17" model="hr.work_sched_time">
+            <field name="month_date">17</field>
+            <field name="is_month_date">1</field>
+        </record>
+                <record id="default_18" model="hr.work_sched_time">
+            <field name="month_date">18</field>
+            <field name="is_month_date">1</field>
+        </record>
+        <record id="default_19" model="hr.work_sched_time">
+            <field name="month_date">19</field>
+            <field name="is_month_date">1</field>
+        </record>
+                <record id="default_20" model="hr.work_sched_time">
+            <field name="month_date">20</field>
+            <field name="is_month_date">1</field>
+        </record>
+                <record id="default_21" model="hr.work_sched_time">
+            <field name="month_date">21</field>
+            <field name="is_month_date">1</field>
+        </record>
+                <record id="default_22" model="hr.work_sched_time">
+            <field name="month_date">22</field>
+            <field name="is_month_date">1</field>
+        </record>
+        <record id="default_23" model="hr.work_sched_time">
+            <field name="month_date">23</field>
+            <field name="is_month_date">1</field>
+        </record>
+        <record id="default_24" model="hr.work_sched_time">
+            <field name="month_date">24</field>
+            <field name="is_month_date">1</field>
+        </record>
+        <record id="default_25" model="hr.work_sched_time">
+            <field name="month_date">25</field>
+            <field name="is_month_date">1</field>
+        </record>
+        <record id="default_26" model="hr.work_sched_time">
+            <field name="month_date">26</field>
+            <field name="is_month_date">1</field>
+        </record>                <record id="default_27" model="hr.work_sched_time">
+            <field name="month_date">27</field>
+            <field name="is_month_date">1</field>
+        </record>
+        <record id="default_28" model="hr.work_sched_time">
+            <field name="month_date">28</field>
+            <field name="is_month_date">1</field>
+        </record>
+        <record id="default_29" model="hr.work_sched_time">
+            <field name="month_date">29</field>
+            <field name="is_month_date">1</field>
+        </record>
+        <record id="default_30" model="hr.work_sched_time">
+            <field name="month_date">30</field>
+            <field name="is_month_date">1</field>
+        </record>
+        <record id="default_31" model="hr.work_sched_time">
+            <field name="month_date">31</field>
+            <field name="is_month_date">1</field>
+        </record>
+
+
+
+    </data>
+</odoo>

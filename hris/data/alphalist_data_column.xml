@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        
+        <record id="alpha_main_config" model="hr.alpha_list.main_config">
+			<field name="name">Alphalist</field>
+            <field name="active">True</field>
+            <field name="alphalist_type">7_4</field>
+        </record>
+ 
+		<record id="alpha_column1" model="hr.alpha_list.config">
+			<field name="name">Gross Compensation Income</field>
+            <field name="code">1</field>
+            <field name="alphalist_structure_id" ref="alpha_main_config" />
+        </record>
+       	<record id="alpha_column2" model="hr.alpha_list.config">
+			<field name="name">13th Month Pay and Other Benefits</field>
+            <field name="code">2</field>
+            <field name="alphalist_structure_id" ref="alpha_main_config" />
+        </record>
+       	<record id="alpha_column3" model="hr.alpha_list.config">
+			<field name="name">De Minimis Benefits</field>
+            <field name="code">3</field>
+            <field name="alphalist_structure_id" ref="alpha_main_config" />
+        </record>
+       	<record id="alpha_column4" model="hr.alpha_list.config">
+			<field name="name">SSS,GSIS, PHIC and Pag-Ibig Contributions and union Dues</field>
+            <field name="code">4</field>
+            <field name="alphalist_structure_id" ref="alpha_main_config" />
+        </record>
+       	<record id="alpha_column5" model="hr.alpha_list.config">
+			<field name="name">Salaries and Other Forms of Compensation</field>
+            <field name="code">5</field>
+            <field name="alphalist_structure_id" ref="alpha_main_config" />
+        </record>
+       	<record id="alpha_column6" model="hr.alpha_list.config">
+			<field name="name">Total Non-Taxable /Exempt Compensation Income</field>
+            <field name="code">6</field>
+            <field name="alphalist_structure_id" ref="alpha_main_config" />
+        </record>
+       	<record id="alpha_column7" model="hr.alpha_list.config">
+			<field name="name">Basic Salary</field>
+            <field name="code">7</field>
+            <field name="alphalist_structure_id" ref="alpha_main_config" />
+        </record>
+       	<record id="alpha_column8" model="hr.alpha_list.config">
+			<field name="name">13th Month Pay and Other Benefits</field>
+            <field name="code">8</field>
+            <field name="alphalist_structure_id" ref="alpha_main_config" />
+        </record>
+       	<record id="alpha_column9" model="hr.alpha_list.config">
+			<field name="name">Salaries and Other Forms of Compensation</field>
+            <field name="code">9</field>
+            <field name="alphalist_structure_id" ref="alpha_main_config" />
+        </record>
+       	<record id="alpha_column10" model="hr.alpha_list.config">
+			<field name="name">Total Taxable Compensation Income</field>
+            <field name="code">10</field>
+            <field name="alphalist_structure_id" ref="alpha_main_config" />
+        </record>
+       	<record id="alpha_column11" model="hr.alpha_list.config">
+			<field name="name">Code</field>
+            <field name="code">11</field>
+            <field name="alphalist_structure_id" ref="alpha_main_config" />
+        </record>
+       	<record id="alpha_column12" model="hr.alpha_list.config">
+			<field name="name">Amount</field>
+            <field name="code">12</field>
+            <field name="alphalist_structure_id" ref="alpha_main_config" />
+        </record>
+        <record id="alpha_column13" model="hr.alpha_list.config">
+			<field name="name">Premium Paid on Health and/or Hospital Insurance</field>
+            <field name="code">13</field>
+            <field name="alphalist_structure_id" ref="alpha_main_config" />
+        </record>
+        <record id="alpha_column14" model="hr.alpha_list.config">
+			<field name="name">Net Taxable Compensation Income</field>
+            <field name="code">14</field>
+            <field name="alphalist_structure_id" ref="alpha_main_config" />
+        </record>
+        <record id="alpha_column15" model="hr.alpha_list.config">
+			<field name="name">TAX DUE (JAN. -DEC.)</field>
+            <field name="code">15</field>
+            <field name="alphalist_structure_id" ref="alpha_main_config" />
+        </record>
+        <record id="alpha_column16" model="hr.alpha_list.config">
+			<field name="name">TAX WITHHELD (JAN. - NOV.)</field>
+            <field name="code">16</field>
+            <field name="alphalist_structure_id" ref="alpha_main_config" />
+        </record>
+        <record id="alpha_column17" model="hr.alpha_list.config">
+			<field name="name">AMOUNT WITHHELD AND PAID FOR IN DECEMBER</field>
+            <field name="code">17</field>
+            <field name="alphalist_structure_id" ref="alpha_main_config" />
+        </record>
+        <record id="alpha_column18" model="hr.alpha_list.config">
+			<field name="name">OVER WITHHELD TAX REFUNDED TO EMPLOYEE</field>
+            <field name="code">18</field>
+            <field name="alphalist_structure_id" ref="alpha_main_config" />
+        </record>
+        <record id="alpha_column19" model="hr.alpha_list.config">
+			<field name="name">AMOUNT OF TAX WITHHELD AS ADJUSTED  ( to be reflected in BIR Form No. 2316)</field>
+            <field name="code">19</field>
+            <field name="alphalist_structure_id" ref="alpha_main_config" />
+        </record>
+        <record id="alpha_column20" model="hr.alpha_list.config">
+			<field name="name">Substituted Filing? Yes/No</field>
+            <field name="code">20</field>
+            <field name="alphalist_structure_id" ref="alpha_main_config" />
+        </record>
+    </data>
+</odoo>

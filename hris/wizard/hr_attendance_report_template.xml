@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_employee_attendance_report_template" model="ir.ui.view">
+            <field name="name">Attendance Report Template</field>
+            <field name="model">hr.attendance.report</field>
+            <field name="arch" type="xml">
+                <form string="Attendance Report Template" >
+                <group>
+                    <field name="state" invisible="1"/>
+                    <field name="date_from" attrs="{'invisible':[('state', '=' , 'done')]}"></field>
+                    <separator string="Employees"/>
+                    <field name="employee_ids" context="{'tree_view_ref':'hris.employee_tree_view_ref', 'form_view_ref':'hris.employee_form_view_ref'}"
+                       nolabel="1" widget="many2many_list" colspan="4" attrs="{'invisible':[('state', '=' , 'done')]}"></field>
+                    <field name="name" colspan="4" invisible="1" attrs="{'invisible':[('state', '=' , 'draft')]}"/>
+                    <field name="report" filename="name" colspan="4" attrs="{'invisible':[('state', '=' , 'draft')]}"/>
+                </group>
+                    <footer>
+                        <button name="action_generate_xls_report" string="PRINT" type="object" class="oe_highlight" attrs="{'invisible':[('state', '=' , 'done')]}"/>
+                        <button string="Cancel" class="btn-default" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+       <record id="action_employee_attendance_report_template" model="ir.actions.act_window">
+            <field name="name">Attendance Report Template</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hr.attendance.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="menu_attendance_report_template" 
+                  action="action_employee_attendance_report_template" 
+                  parent="hr_attendance.menu_hr_attendance_report" 
+                  name="Attendance Report" />
+    </data>
+</odoo>

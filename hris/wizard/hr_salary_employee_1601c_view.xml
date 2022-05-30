@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record id="view_salary_employee_1601c" model="ir.ui.view">
+            <field name="name">Hr monthly Employee Salary 1601-C</field>
+            <field name="model">hr.salary.employee.1601c</field>
+            <field name="arch" type="xml">
+                <form string="Employee 1601-C">
+                    <label string="This wizard will print 1601-C report for a specified date."/>
+                    <footer>
+                        <button name="print_report" string="Print" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-default" special="cancel" />
+                    </footer>
+                    <group>
+                        <field name="start_date" invisible="1"/>
+                        <field name="payout_from"/>
+                        <field name="payout_to"/>
+                        <field name="date_release_from" invisible="1"/>
+                        <field name="date_release_to" invisible="1"/>
+                        <separator string="Employees" />
+                        <field name="employee_ids" context="{'tree_view_ref':'hris.employee_tree_view_ref',
+                        'form_view_ref':'hris.employee_form_view_ref'}" 
+                        nolabel="1" widget="many2many_list" colspan="4">
+                        </field>
+                    </group>
+                    <group  colspan="8" col="4">
+                        <field name="for_month"/>
+                        <field name="amended_return"/>
+                        <field name="tax_treaty"/>
+                        <field name="any_taxes_witheld"/>
+                        <field name="specify" attrs="{'invisible': [('tax_treaty','=',False)]}"/>
+                        <field name="category_of_agent"/>
+                        <field name="adjustment_taxes"/>
+                        <field name="previously_field_tax"/>
+                        <newline/>
+                        <field name="remittances_specify"/>
+                        <field name="remittances_amount"/>
+                        <field name="non_taxable_specify"/>
+                        <field name="non_taxable_amount" invisible="1"/>
+                    </group>
+                </form>
+            </field>        
+        </record>
+
+       <record id="action_salary_employee_1601c" model="ir.actions.act_window">
+            <field name="name">BIR 1601-C Report</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hr.salary.employee.1601c</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem
+            name="Form No. 1601-C"
+            parent="hr_payroll.menu_hr_payroll_reps"
+            sequence="200"
+            action="action_salary_employee_1601c"
+            id="menu_salary_employee_1601c"
+            groups="menu_hide,base.group_erp_manager"
+           />
+</odoo>

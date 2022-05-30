@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record id="view_salary_employee_2307" model="ir.ui.view">
+            <field name="name">Hr monthly Employee Salary 2307</field>
+            <field name="model">hr.salary.employee.2307</field>
+            <field name="arch" type="xml">
+	            <form string="Employee 2307">
+	                <label string="This wizard will print 2307 report for a specified date."/>
+	                <group>
+	                    <group>
+	                        <label for="start_date" string="For the Period" />
+		                    <div class="o_row">
+		                    	<field name="start_date" />
+		                    	To
+		                    	<field name="end_date" />
+		                    </div>
+		                    <field name="salary_rule_ids" widget="many2many_tags" 
+		                        options="{'no_create':True,'no_create_edit':True,'no_open':True}" />
+		                    <field name="atc_type" />
+		                    <label for="atc_id" />
+		                    <div class="o_row" >
+		                    	<field name="atc_id" domain="[('atc_type', '=', atc_type)]" 
+		                        options="{'no_create':True,'no_create_edit':True,'no_open':True}"/>
+		                    	<field name="percent_tax_witheld"  readonly="1"/>
+		                    </div>
+	                	</group>
+	                </group>
+	                
+	                <separator string="Employees" />
+                	<field name="employee_ids" context="{'tree_view_ref':'hris.employee_tree_view_ref',
+	                    'form_view_ref':'hris.employee_form_view_ref'}" 
+	                    nolabel="1" widget="many2many_list" colspan="4">
+	          		</field>
+	          		 <footer>
+	                    <button name="print_report" string="Print" type="object" class="btn-primary"/>
+	                    <button string="Cancel" class="btn-default" special="cancel" />
+	                </footer>
+	            </form>
+	     	</field>
+        </record>
+
+        <record id="action_salary_employee_2307" model="ir.actions.act_window">
+            <field name="name">BIR 2307 Report</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hr.salary.employee.2307</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+<!--         <menuitem
+            name="Form No. 2307"
+            parent="hr_payroll.menu_hr_payroll_reps"
+            sequence="201"
+            action="action_salary_employee_2307"
+            id="menu_salary_employee_2307"
+            groups="hris.group_hr_user"
+           /> -->
+</odoo>

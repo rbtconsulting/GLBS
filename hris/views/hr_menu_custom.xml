@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        
+            <record model="ir.ui.menu" id="hr.menu_hr_reporting_timesheet" >
+                <field name="groups_id" eval="[(6,0,[ ref('hide')])]"/>
+            </record>
+            <!--hr.reports-->
+            <!--hr_attendance.my attendance-->
+            <record model="ir.ui.menu" id="hr_attendance.menu_hr_attendance_my_attendances" >
+                <field name="groups_id" eval="[(6,0,[ ref('hide')])]"/>
+            </record>
+            <!--hr_attendance.employees-->
+            <record model="ir.ui.menu" id="hr_attendance.menu_hr_attendance_view_employees_kanban" >
+                <field name="groups_id" eval="[(6,0,[ ref('hide')])]"/>
+            </record>
+             <!--hr_attendance.configuration-->
+             <record model="ir.ui.menu" id="hr_attendance.menu_hr_attendance_settings" >
+                <field name="groups_id" eval="[(6,0,[ ref('hide')])]"/>
+            </record>
+             <!--hr_attendance.kiosk-->
+             <!-- <record model="ir.ui.menu" id="hr_attendance.menu_hr_attendance_kiosk_mode" >
+                <field name="groups_id" eval="[(6,0,[ ref('hide')])]"/>
+            </record> -->
+            <!--accounting menu-->
+            <record model="ir.ui.menu" id="account.menu_finance" >
+                <field name="groups_id" eval="[(6,0,[ ref('hide')])]"/>
+            </record>
+            <!--project menu-->
+            <record model="ir.ui.menu" id="project.menu_main_pm" >
+                <field name="groups_id" eval="[(6,0,[ ref('hide')])]"/>
+            </record>
+            <!--expense menu-->
+            <record model="ir.ui.menu" id="hr_expense.menu_hr_expense_root" >
+                <field name="groups_id" eval="[(6,0,[ ref('hide')])]"/>
+            </record>
+            <!--website admin menu-->
+            <record model="ir.ui.menu" id="website.menu_website_configuration" >
+                <field name="groups_id" eval="[(6,0,[ ref('hide')])]"/>
+            </record>
+           <!--KRA menu-->
+            <record model="ir.ui.menu" id="employee_kra.menu_employee_kra_root" >
+                <field name="groups_id" eval="[(6,0,[ ref('hide')])]"/>
+            </record>
+            <!--link tracker menu-->
+            <record model="ir.ui.menu" id="utm.menu_link_tracker_root" >
+                <field name="groups_id" eval="[(6,0,[ ref('hide')])]"/>
+            </record>
+
+            <!--calendar-->
+            <record model="ir.ui.menu" id="calendar.mail_menu_calendar" >
+                <field name="groups_id" eval="[(6,0,[ ref('hide')])]"/>
+            </record>
+            <!--hr_holidays. leaves to approve-->
+            <record model="ir.ui.menu" id="hr_holidays.menu_hr_holidays_approvals" >
+                <field name="groups_id" eval="[(6,0,[ ref('hide')])]"/>
+            </record>
+            <!--hr public holidays-->
+           <!-- <record model="ir.ui.menu" id="hr_public_holidays.menu_hr_public_holidays" >
+                <field name="groups_id" eval="[(6,0,[ ref('hide')])]"/>
+            </record> -->
+             <record model="ir.ui.menu" id="hr_payslip_monthly_report.menu_hr_payslip_view_report" >
+               <field name="groups_id" eval="[(6,0,[ ref('hide')])]"/>
+            </record>
+            <!-- Recruitment-Applications -->
+            <record model="ir.ui.menu" id="hr_recruitment.menu_crm_case_categ0_act_job" >
+               <field name="groups_id" eval="[(6,0,[])]"/>
+            </record>
+
+
+
+        <!-- attendance module -->
+             <record model="ir.ui.menu" id="hr_attendance.menu_hr_attendance_root" >
+                <field name="groups_id" eval="[(4,[ref('group_firstlevel'),ref('group_approver'),ref('hris.group_hr_user')])]"/>
+             </record>
+         <!-- apps access-->
+              <record model="ir.ui.menu" id="hr_timesheet.timesheet_menu_root" >
+               <field name="groups_id" eval="[(6,0,[ ref('hide')])]"/>
+            </record>
+             <record model="ir.ui.menu" id="hr_employee_loan.loan_root" >
+                <field name="groups_id" eval="[(6,0,[ ref('hr_payroll_module')])]"/>
+             </record>
+             <record model="ir.ui.menu" id="base.menu_management" >
+                <field name="groups_id" eval="[(6,0,[ ref('base.user_root')])]"/>
+             </record>
+             <record model="ir.ui.menu" id="base.menu_administration" >
+                <field name="groups_id" eval="[(6,0,[ ref('base.user_root')])]"/>
+             </record>
+             <record model="ir.ui.menu" id="hr_attendance.menu_hr_attendance_root" >
+                <field name="groups_id" eval="[(4,[ref('group_firstlevel'),ref('group_approver'),ref('hr_attendance_module')])]"/>
+             </record>
+             <record model="ir.ui.menu" id="hr.menu_hr_root" >
+                <field name="groups_id" eval="[(6,0,[ref('hris.hr_employee_module')])]"/>
+             </record>
+             <record model="ir.ui.menu" id="hr_payroll.menu_hr_payroll_root" >
+                <field name="groups_id" eval="[(4,[ref('group_firstlevel'),ref('group_approver'),ref('hr_payroll_module')])]"/>
+             </record>
+             <record model="ir.ui.menu" id="hr_recruitment.menu_hr_recruitment_root" >
+                <field name="groups_id" eval="[(6,0,[ ref('hr_recruitment_module')])]"/>
+             </record>
+              <record model="ir.ui.menu" id="hr_holidays.menu_hr_holidays_root" >
+                <field name="groups_id" eval="[(4,[ref('group_firstlevel'),ref('group_approver'),ref('hr_leaves_module')])]"/>
+             </record>
+             <record model="ir.ui.menu" id="main_create_user" >
+                <field name="groups_id" eval="[(6,0,[ ref('hr_create_user_module')])]"/>
+             </record>
+             <record model="ir.ui.menu" id="survey.menu_surveys" >
+               <field name="groups_id" eval="[(6,0,[ ref('hr_recruitment_module')])]"/>
+             </record>
+		
+        <menuitem
+            name="Reports"
+            parent="hr.menu_hr_root"
+            id="menu_hr_reports"
+            sequence="100"
+           />
+		<menuitem id="advance_salary.menu_salary_advance" 
+		    	  action="advance_salary.action_salary_advance" 
+		    	  parent="advance_salary.parent_menu_salary_advance" 
+		    	  groups="group_enable_menus"
+		    	  name="Salary Advance" sequence="1" />
+		
+        <menuitem id="advance_salary.menu_advance_rule" 
+            	  action="advance_salary.action_advance_rule" 
+            	  parent="hr.menu_human_resources_configuration" 
+            	  groups="group_enable_menus"
+            	  name="Salary Advances" sequence="17" />
+        
+        <menuitem id="hr_experience.menu_hr_experience" 
+             	  parent="hr.menu_human_resources_configuration" 
+             	  name="Experiences" 
+             	  sequence="95"/>
+        
+        <menuitem id="hr_recruitment.menu_hr_job_position" 
+             	  parent="hr_payroll.menu_hr_payroll_configuration" 
+             	  action="hr_recruitment.action_hr_job_config"
+             	  groups="hris.group_hr_user"
+             	  name="Position Title" 
+             	  sequence="10"/>
+
+
+        <menuitem name="Reports"
+                  id="hr_payslip_monthly_report.menu_hr_payslip_reports"
+                  parent="hr_payroll.menu_hr_payroll_root"
+                  groups="hris.group_hr_user"/>
+
+        
+    	
+    	<!--payslip batches ==> Payslip payroll -->
+     	<record id="hr_payroll.action_hr_payslip_run_tree" model="ir.actions.act_window">
+            <field name="name">Payroll Batches</field>
+     	</record>
+
+        <menuitem id="menu_payroll_batches"
+            name="Payroll"
+            parent="hr_payroll.menu_hr_payroll_root"
+            sequence="2"/>
+        <menuitem
+            action="hr_payroll.action_hr_payslip_run_tree"
+            id="hr_payroll.menu_hr_payslip_run"
+            parent="menu_payroll_batches"
+            sequence="1"/>
+
+	    <!--change label employee payslip to employee payroll-->
+	    <record id="hr_payroll.action_view_hr_payslip_form" model="ir.actions.act_window">
+	        <field name="name">Employee Payroll</field>
+	    </record>
+        <menuitem
+               action="hr_payroll.action_view_hr_payslip_form"
+               id="hr_payroll.menu_department_tree"
+               parent="menu_payroll_batches"
+               groups="hr_payroll.group_hr_payroll_user"
+               sequence="2"/>
+
+
+         <!--BIR reports menu -->
+         <menuitem name="Bureau of Internal Revenue"
+                id="hr_payroll.menu_hr_payroll_reps"
+                parent="hr_payroll.menu_hr_payroll_root"
+                sequence="8"
+                groups='base.group_erp_manager'/>
+          
+        <!--print menu-->
+        <report
+            id="hr_payroll.action_report_payslip"
+            model="hr.payslip"
+            string="Payslip"
+            report_type="qweb-pdf"
+            name="hr_payroll.report_payslip"
+            file="hr_payroll.report_payslip"
+            menu="False"/>
+        <report
+            id="hr_payroll.payslip_details_report"
+            model="hr.payslip"
+            string="PaySlip Details"
+            report_type="qweb-pdf"
+            name="hr_payroll.report_payslipdetails"
+            file="hr_payroll.report_payslipdetails"
+            menu="False"/>
+
+        <report
+            id="hr_holidays.report_holidays_summary_custom"
+            string="Leaves Summary"
+            model="hr.holidays"
+            report_type="qweb-pdf"
+            name="hr_holidays.report_holidayssummary"
+            file="hr_holidays.report_holidayssummary"
+            menu="False"
+            groups="hris.group_hr_user"/>
+
+
+    </data>
+</odoo>

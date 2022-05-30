@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="apply" name="apply" inherit_id="website_hr_recruitment.apply">
+        <xpath expr="//label[@for='partner_name']" position="replace">
+            <label class="control-label" for="firstname">Your Name</label>
+        </xpath>
+        <xpath expr="//input[@type='text']" position="replace">
+            <input type="text" class="form-control o_website_form_input" name="firstname" required=""/>
+        </xpath>
+        <xpath expr="//div[hasclass('o_website_form_required_custom')]" position="after">
+            <div class="form-group form-field o_website_form_required_custom">
+                <div class="col-md-3 col-sm-4 text-right">
+                    <label class="control-label" for="lastname">Your Surname</label>
+                </div>
+                <div class="col-md-7 col-sm-8">
+                    <input type="text" class="form-control o_website_form_input" name="lastname" required=""/>
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+    <function model="ir.model.fields" name="formbuilder_whitelist">
+        <value>hr.applicant</value>
+        <value eval="[
+            'firstname', 'lastname', 'phone_number', 
+            'department_id', 'partner_phone', 'email_from',
+            'description', 'job_id'
+        ]"/>
+    </function>
+</odoo>

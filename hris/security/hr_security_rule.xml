@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+         <!--groups-->
+
+		<record id="group_enable_menus" model="res.groups">
+			<field name="name">Enable Restricted Menus</field>
+			<field name="comment">Enable Restricted Menus Group</field>
+		</record>
+        <record id="hr_access_rights" model="ir.module.category">
+            <field name="name">Access Rights</field>
+        </record>
+         <record id="hris.group_hr_user" model="res.groups">
+             <field name="name">HR Manager</field>
+             <field name="category_id" ref="hr_access_rights"/>
+         <!--<field name="implied_ids" eval="[(4, ref('base.group_system'))]"/>-->
+             <field name="users" eval="[(4, ref('base.group_erp_manager'))]"/>
+         </record>
+         <record id="group_approver" model="res.groups">
+               <field name="name">HR Approver</field>
+               <field name="category_id" ref="hr_access_rights"/>
+         </record>
+         <record id="group_firstlevel" model="res.groups">
+             <field name="name">HR First-Level User</field>
+             <field name="category_id" ref="hr_access_rights"/>
+         </record>
+          <record id="hide" model="res.groups">
+                 <field name="name">Show Apps</field>
+                 <field name="category_id" ref="hr_access_rights"/>
+         </record>
+
+         <record id="group_timekeeper" model="res.groups">
+                 <field name="name">Time keeper</field>
+             <field name="implied_ids" eval="[(4, ref('hris.group_hr_user'))]"/>
+                 <field name="category_id" ref="hr_access_rights"/>
+         </record>
+
+         <!-- menu hider -->
+         
+         <record id="menu_hide" model="res.groups">
+                 <field name="name">Menu Hide</field>
+                 <field name="category_id" ref="hr_access_rights"/>
+         </record>
+
+		<!-- Payroll Admin -->
+		
+         <record id="payroll_admin" model="res.groups">
+                 <field name="name">Payroll Admin</field>
+                 <field name="category_id" ref="hr_access_rights"/>
+         </record>
+         
+		<!-- Payroll user -->
+		
+         <record id="payroll_user" model="res.groups">
+                 <field name="name">Payroll User</field>
+                 <field name="category_id" ref="hr_access_rights"/>
+         </record> 
+        <!-- accounting -->
+
+
+        <record id="hr_access_modules" model="ir.module.category">
+            <field name="name">Modules</field>
+        </record>
+        <record id="hr_employee_module" model="res.groups">
+             <field name="name">Employee Module</field>
+             <field name="category_id" ref="hr_access_modules"/>
+         </record>
+        <record id="hr_recruitment_module" model="res.groups">
+             <field name="name">Recruitment Module</field>
+             <field name="category_id" ref="hr_access_modules"/>
+         </record>
+        <record id="hr_payroll_module" model="res.groups">
+             <field name="name">Payroll Module</field>
+             <field name="category_id" ref="hr_access_modules"/>
+         </record>
+        <record id="hr_attendance_module" model="res.groups">
+             <field name="name">Attendance Module</field>
+             <field name="category_id" ref="hr_access_modules"/>
+         </record>
+        <record id="hr_leaves_module" model="res.groups">
+             <field name="name">Leaves Module</field>
+             <field name="category_id" ref="hr_access_modules"/>
+         </record>
+        <record id="hr_create_user_module" model="res.groups">
+             <field name="name">Create User Account</field>
+             <field name="category_id" ref="hr_access_modules"/>
+         </record>
+
+         <record model="ir.rule" id="view_rule_leaves_HR">
+              <field name="name">HR leaves</field>
+              <field name="model_id" ref="hr_holidays.model_hr_holidays"/>
+              <field name="groups" eval="[(4,[ref('hris.group_hr_user'),ref('group_timekeeper')])]" />
+              <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+         </record>
+
+
+        <record id="hr.menu_hr_root" model="ir.ui.menu" >
+            <field name="groups_id" eval="[(6,0, [ref('hris.group_hr_user'),ref('hris.hr_employee_module')])]"/>
+        </record>
+
+<!--        <record id="leaves_rules_for_manager" model="ir.rule">-->
+<!--            <field name="name">Product Edit Access</field>-->
+<!--            <field name="model_id" ref="hr_holidays.model_hr_holidays"/>-->
+<!--            <field name="domain_force">[('current_user_is_approver','=',True)]</field>-->
+<!--             <field name="groups" eval="[(6,0,[ref('hris.group_approver'),])]" />-->
+<!--            <field name="perm_unlink" eval="False"/>-->
+<!--            <field name="perm_write" eval="False"/>-->
+<!--            <field name="perm_read" eval="True"/>-->
+<!--            <field name="perm_create" eval="False"/>-->
+<!--        </record>-->
+	<!--
+         <record model="ir.rule" id="employee_view_rule_overtime_approver">
+               <field name="name">Approver overtime</field>
+               <field name="model_id" ref="hris.model_hr_attendance_overtime"/>
+               <field name="groups" eval="[(6,0, [ref('group_approver')])]" />
+               <field name="domain_force">['|',('employee_id.user_id','=',user.id),('employee_id.parent_id.user_id','=',user.id)]</field>
+         </record>
+	-->
+
+        <record model="ir.rule" id="employee_view_rule_attendance_change_approver">
+               <field name="name">Approver attendance change</field>
+               <field name="model_id" ref="hris.model_hr_attendance_change"/>
+               <field name="groups" eval="[(6,0, [ref('group_approver')])]" />
+               <field name="domain_force">['|',('employee_id.user_id','=',user.id),('employee_id.parent_id.user_id','=',user.id)]</field>
+         </record>
+         <record model="ir.rule" id="employee_view_rule_payslip_approver">
+               <field name="name">Approver payslip</field>
+               <field name="model_id" ref="hr_payroll.model_hr_payslip"/>
+               <field name="groups" eval="[(4,[ref('group_approver'),ref('group_firstlevel')])]" />
+               <field name="domain_force">[('state','=','done'),('employee_id.user_id','=',user.id)]</field>
+         </record>
+	<!--
+        <record model="ir.rule" id="employee_view_rule_overtime">
+               <field name="name">first-level overtime</field>
+               <field name="model_id" ref="hris.model_hr_attendance_overtime"/>
+               <field name="groups" eval="[(6,0, [ref('group_firstlevel')])]" />
+               <field name="domain_force">[('employee_id.user_id','=',user.id)]</field>
+         </record>
+        -->
+ 	 <record model="ir.rule" id="employee_view_rule_attendance_request">
+               <field name="name">view own attendance request</field>
+               <field name="model_id" ref="hris.model_hr_attendance_request"/>
+               <field name="groups" eval="[(6,0, [ref('group_firstlevel')])]" />
+               <field name="domain_force">[('employee_id.user_id','=',user.id)]</field>
+         </record>
+         <record model="ir.rule" id="employee_view_rule_attendance_change">
+               <field name="name">first-level attendance change</field>
+               <field name="model_id" ref="hris.model_hr_attendance_change"/>
+               <field name="groups" eval="[(6,0, [ref('group_firstlevel')])]" />
+               <field name="domain_force">[('employee_id.user_id','=',user.id)]</field>
+         </record>
+
+    </data>
+</odoo>

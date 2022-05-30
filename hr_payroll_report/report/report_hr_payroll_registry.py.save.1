@@ -1,0 +1,241 @@
+# -*- coding:utf-8 -*-
+
+from datetime import datetime, date
+
+from odoo import api, models
+from odoo.osv import osv
+
+class ReportHrSalaryEmployee2307(models.AbstractModel):
+    _name = 'report.hr_payroll_report.report_hrpayrollregistry'
+
+    def get_payroll_registry_details(self, form):
+        emp_ids = form.get('employee_ids', [])
+        date_payroll = form.get('date_payroll', None)
+        date_from = form.get('date_from', None)
+        date_to = form.get('date_to', None)
+
+        employees = self.env['hr.employee'].browse(emp_ids)
+
+        dt_payroll = datetime.strptime(date_payroll, '%Y-%m-%d')
+        dt_from = datetime.strptime(date_from, '%Y-%m-%d')
+        dt_to = datetime.strptime(date_to, '%Y-%m-%d')
+
+
+        def format_date(str_date):
+            dt = datetime.strptime(str_date, '%Y-%m-%d')
+            year, mnth, day = dt.year, dt.month, dt.day
+
+            day = '0' + str(day) if len(str(day)) == 1 else day
+            mnth = '0' + str(mnth) if len(str(mnth)) == 1 else mnth
+            return '-'.join([str(mnth), str(day), str(year)])
+
+        def get_payroll_registry(emp_id, date_from, date_to):
+            qry = """
+                SELECT pl.code, pl.total
+                FROM hr_payslip_line AS pl
+                LEFT JOIN hr_payslip AS p ON pl.slip_id = p.id
+                LEFT JOIN hr_employee AS he ON he.id = p.employee_id
+                WHERE to_char(p.date_from, 'mm-dd-yyyy') = '{}' AND to_char(p.date_to, 'mm-dd-yyyy') = '{}'
+                AND p.state = 'done' AND p.employee_id = {}
+                GROUP BY pl.code, he.name_related, pl.total
+                ORDER BY he.name_related
+            """.format(date_from, date_to, emp_id)
+
+            self.env.cr.execute(qry)
+
+            d = self.env.cr.fetchall()
+
+            if d:
+                return [dict(d)]
+            return []
+
+        emp_payroll_registry = []
+        totals = []
+        TOTAL_BASIC = 0.0
+        TOTAL_GROSS = 0.0
+        TOTAL_NET = 0.0
+        TOTAL_ROWS = 0
+        TOTAL_UP = 0.0
+        TOTAL_WT = 0.0
+        TOTAL_SSS = 0.0
+        TOTAL_PH = 0.0
+        TOTAL_PAGIBIG = 0.0
+        TOTAL_SSSEmployer = 0.0
+        TOTAL_PHEmployer = 0.0
+        TOTAL_HDMFEmployer = 0.0
+        """
+            Initialize other totals here
+        """
+        for employee in employees:
+            d = {}            
+            emp_name = employee.name
+            emp_addr = employee.address_id.name
+            emp_id = employee.id
+            emp_position = employee.job_id.name
+            # Add tax code here 
+            """
+                splucena
+                Add additional employee details here
+                Add additional employee details to dictionary
+            """
+            d.update({
+                'EMP_NAME': emp_name or '',
+                'EMP_ADDR': emp_addr or '',
+                'EMP_POS': emp_position or '',
+                'EMP_NUM': emp_id, # TEMPORARY REPLACE WITH ACTUAL FIELD IN PRODUCTION
+                # Update to include tax code
+            })
+
+            ls = get_payroll_registry(emp_id, format_date(date_from), format_date(date_to))
+            if ls:                
+                LEN_LS_ITEMS = len(ls)
+                for gpr in ls:
+                    TOTAL_BASIC += gpr.get('BASIC', 0.00)
+                    TOTAL_NET += gpr.get('NET', 0.00)
+                    TOTAL_GROSS += gpr.get('GROSS', 0.00)
+                    TOTAL_UP += abs(gpr.get('UP', 0.00))
+                    TOTAL_WT += gpr.get('WT', 0.00)
+                    TOTAL_SSS += gpr.get('SSS', 0.00)
+                    TOTAL_PH += gpr.get('PH', 0.00)
+                    TOTAL_PAGIBIG += gpr.get('PAGIBIG', 0.00)
+                    TOTAL_SSSEmployer += gpr.get('SSSEmployer', 0.00)
+                    TOTAL_PHEmployer += gpr.get('PHEmployer', 0.00)
+                    TOTAL_HDMFEmployer += gpr.get('HDMFEmployer', 0.00)
+                    """
+                        Include other totals here
+                    """
+                    d.update(gpr)
+
+            if not d.get('BASIC'):
+                d.update({
+                    'BASIC': 0.0, 
+                })
+            if not d.get('NET'):
+                d.update({
+                    'NET': 0.0, 
+                })
+            if not d.get('GROSS'):
+                d.update({
+                    'GROSS': 0.0, 
+                })
+            if not d.get('WT'):
+                d.update({
+                    'WT': 0.0, 
+                })
+            if not d.get('UP'):
+                d.update({
+                    'UP': 0.0, 
+                })
+            if not d.get('SSS'):
+                d.update({
+                    'SSS': 0.0, 
+                })
+            if not d.get('PH'):
+                d.update({
+                    'PH': 0.0, 
+                })
+            if not d.get('PAGIBIG'):
+                d.update({
+                    'PAGIBIG': 0.0, 
+                })
+            if not d.get('SSSEmployer'):
+                d.update({
+                    'SSSEmployer': 0.0, 
+                })
+            if not d.get('PHEmployer'):
+                d.update({
+                    'PHEmployer': 0.0, 
+                })
+            if not d.get('HDMFEmployer'):
+                d.update({
+                    'HDMFEmployer': 0.0, 
+                })
+
+            emp_payroll_registry.append(d)
+            TOTAL_ROWS += 1
+
+        emp_payroll_registry.append({
+            'TOTAL_NET': TOTAL_NET,
+            'TOTAL_GROSS': TOTAL_GROSS,
+            'TOTAL_BASIC': TOTAL_BASIC,
+            'TOTAL_ROWS': TOTAL_ROWS,
+            'TOTAL_UP': TOTAL_UP,
+            'TOTAL_WT': TOTAL_WT,
+            'TOTAL_SSS': TOTAL_SSS,
+            'TOTAL_PH': TOTAL_PH,
+            'TOTAL_PAGIBIG': TOTAL_PAGIBIG,
+            'TOTAL_SSSEmployer': TOTAL_SSSEmployer,
+            'TOTAL_PHEmployer': TOTAL_PHEmployer,
+            'TOTAL_HDMFEmployer': TOTAL_HDMFEmployer
+            # Update to include other totals here
+        })
+
+        return emp_payroll_registry
+
+    def get_signatories(self, form):
+
+        approved_by = form.get('approved_by', False)[1]
+        prepared_by = form.get('prepared_by', False)[1]
+        checked_by = form.get('checked_by', False)[1]
+
+        d = {
+            'PREPARED_BY': prepared_by, #get_name_related(prepared_by),
+            'APPROVED_BY': approved_by, #get_name_related(approved_by),
+            'CHECKED_BY': checked_by #get_name_related(checked_by),
+        }
+
+        return d
+
+    @api.model
+    def render_html(self, docids, data=None):
+        model = self.env.context.get('active_model')
+        docs = self.env[model].browse(self.env.context.get('active_id'))
+        get_payroll_registry_details = self.get_payroll_registry_details(data['form'])
+        date_payroll = datetime.strptime(data['form'].get('date_payroll'), '%Y-%m-%d').strftime('%B %d, %Y')
+        date_from = datetime.strptime(data['form'].get('date_from'), '%Y-%m-%d').strftime('%B %d, %Y')
+        date_to = datetime.strptime(data['form'].get('date_to'), '%Y-%m-%d').strftime('%B %d, %Y')
+        #get_signatories = self.get_signatories(data['form'])
+
+        #print get_payroll_registry_details
+
+        details = []
+        totals = []
+
+        #for record in get_payroll_registry_details:
+        #    details.append(record[0])
+        #    details.append(record[1])
+            #if record:
+            #    details.append(record[0])
+            #    details.append(record[1])
+            #print record
+            
+
+        #print details, totals
+        #print get_payroll_registry_details
+        total_record = len(get_payroll_registry_details) - 1
+        for index, record in enumerate(get_payroll_registry_details):
+            if index != total_record:
+                details.append(record)
+            else:
+                totals.append(record)
+
+
+
+        dates = {
+            'DATE_PAYROLL': date_payroll,
+            'DATE_FROM': date_from,
+            'DATE_TO': date_to
+        }
+
+        docargs = {
+            'doc_ids': docids,
+            'doc_model': model,
+            'data': data,
+            'docs': docs,
+            'get_payroll_registry_details': details,
+            'totals': totals,
+            'dates': dates,
+            #'get_signatories': get_signatories
+        }
+        return self.env['report'].render('hr_payroll_report.report_hrpayrollregistry_template', docargs)
+    

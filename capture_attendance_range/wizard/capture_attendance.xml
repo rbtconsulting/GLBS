@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+      <record id="capture_attendance" model="ir.ui.view">
+            <field name="name">Capture Attendance</field>
+            <field name="model">capture.attendance</field>
+            <field name="arch" type="xml">
+              <form string="Employee Coe">
+	                <group>
+                        <group>
+                             <field name="dt_from" />
+	                         <field name="dt_to"/>
+	                         <field name="bio_logs"  options='{"no_open": True, "no_create": True}'/>
+			            </group>
+	                </group>
+	                <footer>
+	                    <button name="capture_attendance" string="Capture Attendance By Range" type="object" class="btn-primary"/>
+	                    <button string="Cancel" class="btn-default" special="cancel" />
+	                </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_capture_attendance" model="ir.actions.act_window">
+              <field name="name">Capture Attendance</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">capture.attendance</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+          <field name="target">new</field>
+        </record>
+
+
+       	<menuitem
+               name="Capture Attendance"
+               parent="hris.menu_hris_attendance_device"
+               action="action_capture_attendance"
+               id="capture_attendance_root"
+
+           />
+
+
+
+</odoo>

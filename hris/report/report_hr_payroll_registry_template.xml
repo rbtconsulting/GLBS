@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="hris.report_hrpayrollregistry_template">
+    <t t-call="report.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="report.internal_layout">
+                  <div class="page">
+                <style>
+                    .table-borderless > tbody > tr > td,
+                    .table-borderless > tbody > tr > th,
+                    .table-borderless > tfoot > tr > td,
+                    .table-borderless > tfoot > tr > th,
+                    .table-borderless > thead > tr > td,
+                    .table-borderless > thead > tr > th {
+                        border: none;
+                        padding: 0;
+
+                    }
+                    .total{
+                         font-weight:bold;
+                         font-size:16x;
+                    }
+                    .list > ul > li {
+                        list-style:none;
+                        margin-left:10px;
+                    }
+                    .company_info{
+                       margin-top:- 50px;
+                    }
+                </style>
+                <t t-set="data_source" t-value="get_payroll_registry_details" />
+                <t t-set="totals" t-value="totals" />
+                <t t-set="dates" t-value="dates" />
+                <t t-set="form" t-value="form_data"/>
+                           <div class="company_info">
+                               <!--<div>
+                                    <img t-if="res_company.logo" t-att-src="'data:image/png;base64,%s' %res_company.logo" width="60px" height="60px"/>
+                               </div>-->
+                               <div class='text-center'>
+                                   <h3><span t-field="res_company.partner_id.name"/></h3>
+                                   <br/>
+                                   PAYROLL REGISTER
+                                   <br/>
+                                   For the Period, <span t-esc="form['PAYROLL_PERIOD']"/>
+                                   <br/>
+                                   <!-- <b>CONTRACT OF SERVICE<br/>Regional Office</b> -->
+                               </div>
+                               <!--<div class="list">
+                                   <ul>
+                                       <li><span t-field="res_company.partner_id.street"/> <span t-field="res_company.partner_id.street2"/></li>
+                                       <li><span t-field="res_company.partner_id.city"/>
+                                           <span t-field="res_company.partner_id.state_id"/>
+                                           <span t-field="res_company.partner_id.zip"/>
+                                           <span t-field="res_company.partner_id.country_id"/>
+                                       </li>
+                                       <li>Contact No.:<span t-field="res_company.partner_id.phone"/></li>
+                                       <li>Fax:<span t-field="res_company.partner_id.fax"/></li>
+                                       <li><span t-field="res_company.partner_id.website"/></li>
+                                   </ul>
+                               </div>-->
+                           </div>
+                <!--<table class="table">
+                    <tr>
+                        <td>Process date:</td>
+                        <td><span t-esc="dates['DATE_RELEASE']" /></td>
+                    </tr>
+                    <tr>
+                        <td>Payroll Period:</td>
+                        <td><span t-esc="form['PAYROLL_PERIOD']"/> </td>
+                    </tr>
+                </table>-->
+                <table class="table table-bordered" border="1" style="margin-top:20px;">
+                    <thead>
+                        <tr>
+                            <th class="text-center" rowspan="2">Emp. No.</th>
+                            <th class="text-center" rowspan="2">Employee Name and Position</th>
+                            <th class="text-center" colspan="2">Earnings</th>
+                            <th class="text-center" colspan="2">Deductions</th>
+                            <th class="text-center" rowspan="2">NET PAY</th>
+                        </tr>
+                        <tr>
+                            <th class="text-center">Code</th>
+                            <th class="text-center">Amount</th>
+                            <th class="text-center">Code</th>
+                            <th class="text-center">Amount</th>
+                        </tr>
+                    </thead>
+                    <tr t-foreach="data_source" t-as="ds">
+                        <td class="text-center"><span t-esc="ds.get('EMPLOYEE') and ds.get('EMPLOYEE').barcode or ''" /></td>
+                        <td class="text-center"><span t-esc="ds.get('EMPLOYEE') and ds.get('EMPLOYEE').name or ''" /><br/>
+                        <span t-esc="ds.get('EMPLOYEE') and ds.get('EMPLOYEE').job_id.name or ''" /></td>
+                        <td>
+                            SALARY
+                            <br/>
+                            <b>OTHER TAXABLE INCOME:</b><br/>
+                            <t t-foreach="ds.get('OTHER_TAX_INCOME')" t-as="tax">
+                                <span t-esc="tax.name"/><br/>
+                            </t>
+                            <b>OTHER NONTAXABLE INCOME:</b><br/>
+                            <t t-foreach="ds.get('OTHER_NONTAX_INCOME')" t-as="tax">
+                                <span t-esc="tax.name"/><br/>
+                            </t>
+                        </td>
+                        <td class="text-right">
+                             <span t-esc="ds.get('BASIC', 0)"/><br/>
+                             <br/>
+                             <t t-foreach="ds.get('OTHER_TAX_INCOME')" t-as="tax">
+                                <span t-esc="tax.amount"/><br/>
+                            </t>
+                            <br/>
+                            <t t-foreach="ds.get('OTHER_NONTAX_INCOME')" t-as="tax">
+                                <span t-esc="tax.amount"/><br/>
+                            </t>
+                        </td>
+                        <td>
+                            Loans
+                            <br/>
+                            Other Taxable Deductions
+                            <br/>
+                            Other NonTaxable Deductions
+                            <br/>
+                            Employee Contribution
+                            <br/>
+                            Withholding Tax
+                            <br/>
+                            Deduction
+                        </td>
+                        <td class="text-right">
+                            <span t-esc="ds.get('withholding_tax', 0)"/><br/>
+                            <span t-esc="ds.get('OTHER_TAX_DEDUCT', 0)"/><br/>
+                            <span t-esc="ds.get('OTHER_NONTAX_DEDUCT', 0)"/><br/>
+                            <span t-esc="ds.get('employee_contribution', 0)"/><br/>
+                            <span t-esc="ds.get('withholding_tax', 0)"/><br/>
+                            <span t-esc="ds.get('deduction', 0)"/><br/>
+                            <br/>
+                        </td>
+                        <td class="text-right">
+                            <span t-esc="ds.get('net_pay', 0)"/>
+                            <br/>
+                        </td>
+                        <tr style="border-top: 1px solid white;">
+                            <td style="border-top: 1px solid white;"></td>
+                            <td style="border-top: 1px solid white;"></td>
+                            <td style="border-top: 1px solid white;">Total</td>
+                            <td  class="text-right" style="border-top: 1px solid white;">
+                                <span t-esc="ds.get('total_earnings', 0)"/>
+                            </td>
+                            <td style="border-top: 1px solid white;">Total</td>
+                            <td  class="text-right" style="border-top: 1px solid white;">
+                                <t t-set="total_deduction" t-value="(ds.get('deduction', 0) + ds.get('withholding_tax', 0) + ds.get('withholding_tax', 0) + ds.get('employee_contribution', 0) + 
+                                        ds.get('OTHER_TAX_DEDUCT', 0) + ds.get('OTHER_NONTAX_DEDUCT', 0))"/>
+                                <span t-esc="total_deduction"/>
+                            </td>
+                            <td class="text-right" style="border-top:1px solid white;">
+                                <span t-esc="ds.get('net_pay', 0)"/>
+                            </td>
+                        </tr>
+                    </tr>
+                </table>
+                <table class="table table-bordered" border="1" style="width:40%;margin-right:100px;margin-left:300px;">
+                    <tr>
+                        <td>
+                            Number of Payee
+                        </td>
+                        <td class="text-right">
+                            <span t-esc="totals.get('total_emp')"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Basic Salary
+                        </td>
+                        <td class="text-right">
+                            <span t-esc="totals.get('total_salary', 0)"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            TOTAL COMPENSATION:
+                        </td>
+                        <td class="text-right">
+                            <span t-esc="totals.get('total_comensation', 0)"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            TOTAL DEDUCTIONS
+                        </td>
+                        <td class="text-right">
+                            <span t-esc="totals.get('total_deductions', 0)"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            TOTAL NET SALARY:
+                        </td>
+                        <td class="text-right">
+                            <span t-esc="totals.get('total_net_salary', 0)"/>
+                        </td>
+                    </tr>
+                </table>
+                <!--<table class="table table-striped">
+                  <thead>
+                    <tr>
+                        <th class="text-center">EMP. NO.</th>
+                        <th class="text-center">NAME</th>
+                        <th class="text-center">BANK ACCOUNT</th>
+                        <th class="text-center">POSITION</th>
+                        <th class="text-center">BASIC PAY</th>
+                        <th class="text-center">TOTAL WORKED HOURS</th>                        
+                        <th class="text-center">TOTAL OVERTIME</th>
+                        <th class="text-center">TOTAL NIGHT DIFFERENTIAL</th>
+                        <th class="text-center">TOTAL UNDERTIME/TARDINESS</th>
+                        <th class="text-center">TOTAL ABSENCES</th>
+                        <th class="text-center">OTHER INCOME(Taxable)</th>
+                        <th class="text-center">OTHER INCOME(Non Taxable)</th>
+                        <th class="text-center">OTHER DEDUCTIONS(Taxable)</th>
+                        <th class="text-center">OTHER DEDUCTIONS(Non Taxable)</th>
+                        <th class="text-center">SSS</th>
+                        <th class="text-center">PHIC</th>
+                        <th class="text-center">HDMF</th>
+                        <th class="text-center">GROSS TAXABLE INCOME</th>
+                        <th class="text-center">WITHOLDING TAX</th>
+                        <th class="text-center">NET PAY</th>
+                    </tr>
+                  </thead>
+                    <t t-foreach="data_source" t-as="ds">
+                    <tr>
+                        <td class="text-center"><span t-esc="ds['EMPLOYEE'].barcode and ds['EMPLOYEE'].barcode or ''" /></td>
+                        <td class="text-center"><span t-esc="ds['EMPLOYEE'].name and ds['EMPLOYEE'].name or ''" /></td>
+                        <td class="text-center"><span t-esc="ds['EMPLOYEE'].bank_account_id and ds['EMPLOYEE'].bank_account_id.acc_number or ''" /></td>
+                        <td class="text-center"><span t-esc="ds['EMPLOYEE'].job_id and ds['EMPLOYEE'].job_id.name or ''" /></td>
+                        
+                        <td class="text-center"><span t-esc="'{:,.2f}'.format(ds['BASIC'])" /></td>
+                        <td class="text-center"><span t-esc="'{:,.2f}'.format(ds['REGWRK'])" /></td>
+                        <td class="text-center"><span t-esc="'{:,.2f}'.format(ds['OT'])" /></td>
+                        <td class="text-center"><span t-esc="'{:,.2f}'.format(ds['NightDiff'])" /></td>
+
+
+                        <td class="text-center"><span t-esc="'{:,.2f}'.format(ds['UT_TD'])" /></td>
+                        <td class="text-center"><span t-esc="'{:,.2f}'.format(ds['ABS'])" /></td>
+
+                        <td class="text-center"><span t-esc="'{:,.2f}'.format(ds['EARTAX']) " /></td>
+                        <td class="text-center"><span t-esc="'{:,.2f}'.format(ds['EARNONTAX'] + ds['OTHER_INCOME'])" /></td>
+                        <td class="text-center"><span t-esc="'{:,.2f}'.format(ds['DEDTAX'])" /></td>
+                        <td class="text-center"><span t-esc="'{:,.2f}'.format(ds['DEDNONTAX'])" /></td>
+
+
+                        <td class="text-center"><span t-esc="'{:,.2f}'.format(ds['SSS'])" /></td>
+                        <td class="text-center"><span t-esc="'{:,.2f}'.format(ds['PHIC'])" /></td>
+                        <td class="text-center"><span t-esc="'{:,.2f}'.format(ds['HDMF'])" /></td>
+                        <td class="text-center"><span t-esc="'{:,.2f}'.format(ds['GROSS'])" /></td>
+                        <td class="text-center"><span t-esc="'{:,.2f}'.format(ds['WTAX'])" /></td>
+                        <td class="text-center"><span t-esc="'{:,.2f}'.format(ds['FNP'])" /></td>
+                    </tr>
+                     </t>
+                    <tr>
+                        <td class="text-center total">GRAND TOTAL</td>
+                        <td class="text-center total" colspan="3"><span t-esc="totals[len(totals)-1]['TOTAL_ROWS']" /> Record(s)</td>
+                        <td class="text-center total"><span t-esc="'{:,.2f}'.format(totals[len(totals)-1]['TOTAL_BASIC'])" /></td>
+                        <td class="text-center total"><span t-esc="'{:,.2f}'.format(totals[len(totals)-1]['TOTAL_REGWRK'])" /></td>
+                        <td class="text-center total"><span t-esc="'{:,.2f}'.format(totals[len(totals)-1]['TOTAL_OT'])" /></td>
+                        <td class="text-center total"><span t-esc="'{:,.2f}'.format(totals[len(totals)-1]['TOTAL_NIGHTDIFF'])" /></td>
+                        <td class="text-center total"><span t-esc="'{:,.2f}'.format(totals[len(totals)-1]['TOTAL_UT_TD'])" /></td>
+                        <td class="text-center total"><span t-esc="'{:,.2f}'.format(totals[len(totals)-1]['TOTAL_ABS'])" /></td>
+                        <td class="text-center total"><span t-esc="'{:,.2f}'.format(totals[len(totals)-1]['TOTAL_EARTAX'])" /></td>
+                        <td class="text-center total"><span t-esc="'{:,.2f}'.format(totals[len(totals)-1]['TOTAL_OTHER_INCOME_NONTAX'])" /></td>
+                        <td class="text-center total"><span t-esc="'{:,.2f}'.format(totals[len(totals)-1]['TOTAL_DEDTAX'])" /></td>
+                        <td class="text-center total"><span t-esc="'{:,.2f}'.format(totals[len(totals)-1]['TOTAL_DEDNONTAX'])" /></td>
+                        <td class="text-center total"><span t-esc="'{:,.2f}'.format(totals[len(totals)-1]['TOTAL_SSS'])" /></td>
+                        <td class="text-center total"><span t-esc="'{:,.2f}'.format(totals[len(totals)-1]['TOTAL_PHIC'])" /></td>
+                        <td class="text-center total"><span t-esc="'{:,.2f}'.format(totals[len(totals)-1]['TOTAL_HDMF'])" /></td>
+                        <td class="text-center total"><span t-esc="'{:,.2f}'.format(totals[len(totals)-1]['TOTAL_GROSS'])" /></td>
+                        <td class="text-center total"><span t-esc="'{:,.2f}'.format(totals[len(totals)-1]['TOTAL_WTAX'])" /></td>
+                        <td class="text-center total"><span t-esc="'{:,.2f}'.format(totals[len(totals)-1]['TOTAL_FNP'])" /></td>
+                    </tr>
+                </table>-->
+            </div>
+          </t>
+         </t>
+        </t>
+    </template>
+</odoo>
+

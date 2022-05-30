@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_hrsalaryemployee1601c_template">
+        <t t-call="report.html_container">
+            <t t-call="report.external_layout">
+                <div class="page">
+                    <style>
+                        div.main-div{
+                        background-image: url('/hris/static/src/img/1601c-1.png');
+                        background-size: cover;
+                        height: 1344px;
+                        width: 816px;
+                        background-position: center center;
+                        background-repeat: no-repeat;
+                        margin: auto;
+                        }
+                    </style>
+                    <div class="main-div">
+                        <!-- 1. For the month -->
+                        <t t-set="val" t-if="values.get('1')"
+                            t-value="str(values.get('1') or ' / ').split('/')"></t>
+                        <div t-if="values.get('1')" style="position: absolute; top:187px; left:135px; letter-spacing:12px; font-size:15px;">
+                            <span t-esc="val[0]" />
+                        </div>
+                        <div t-if="values.get('1')" style="position: absolute; top:187px; left:172px; letter-spacing:12px; font-size:15px;">
+                            <span t-esc="val[1]" />
+                        </div>
+                        <!-- 2. Amended Return -->
+                        <div style="position: absolute; top:192px; left:315px; letter-spacing:12px; font-size:15px;">
+                            <span t-if="values.get('2') == True"><i class="fa fa-check"/></span>
+                        </div>
+                        <div style="position: absolute; top:192px; left:379px; letter-spacing:12px; font-size:15px;">
+                            <span t-if="values.get('2') == False"><i class="fa fa-check"/></span>
+                        </div>
+                        <!-- 3. Any Taxes Withheld -->
+                        <div style="position: absolute; top:192px; left:478px; letter-spacing:12px; font-size:15px;">
+                            <span t-if="values.get('3') == True"><i class="fa fa-check"/></span>
+                        </div>
+                        <div style="position: absolute; top:192px; left:533px; letter-spacing:12px; font-size:15px;">
+                            <span t-if="values.get('3') == False"><i class="fa fa-check"/></span>
+                        </div>
+                        <!-- 4. Number of sheet/s attached -->
+                        <!-- 6. TIN Number -->
+                        <t t-if="values.get('6')">
+                            <t t-set="tin" t-value="str(values['6'])"></t>
+                        </t>
+                        <t t-else="">
+                            <t t-set="tin" t-value="False"></t>
+                        </t>
+                        <div style="position: absolute; top:230px; left:385px; letter-spacing:12px; font-size:15px;">
+                            <t t-if="tin and len(tin) &gt; 3" t-esc="tin[:3]"></t>
+                        </div>
+                        <div style="position: absolute; top:230px; left:465px; letter-spacing:10px; font-size:15px;">
+                            <t t-if="tin and len(tin) &gt;= 6" t-esc="tin[3:6]"/><t t-elif="tin and len(tin) &gt; 3" t-esc="tin[3:]"></t>
+                        </div>
+                        <div style="position: absolute; top:230px; left:540px; letter-spacing:10px; font-size:15px;">
+                            <t t-if="tin and len(tin) &gt;= 9" t-esc="tin[6:9]"/><t t-elif="tin and len(tin) &gt; 6" t-esc="tin[6:]"></t>
+                        </div>
+                        <div style="position: absolute; top:230px; left:620px; letter-spacing:10px; font-size:15px;">
+                            <t t-if="tin and len(tin) &gt;= 14" t-esc="tin[9:14]"/><t t-elif="tin and len(tin) &gt; 9" t-esc="tin[9:]"></t>
+                        </div>
+                        <!-- 7. RDO Code -->
+                        <div style="position: absolute; top:230px; left:810px; font-size:13px;">
+                            <span t-if="values.get('7')" t-esc="values['7']"/>
+                        </div>
+                        <!-- 8. Withholding Agent's Name -->
+                        <div style="position: absolute; width: 700px; top:270px; left:95px; letter-spacing:0; font-size:12px;">
+                            <span t-esc="values.get('8')"/>
+                        </div>
+                        <!-- 9. Registered Address -->
+                        <div style="position: absolute; width: 700px; top:305px; left:95px; letter-spacing:0; font-size:12px;">
+                            <span t-esc="values.get('company_addr')"/>
+                        </div>
+                        <!-- 9A. Zip Code -->
+                        <div style="position: absolute; width: 80px; text-align: center; top:325px; left:785px; letter-spacing:0; font-size:12px;">
+                            <span t-esc="values.get('9A')"/>
+                        </div>
+                        <!-- 10. Contact Number -->
+                        <div style="position: absolute; width: 225px; text-align: center; top:348px; left:208px; letter-spacing:0; font-size:12px;">
+                            <span t-esc="values.get('10')"/>
+                        </div>
+                        <!-- 11. Category of Withholding Agent -->
+                        <div style="position: absolute; top:351px; left:671px; letter-spacing:12px; font-size:15px;">
+                            <span t-if="values.get('11') == 'private'"><i class="fa fa-check"/></span>
+                        </div>
+                        <div style="position: absolute; top:351px; left:768px; letter-spacing:12px; font-size:15px;">
+                            <span t-if="values.get('11') == 'government'"><i class="fa fa-check"/></span>
+                        </div>
+                        <!-- 12. Email Address -->
+                        <div style="position: absolute; width: 280px; top:372px; left:208px; letter-spacing:0; font-size:12px;">
+                            <span t-esc="values.get('12')"/>
+                        </div>
+                        <!-- 13. Are these payees availing of tax relief under Special Law International Tax Treaty? -->
+                        <div style="position: absolute; top:399px; left:303px; letter-spacing:12px; font-size:15px;">
+                            <span t-if="values.get('13') == True"><i class="fa fa-check"/></span>
+                        </div>
+                        <div style="position: absolute; top:399px; left:362px; letter-spacing:12px; font-size:15px;">
+                            <span t-if="values.get('13') == False"><i class="fa fa-check"/></span>
+                        </div>
+                        <!-- 13A.  -->
+                        <div style="position: absolute; width: 320px; top:395px; left:538px; letter-spacing:0; font-size:12px;">
+                            <span t-if="values.get('13') == True" t-esc="values.get('13A')"/>
+                        </div>
+                        <!-- 14. -->
+                        <t t-set="val" t-value="str('{:.2f}'.format(values.get('14') or 0.0)).split('.')"></t>
+                        <div style="position: absolute; width: 200px; top:438px; left:600px; text-align: center; letter-spacing:5px; font-size:12px;">
+                            <span t-esc="val[0]"/>
+                        </div>
+                        <div style="position: absolute; width: 30px; top:438px; left:835px; letter-spacing:5px; font-size:12px;">
+                            <span t-esc="val[1]"/>
+                        </div>
+                        <!-- 15. -->
+                        <t t-set="val" t-value="str('{:.2f}'.format(values.get('15') or 0.0)).split('.')"></t>
+                        <div style="position: absolute; text-align: center; width: 200px; top:475px; left:600px; letter-spacing:5px; font-size:12px;">
+                            <span t-esc="val[0]"/>
+                        </div>
+                        <div style="position: absolute; width: 30px; top:475px; left:835px; letter-spacing:5px; font-size:12px;">
+                            <span t-esc="val[1]"/>
+                        </div>
+                        <!-- 16. -->
+                        <t t-set="val" t-value="str('{:.2f}'.format(values.get('16') or 0.0)).split('.')"></t>
+                        <div style="position: absolute; text-align: center; width: 200px; top:495px; left:600px; letter-spacing:5px; font-size:12px;">
+                            <span t-esc="val[0]"/>
+                        </div>
+                        <div style="position: absolute; width: 30px; top:495px; left:835px; letter-spacing:5px; font-size:12px;">
+                            <span t-esc="val[1]"/>
+                        </div>
+                        <!-- 17. -->
+                        <t t-set="val" t-value="str('{:.2f}'.format(values.get('17') or 0.0)).split('.')"></t>
+                        <div style="position: absolute; text-align: center; width: 200px; top:518px; left:600px; letter-spacing:5px; font-size:12px;">
+                            <span t-esc="val[0]"/>
+                        </div>
+                        <div style="position: absolute; width: 30px; top:518px; left:835px; letter-spacing:5px; font-size:12px;">
+                            <span t-esc="val[1]"/>
+                        </div>
+                        <!-- 18. -->
+                        <t t-set="val" t-value="str('{:.2f}'.format(values.get('18') or 0.0)).split('.')"></t>
+                        <div style="position: absolute; text-align: center; width: 200px; top:540px; left:600px; letter-spacing:5px; font-size:12px;">
+                            <span t-esc="val[0]"/>
+                        </div>
+                        <div style="position: absolute; width: 30px; top:540px; left:835px; letter-spacing:5px; font-size:12px;">
+                            <span t-esc="val[1]"/>
+                        </div>
+                        <!-- 19. -->
+                        <t t-set="val" t-value="str('{:.2f}'.format(values.get('19') or 0.0)).split('.')"></t>
+                        <div style="position: absolute; text-align: center; width: 200px; top:560px; left:600px; letter-spacing:5px; font-size:12px;">
+                            <span t-esc="val[0]"/>
+                        </div>
+                        <div style="position: absolute; width: 30px; top:560px; left:835px; letter-spacing:5px; font-size:12px;">
+                            <span t-esc="val[1]"/>
+                        </div>
+                        <!-- 20. -->
+                        <div style="position: absolute; text-align: center; height: 15px; width: 235px; top:580px; left:342px; letter-spacing:5px; font-size:12px;">
+                            <span t-esc="values.get('20A')"/>
+                        </div>
+                        <t t-set="val" t-value="str('{:.2f}'.format(values.get('20') or 0.0)).split('.')"></t>
+                        <div style="position: absolute; text-align: center; width: 200px; top:580px; left:600px; letter-spacing:5px; font-size:12px;">
+                            <span t-esc="val[0]"/>
+                        </div>
+                        <div style="position: absolute; width: 30px; top:580px; left:835px; letter-spacing:5px; font-size:12px;">
+                            <span t-esc="val[1]"/>
+                        </div>
+                        <!-- 21. -->
+                        <t t-set="val" t-value="str('{:.2f}'.format(values.get('21') or 0.0)).split('.')"></t>
+                        <div style="position: absolute; text-align: center; width: 200px; top:602px; left:600px; letter-spacing:5px; font-size:12px;">
+                            <span t-esc="val[0]"/>
+                        </div>
+                        <div style="position: absolute; width: 30px; top:602px; left:835px; letter-spacing:5px; font-size:12px;">
+                            <span t-esc="val[1]"/>
+                        </div>
+                        <!-- 22. -->
+                        <t t-set="val" t-value="str('{:.2f}'.format(values.get('22') or 0.0)).split('.')"></t>
+                        <div style="position: absolute; text-align: center; width: 200px; top:622px; left:600px; letter-spacing:5px; font-size:12px;">
+                            <span t-esc="val[0]"/>
+                        </div>
+                        <div style="position: absolute; width: 30px; top:622px; left:835px; letter-spacing:5px; font-size:12px;">
+                            <span t-esc="val[1]"/>
+                        </div>
+                        <!-- 23. -->
+                        <!-- 24. -->
+                        <t t-set="val" t-value="str('{:.2f}'.format(values.get('24') or 0.0)).split('.')"></t>
+                        <div style="position: absolute; text-align: center; width: 200px; top:666px; left:600px; letter-spacing:5px; font-size:12px;">
+                            <span t-esc="val[0]"/>
+                        </div>
+                        <div style="position: absolute; width: 30px; top:665px; left:835px; letter-spacing:5px; font-size:12px;">
+                            <span t-esc="val[1]"/>
+                        </div>
+                        <!-- 25. -->
+                        <t t-set="val" t-value="str('{:.2f}'.format(values.get('25') or 0.0)).split('.')"></t>
+                        <div style="position: absolute; text-align: center; width: 200px; top:688px; left:600px; letter-spacing:5px; font-size:12px;">
+                            <span t-esc="val[0]"/>
+                        </div>
+                        <div style="position: absolute; width: 30px; top:688px; left:835px; letter-spacing:5px; font-size:12px;">
+                            <span t-esc="val[1]"/>
+                        </div>
+                        <!-- 26. -->
+                        <t t-set="val" t-value="str('{:.2f}'.format(values.get('26') or 0.0)).split('.')"></t>
+                        <div style="position: absolute; text-align: center; width: 200px; top:710px; left:600px; letter-spacing:5px; font-size:12px;">
+                            <span t-esc="val[0]"/>
+                        </div>
+                        <div style="position: absolute; width: 30px; top:710px; left:835px; letter-spacing:5px; font-size:12px;">
+                            <span t-esc="val[1]"/>
+                        </div>
+                        <!-- 27. -->
+                        <t t-set="val" t-value="str('{:.2f}'.format(values.get('27') or 0.0)).split('.')"></t>
+                        <div style="position: absolute; text-align: center; width: 200px; top:730px; left:600px; letter-spacing:5px; font-size:12px;">
+                            <span t-esc="val[0]"/>
+                        </div>
+                        <div style="position: absolute; width: 30px; top:730px; left:835px; letter-spacing:5px; font-size:12px;">
+                            <span t-esc="val[1]"/>
+                        </div>
+                        <!-- 28. -->
+                        <t t-set="val" t-value="str('{:.2f}'.format(values.get('28') or 0.0)).split('.')"></t>
+                        <div style="position: absolute; text-align: center; width: 200px; top:752px; left:600px; letter-spacing:5px; font-size:12px;">
+                            <span t-esc="val[0]"/>
+                        </div>
+                        <div style="position: absolute; width: 30px; top:752px; left:835px; letter-spacing:5px; font-size:12px;">
+                            <span t-esc="val[1]"/>
+                        </div>
+                        <!-- 29. -->
+                        <div style="position: absolute; text-align: center; height: 15px; width: 255px; top:775px; left:330px; letter-spacing:5px; font-size:12px;">
+                            <span t-esc="values.get('29A')"/>
+                        </div>
+                        <t t-set="val" t-value="str('{:.2f}'.format(values.get('29') or 0.0)).split('.')"></t>
+                        <div style="position: absolute; text-align: center; width: 200px; top:775px; left:600px; letter-spacing:5px; font-size:12px;">
+                            <span t-esc="val[0]"/>
+                        </div>
+                        <div style="position: absolute; width: 30px; top:775px; left:835px; letter-spacing:5px; font-size:12px;">
+                            <span t-esc="val[1]"/>
+                        </div>
+                        <!-- 30. -->
+                        <t t-set="val" t-value="str('{:.2f}'.format(values.get('30') or 0.0)).split('.')"></t>
+                        <div style="position: absolute; text-align: center; width: 200px; top:800px; left:600px; letter-spacing:5px; font-size:12px;">
+                            <span t-esc="val[0]"/>
+                        </div>
+                        <div style="position: absolute; width: 30px; top:800px; left:835px; letter-spacing:5px; font-size:12px;">
+                            <span t-esc="val[1]"/>
+                        </div>
+                        <!-- 31. -->
+                        <t t-set="val" t-value="str('{:.2f}'.format(values.get('31') or 0.0)).split('.')"></t>
+                        <div style="position: absolute; text-align: center; width: 200px; top:820px; left:600px; letter-spacing:5px; font-size:12px;">
+                            <span t-esc="val[0]"/>
+                        </div>
+                        <div style="position: absolute; width: 30px; top:820px; left:835px; letter-spacing:5px; font-size:12px;">
+                            <span t-esc="val[1]"/>
+                        </div>
+                        <!-- 32. -->
+                        <t t-set="val" t-value="str('{:.2f}'.format(values.get('32') or 0.0)).split('.')"></t>
+                        <div style="position: absolute; text-align: center; width: 200px; top:840px; left:600px; letter-spacing:5px; font-size:12px;">
+                            <span t-esc="val[0]"/>
+                        </div>
+                        <div style="position: absolute; width: 30px; top:840px; left:835px; letter-spacing:5px; font-size:12px;">
+                            <span t-esc="val[1]"/>
+                        </div>
+                        <!-- 33. -->
+                        <t t-set="val" t-value="str('{:.2f}'.format(values.get('33') or 0.0)).split('.')"></t>
+                        <div style="position: absolute; text-align: center; width: 200px; top:860px; left:600px; letter-spacing:5px; font-size:12px;">
+                            <span t-esc="val[0]"/>
+                        </div>
+                        <div style="position: absolute; width: 30px; top:860px; left:835px; letter-spacing:5px; font-size:12px;">
+                            <span t-esc="val[1]"/>
+                        </div>
+                        <!-- 34. -->
+                        <t t-set="val" t-value="str('{:.2f}'.format(values.get('34') or 0.0)).split('.')"></t>
+                        <div style="position: absolute; text-align: center; width: 200px; top:882px; left:600px; letter-spacing:5px; font-size:12px;">
+                            <span t-esc="val[0]"/>
+                        </div>
+                        <div style="position: absolute; width: 30px; top:882px; left:835px; letter-spacing:5px; font-size:12px;">
+                            <span t-esc="val[1]"/>
+                        </div>
+                        <!-- 35. -->
+                        <t t-set="val" t-value="str('{:.2f}'.format(values.get('35') or 0.0)).split('.')"></t>
+                        <div style="position: absolute; text-align: center; width: 200px; top:905px; left:600px; letter-spacing:5px; font-size:12px;">
+                            <span t-esc="val[0]"/>
+                        </div>
+                        <div style="position: absolute; width: 30px; top:905px; left:835px; letter-spacing:5px; font-size:12px;">
+                            <span t-esc="val[1]"/>
+                        </div>
+                        <!-- 36. -->
+                        <t t-set="val" t-value="str('{:.2f}'.format(values.get('36') or 0.0)).split('.')"></t>
+                        <div style="position: absolute; text-align: center; width: 200px; top:925px; left:600px; letter-spacing:5px; font-size:12px;">
+                            <span t-esc="val[0]"/>
+                        </div>
+                        <div style="position: absolute; width: 30px; top:925px; left:835px; letter-spacing:5px; font-size:12px;">
+                            <span t-esc="val[1]"/>
+                        </div>
+                        <!-- For Individual -->
+                        <!-- <div style="background-color:rgb(204,204,204); position: absolute; width: 360px; top:992px; left:100px; letter-spacing:5px; font-size:12px;">
+                            <span t-if="values.get('employees')" t-field="values['employees'].company_id.company_representative"></span>
+                        </div> -->
+                        <!-- For Non-Individual -->
+                        <div style="position: absolute; width: 380px; top:992px; left:482px; letter-spacing:3px; font-size:12px;">
+                            <span t-if="values.get('employees')" t-field="values['employees'].id_company.company_representative"></span>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>
+

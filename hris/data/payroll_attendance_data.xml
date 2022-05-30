@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+        <record id="cron_gen_attendance_record" model="ir.cron">
+            <field name="name">Generate Employee Absent Attendance</field>
+            <field name="user_id" ref="base.user_root" />
+            <field name="model">hr.attendance</field>
+            <field name="function">make_absent</field>
+            <field name="interval_type">hours</field>
+            <field name="interval_number" eval="24" />
+        </record>
+
+        <record id="cron_gen_attendance_logs_bio" model="ir.cron">
+            <field name="name">Download Logs Biometric</field>
+            <field name="user_id" ref="base.user_root" />
+            <field name="model">hr.biometric.connection</field>
+            <field name="function">_cron_get_attendance</field>
+            <field name="interval_type">hours</field>
+            <field name="interval_number" eval="24" />
+        </record>
+
+    </data>
+
+    <!--
+	<data noupdate="1">
+        <record id="payslip_template_default" model="hr.payslip.template">
+			<field name="payslip_template">template_one</field>
+			<field name="report_template_id" ref="action_report_payslip" />
+		</record>
+    </data>-->
+</odoo>

@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<odoo>
+	<data>
+	    <record id="hr_attendance_ctx_form" model="ir.ui.view">
+	      	<field name="name">Change of Attendance</field>
+	      	<field name="model">hr.attendance</field>
+	      	<field name="priority" eval="18" />
+	      	<field name="arch" type="xml">
+	      	    <form>
+				    <sheet>
+				        <group>
+				            <group string="Employee" >
+
+				                <field name="employee_id" options="{'no_open': True, 'no_create': True, 'no_create_edit':True}"  />
+							    
+							 </group>
+							 <group string="Schedule">
+							    <field name="schedule_in" />
+							    <field name="schedule_out" />
+							 </group>
+							 <group string="Actual Time">
+							    
+							    <field name="check_in" string="Actual Time In" attrs="{'readonly': [('is_ob', '=', False)]}" />
+				    			<field name="check_out" string="Actual Time Out" attrs="{'readonly': [('is_ob', '=', False)]}" />
+				    		 </group>
+				    		 <group string="Change Actual Time">
+								 <field name="temp_in" string="Change Actual Time In" attrs="{'readonly': [('check_in', '!=', False),('is_raw', '=', True)]}" />
+				    			<field name="temp_out" string="Change Actual Time Out" attrs="{'readonly': [('check_out', '!=', False),('is_raw', '=', True)]}" />
+							 </group>
+							 <group string="Remarks">
+							 	<field nolabel="1" name="remarks" readonly="1"/>
+							 </group>
+							 <field name="is_ob"  invisible="1" />
+							 <field name="is_absent"  invisible="1" />
+							 <field name="is_leave"  invisible="1" />
+							 <field name="is_holiday"  invisible="1" />
+							 <field name="is_raw" invisible="1" />
+				        </group>
+				    </sheet>
+				</form>
+	      	</field>
+	    </record>
+	    <record id="hr_attendance_ctx_tree" model="ir.ui.view">
+	      	<field name="name">Change of Attendance</field>
+	      	<field name="model">hr.attendance</field>
+	      	<field name="priority" eval="18" />
+	      	<field name="arch" type="xml">
+	      	    <tree>
+				    <field name="employee_id" readonly="1"/>
+				    <field name="schedule_in" />
+				    <field name="schedule_out" />
+				    <field name="check_in" readonly="1" string="Actual Time In"/>
+				    <field name="check_out" readonly="1" string="Actual Time Out"/>
+				    <field name="temp_in" string="Change Actual Time In" />
+				    <field name="temp_out" string="Change Actual Time Out" />
+				    <field name="remarks" readonly="1" />
+				    <field name="is_absent" invisible="1" />
+					<field name="is_leave" invisible="1" />
+					<field name="is_holiday" invisible="1" />
+				</tree>
+	      	</field>
+	    </record>
+	    
+
+	    <record id="hr_attendance_rc_view_form" model="ir.ui.view">
+	        <field name="name">Change of Attendance</field>
+	        <field name="model">hr.attendance.change</field>
+	        <field name="arch" type="xml">
+	            <form>
+	                <header>
+	                    <button name="btn_make_draft" groups="hris.group_hr_user,hris.group_approver" type="object" string="RESET TO DRAFT" states="pending,approved" class="btn btn-primary" />
+	                    <button name="btn_pending" type="object" string="CONFIRM" states="draft" class="btn btn-primary" />
+	                	<button name="btn_approved" groups="hris.group_hr_user,hris.group_approver" type="object" string="APPROVE" states="pending" class="btn btn-primary" />
+	       
+	                	<field name="state" nolabel="1" widget="statusbar" statusbar_visible="draft,pending,approved" />
+	                </header>
+	                <sheet>
+	                    <group>
+	                        <group>
+	                            <field name="name" attrs="{'readonly': [('state', '!=', 'draft')]}" />
+	                            
+	                            <field name="employee_id" 
+	                                   attrs="{'readonly': [('state', '!=', 'draft')]}"  
+	                                   options="{'no_open':True, 'no_create_edit':True, 'no_create':True}"/>
+                            </group>
+                            <group>
+                            	<field name="date_applied" invisible="1" />
+                            	<field name="date_approved" readonly="1" />
+                            </group>
+                            <group>
+                            	<field name="description" string="Reason" attrs="{'readonly': [('state', '!=', 'draft')]}" />
+                            </group>
+                            <div class="o_row" invisible="1" >
+								<label for="ob_lockout" />
+								<field name="ob_lockout" />
+								<field name="ob_lockout_period" attrs="{'invisible': [('ob_lockout', '=', False)]}" />payroll cutoff
+							</div>
+	                    </group>
+	                    <notebook>
+						  <page string="Attendances">
+							  <field name="attendance_line" 
+							         required="True"
+							      	 options="{'no_create': True}"
+							      	 domain="[('employee_id','=', employee_id)]"
+							      	 attrs= "{'readonly': [('state', '!=', 'draft')]}"
+							      	 context="{'default_is_ob': True, 
+							      	 'default_employee_id': employee_id, 
+							      	 'form_view_ref': 'hris.hr_attendance_ctx_form',
+							      	 'tree_view_ref': 'hris.hr_attendance_ctx_tree'
+							      	 }">
+									
+							  </field>
+						  </page>
+					  </notebook>
+	                </sheet>
+	                <div class="oe_chatter">
+	                	<field name="message_follower_ids" widget="mail_followers" />
+	                	<field name="message_ids" widget="mail_thread" />
+	                </div>
+	            </form>
+	        </field>
+	    </record>
+	    <record id="hr_attendance_rc_view_tree" model="ir.ui.view">
+	        <field name="name">Change of Attendance</field>
+	        <field name="model">hr.attendance.change</field>
+	        <field name="arch" type="xml">
+	            <tree decoration-info="state=='pending'" decoration-success="state=='approved'" >
+                     <field name="name" />
+                     <field name="employee_id" />
+                     <field name="description" />
+                     <field name="date_applied" />
+                     <field name="state" invisible="1" />    
+	            </tree>
+	        </field>
+	    </record>
+	    <record id="hr_change_attendance_search_view" model="ir.ui.view">
+    	    <field name="name">HR Change of Attendance</field>
+    	    <field name="model">hr.attendance.change</field>
+    	    <field name="arch" type="xml">
+    	        <search>
+    	            <field name="employee_id" string="Employee" filter_domain="[('employee_id.name', 'ilike', self)]" />
+    	        </search>
+    	    </field>
+    	</record>
+	    <record id="action_hr_attendance_rc" model="ir.actions.act_window">
+	    	<field name="name">Change of Attendance </field>
+	    	<field name="res_model">hr.attendance.change</field>
+	    	<field name="view_mode">tree,form</field>
+	    	<field name="view_type">form</field>
+	    	<field name="help" type="html">
+	    	    <p class="oe_nocontent_create_view">
+	    	        Click here add to new request for a change of an attendance. 
+	    	    </p>
+	    	</field>
+	    </record>
+	    <record id="action_hr_attendance_rc_view_form" model="ir.actions.act_window.view">
+	         <field name="sequence">2</field>
+	    	<field name="view_mode">form</field>
+	    	<field name="act_window_id" ref="action_hr_attendance_rc"/>
+	    	<field name="view_id" ref="hr_attendance_rc_view_form"/>
+	    </record>
+	    <record id="action_hr_attendance_rc_view_tree" model="ir.actions.act_window.view">
+	         <field name="sequence">1</field>
+	    	<field name="view_mode">tree</field>
+	    	<field name="act_window_id" ref="action_hr_attendance_rc"/>
+	    	<field name="view_id" ref="hr_attendance_rc_view_tree"/>
+	    </record>
+	    
+	    <menuitem id="menu_hr_attendance_rc" 
+	        	   name="Change Attendance Request"
+	        	   action="action_hr_attendance_rc" 
+	        	   parent="hr_attendance.menu_hr_attendance_manage_attendances"
+	        	   sequence="30"
+	        	    />
+	    
+	</data>
+</odoo>

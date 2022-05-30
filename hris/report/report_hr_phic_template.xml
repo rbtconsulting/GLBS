@@ -1,0 +1,155 @@
+<odoo>
+	<data>
+		<template id="hris.report_phic_template">
+    		<t t-call="report.html_container">
+        	<t t-foreach="docs" t-as="o">
+            <t t-call="report.external_layout">
+                 <div class="page">
+                <style>
+			    header{
+					margin-top:2%;
+					}
+
+			    .headers {
+					 line-height:80%;
+					 font-size:14px;
+					}
+
+				.dates{
+					font-size:14px;
+					line-height:80%;
+					margin-left:70%;
+					}
+
+				.subheader{
+					font-size:14px;
+					margin-bottom: 30px;
+					}
+
+				.company_info{
+					line-height:80%!important;
+					font-size:14px! important;
+					}
+
+				table {
+    				font-family: arial, sans-serif;
+    				border-collapse: collapse;
+    				width: 100%;
+					border:1px solid black;
+					}
+				
+				table {
+					font-family: arial, sans-serif;
+					border-collapse: collapse;
+					width: 100%;
+					white-space:nowrap;
+					}
+
+				td, th {
+					border: 1px solid #dddddd;
+					text-align: left;
+					white-space:nowrap;
+					padding:0 !important;
+					font-size: 18px;
+					}
+				tr:nth-child(even) {
+    				background-color: #dddddd;
+					}
+
+
+
+             	</style>
+                <t t-set="get_company" t-value="get_company"/>
+                <t t-set="data_source" t-value="get_phic_details"/>
+                <t t-set="totals" t-value="totals"/>
+                <t t-set="dates" t-value="dates"/>
+               		
+					<div class="headers"><h6><p align="center">Republic of the Philippines</p></h6></div>
+					<div class="headers"><h4><p align="center"><img src="/hris/static/src/img/phic-logo.jpg" alt="pag-ibig logo" style="height:70px!important; width:70px!important;z-index=1;padding-right:8px;"/>
+					<b>PHILIPPINES HEALTH INSURANCE CORPORATION</b></p></h4></div>
+					<div class="headers"><h6><p align="center">www.philhealth.gov.ph</p></h6></div>
+                
+					<div class="dates">
+						<p><span/>
+
+                    		<b>Date/Time Generated:</b>
+                         	<span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/>
+						</p>
+
+					    <div><p><b>Report Type:</b><span/><span>Regular</span></p></div>
+					    <div><p><b>Applicable Period</b><span/><span t-esc="dates['DATE_FROM']"/> - <span t-esc="dates['DATE_TO']"/></p></div>
+					</div>
+					<div class="subheader"><center><h3><b>PRELIMINARY EMPLOYEES PREMIUM REMITTANCE LIST(PERRL)</b></h3></center></div>
+					<div class="company_info">
+
+						<div class="company"><p align="left"><b>PhilHealth Number:<span/></b><span t-esc="res_company.philhealth_num or ''"/></p></div>
+						<div class="company"><p align="left"><b>Employer Name:</b><span t-esc="res_company.partner_id.name or ''"/></p></div>
+						<div class="company"><p align="left"><b>Employer Address:</b><span t-esc="res_company.partner_id.street or ''"/>
+							                                           <span t-esc="res_company.partner_id and res_company.partner_id.street2 or ''"/>
+																		<span t-esc="res_company.partner_id and res_company.partner_id.city"/>
+																		<span t-esc="res_company.partner_id.state_id and res_company.partner_id.state_id.name or ''"/>
+																		<span t-esc="res_company.partner_id.country_id and res_company.partner_id.country_id.name or ''"/></p></div>
+						<div class="company"><p align="left"><b>Employer TIN:</b><span t-esc="res_company.partner_id.vat or ''"/></p></div>
+						<div class="company"><p align="left"><b>Employee Type:<span/></b><span>Private</span></p></div>
+					</div>
+
+			
+                <table class="table table-condensed,table-hover">
+                    <tr>
+                        <th class="text-center">NO.</th>
+						<th class="text-center">PhilHealth No.</th>
+                        <th class="text-center">Surname</th>
+                        <th class="text-center">Given Name</th>
+                        <th class="text-center">Middle Name</th>
+                        <th class="text-center">EE</th>
+						<th class="text-center">ER</th>
+                    <!-- get Philhealth contributions -->
+                    <t t-foreach="data_source" t-as="ds">
+	                    <tr>
+							<td class="text-center"><span t-esc="ds_index + 1"/></td>
+	              			<td class="text-center"><span t-esc="ds['EMP_PHIC']"/></td>
+				  			<td class="text-center"><span t-esc="ds['EMP_SURNAME']"/></td>
+							<td class="text-center"><span t-esc="ds['EMP_FIRST']"/></td>
+							<td class="text-center"><span t-esc="ds['EMP_MIDDLE']"/></td>
+				  			<td class="text-right"><span t-esc="'{:,.2f}'.format(ds['PHIC_EE'])"/></td>
+							<td class="text-right"><span t-esc="'{:,.2f}'.format(ds['PHIC_ER'])"/></td>
+                    	</tr>        
+                    </t>
+                    <!-- get totals -->
+                    <tr>
+                    	<td class="text-center" colspan="4"/>
+                        <td class="text-center"><b>Sub Total</b></td>
+                        <td class="text-right"><span t-esc="'{:,.2f}'.format(totals['TOTAL_PHIC_EE'])"/></td>
+                        <td class="text-right"><span t-esc="'{:,.2f}'.format(totals['TOTAL_PHIC_ER'])"/></td>
+                    </tr>
+				    <tr>
+						<td class="text-center" colspan="4"/>
+                        <td class="text-center"><b>Grand Total</b></td>
+						<td class="text-center" colspan="2">
+                        	<span t-esc="'{:,.2f}'.format(totals['TOTAL_PHIC'])"/>
+                        </td>
+					</tr>
+                    </tr>
+						<tfoot>
+							<center>
+								 <tr>
+									<td colspan="5">
+									 <br/> _________________________________________________________<br/>
+										 <b>Prepared by</b> (Signature Over Printed Name)<br/>
+		
+									</td>
+									<td colspan="5">
+									 <br/> ________________________________<br/>
+										<b>Approved by</b>(Signature Over Printed Name)
+									</td>
+								  </tr>
+							</center>
+						</tfoot>
+                </table>
+            </div>
+            </t>
+        	</t>
+    		</t>	
+		</template>
+	</data>
+</odoo>

@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="report_payslipdetails">
+	 	<t t-call="report.html_container">
+	     <t t-foreach="docs" t-as="o">
+           <t t-call="report.external_layout">
+              <div class="page">
+                  <style>
+                    .nopadding {
+                      padding: 1px !important;
+                      margin: 0 !important;
+                    }
+
+                    #logo {
+                      width:280px;
+                      height:70px;
+                    }
+
+                    #payslip-border {
+                      border: 3px solid black;
+                      width: 1325px;
+                      height: 550px;
+                    }
+
+                    p, table {
+                      font-family: Calibri, Candara, Segoe, Segoe UI, Optima, Arial, sans-serif;
+                      font-size: 12px;
+                      font-style: normal;
+                      font-variant: normal;
+                      line-height: 14px;
+                    }
+
+                    #header {
+                      font-size: 14px;
+                      line-height: 5px;
+                      font-weight:bold;
+                    }
+
+                    #info {
+                      border: 0px;
+                      text-align: left;
+                    }
+                    #info > tr> td > b{
+                     margin-right:10px;
+                    }
+
+                    table {
+                      width:100%;
+                      margin-right: 0px;
+                    }
+
+                    #profit-table {
+                      font-size: 14px;
+                      line-height: 20px;
+                      height:300px;
+                    }
+
+                    #paydate-table {
+                      font-size: 15px;
+                      line-height: 30px;
+
+                    }
+                    #paydate{
+                       margin: 0 auto;
+                    }
+
+                    #profit-table th{
+                      border-top: 2px solid black;
+                      border-bottom: 2px solid black;
+                      text-align: center;
+                    }
+
+                    #profit-table tfoot {
+                      border-bottom: 3px double #000000;
+
+                    }
+
+                    .empty-space {
+                      padding-bottom: 200px;
+                      border-right: 1px solid black;
+                    }
+
+                    .border-right {
+                      border-right: 1px solid black;
+                    }
+                    #border-right2 {
+                      border-right: 1px solid black;
+                    }
+
+                    h7 {
+                      font-family: Calibri, Candara, Segoe, Segoe UI, Optima, Arial, sans-serif;
+                      font-size: 14px;
+                      font-weight: bold;
+                    }
+                    .table-borderless > tbody > tr > td {
+                          border:none;
+
+                    }
+                    .earnings_ded >tbody >tr >td {
+                         border-top: 1px solid black;
+                        border-bottom: 1px solid black;
+
+                    }
+                    .amount{
+                      border-bottom:1px solid black;
+                      margin-bottom:-5px;
+
+                    }
+                  </style>
+                  <t t-set="TOTAL_DEDUCTION" t-value="TOTAL_DEDUCTION"/>
+                  <t t-set="deductions" t-value="result" />
+                  <div class="container-fluid" id="payslip-border" >
+                  	<div><img t-if="o.company_id.logo" t-att-src="'data:image/png;base64,%s' %o.company_id.logo" width="60px" height="60px"/><b>    <p id="header"><span t-field="o.company_id"/></p></b> </div>
+                        <div class="row"/>
+                          <div class="col-xs-9">
+                            <table id="info">
+                              <tbody>
+                                <tr>
+                                  <td class="col-sm-3 nopadding"> </td>
+                                  <td class="col-xs-3 nopadding"> <center></center></td>
+                                  <td class="col-xs-3 nopadding"> <b>TIN No.:</b><span t-field="o.employee_id.identification_id"/> </td>
+                                  <td class="col-xs-3 nopadding"> <center>  </center> </td>
+                                </tr>
+                                <tr>
+                                  <td class="col-xs-3 nopadding"><b>Name:</b><span t-field="o.employee_id"/> </td>
+                                  <td class="col-xs-3 nopadding"> <center>  </center> </td>
+                                  <td class="col-xs-3 nopadding"><b>SSS No.:</b><span t-field="o.employee_id.sss_no"/> </td>
+                                  <td class="col-xs-3 nopadding"> <center>  </center> </td>
+                                </tr>
+                                <tr>
+                                  <td class="col-xs-3 nopadding"><b>Position:</b><span t-field="o.employee_id.job_id"/> </td>
+                                  <td class="col-xs-3 nopadding"> <center>  </center> </td>
+                                  <td class="col-xs-3 nopadding"> <b>PHIC No.:</b><span t-field="o.employee_id.phic_no"/> </td>
+                                  <td class="col-xs-3 nopadding"> <center>  </center> </td>
+                                </tr>
+                                <tr>
+                                  <td class="col-xs-3 nopadding"><b> Bank Account Number:</b><span t-field="o.employee_id.bank_account_id"/></td>
+                                  <td class="col-xs-3 nopadding"> <center>  </center> </td>
+                                  <td class="col-xs-3 nopadding"><b>HDMF No.:</b> <span t-field="o.employee_id.hdmf_no"/> </td>
+                                  <td class="col-xs-3 nopadding"> <center>  </center> </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                            <table class="table" id="profit-table">
+                              <thead>
+                                <tr>
+                                  <th class="col-xs-4 nopadding border-right">Earnings</th>
+                                  <th class="col-xs-4 nopadding border-right">Deductions</th>
+                                </tr>
+                               	<tr>
+                                   <td class="col-xs-4 nopadding border-right amount" >
+                                      <table class="table">
+                                          <tr>
+                                             <td class="text-left"><b>Description</b></td>
+                                             <td class="text-right"><b>Amount</b></td>
+                                          </tr>
+                                      </table>
+                                   </td>
+                                   <td class="col-xs-4 nopadding border-right amount">
+                                      <table class="table">
+                                         <tr>
+                                         	<td class="text-left"><b>Description</b></td>
+                                           <td class="text-right"><b>Amount</b></td>
+                                         </tr>
+                                      </table>
+                                  </td>
+                            	</tr>
+                             </thead>
+                             <tbody >
+                                <tr>
+                                  <td class="empty-space">
+                                    <table class="table table-borderless">
+                                       <tbody >
+                                          <t t-foreach="o.line_ids.filtered(lambda line: line.appears_on_payslip)" t-as="line">
+                                             <tr>
+                                                 <t t-if="line.amount != 0">
+                                                  <t t-if="line.category_id.code in ['BSC','ONTXINC','LON','BON','MTH13','OtherTaxInc'] and line.code != 'EarTax' and line.code != 'EarNonTax'">
+                                                    <td><span style="line-height:65%!important;" t-field="line.code"/><br/></td>
+                                                    <td class="text-right"><span style="line-height:65%!important;" t-esc="line.amount" t-esc-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/><br/></td>
+                                                   </t>
+                                                 </t>
+                                              </tr>
+                                          </t>
+                                          <tr t-foreach="o.input_line_ids" t-as="ip">
+                                              <t t-if="ip.amount != 0">
+                                                 <t t-if="ip.code == 'EarTax' or ip.code == 'EarNonTax'">
+                                                     <td><span style="line-height:65%!important;" t-field="ip.name" /> </td>
+                                                     <td class="text-right"><span style="line-height:65%!important;" t-esc="ip.amount" t-esc-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/></td>
+                                                 </t>
+                                              </t>
+                                           </tr>
+                                        </tbody>
+                                     </table>
+                                  </td>
+                                  <td class="empty-space">
+                                      <table class="table table-borderless">
+                                         <tbody>
+                                             <t t-foreach="o.line_ids.filtered(lambda line: line.appears_on_payslip)" t-as="line">
+                                               <tr>
+                                                   <t t-if="line.amount != 0" >
+                                                     <t t-if="line.category_id.code in ['DED','EMPCTRB','WTX'] and line.code != 'DedTax' and line.code != 'DedNonTax'">
+                                                        <td><span style="line-height:65%!important;" t-field="line.code" /></td>
+                                                        <td class="text-right"><span style="line-height:65%!important;" t-esc="line.amount"  t-esc-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/></td>
+                                                     </t>
+                                                   </t>
+                                                </tr>
+                                               </t>
+                                               <tr t-foreach="o.input_line_ids" t-as="ip">
+                                                 <t t-if ="ip.amount != 0">
+                                                 <t t-if="ip.code == 'DedTax' or ip.code == 'DedNonTax'">
+                                                     <td><span style="line-height:65%!important;" t-field="ip.name" /> </td>
+                                                     <td class="text-right"><span style="line-height:65%!important;" t-esc="ip.amount" t-esc-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/></td>
+                                                 </t>
+                                                </t>
+                                            </tr>
+                                         </tbody>
+                                      </table>
+                                    </td>
+                                </tr>
+                              </tbody>
+                              <table class="table earnings_ded" style="margin-top:-20px; margin-bottom:20px;">
+                                <tr >
+                                   <t t-foreach="o.line_ids.filtered(lambda line: line.appears_on_payslip)" t-as="line">
+                                     <t t-if="line.code == 'TotEar'">
+                                         <td class="col-xs-2 nopadding"><b>TOTAL EARNINGS:</b></td>
+                                         <td class="col-xs-2 nopadding border-right"><span t-esc="line.amount" t-esc-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/></td>
+                                     </t>
+                                     <t t-if="line.code == 'TotDed'">
+                                         <td class="col-xs-2 nopadding"><b>TOTAL DEDUCTION:</b></td>
+                                        <td  class="col-xs-2 nopadding border-right"><span t-esc="line.amount" t-esc-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/></td>
+                                     </t>
+                                   </t>
+                                </tr>
+                              </table>
+                              <div style="padding-top:5px;">
+                                <t t-foreach="o.line_ids.filtered(lambda line: line.appears_on_payslip)" t-as="line">
+                                   <t t-if="line.code == 'FNP'">
+                                     <center>
+                                        <td class="text-center"><b>NET PAY:</b></td>
+                                        <td class="text-center" ><span t-esc="line.amount" t-esc-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/></td>
+                                     </center>
+                                   </t>
+                                </t>
+                              </div>
+                            </table>
+                          <br/>
+                        </div>
+                        <div>
+                          <h5 class="text-center" >PRIVATE and CONFIDENTIAL</h5>
+                        </div>
+                        <div class="col-xs-3" id="paydate">
+                          <h7 class="col-xs-6 nopadding"> PAYDATE </h7>
+                          <h7 class="col-xs-6 nopadding" style="text-align: right"><span t-field="o.date_release"/></h7>
+                          <br/>
+                          <br/>
+                          <center>
+                            <p> Received by: ________________ </p> <br/>
+                            <p> Received the amount mentioned below as full <br/>
+                            payment for the pay period </p> <br/>
+                          </center>
+                          <table id="paydate-table" >
+                            <t t-foreach="o.line_ids.filtered(lambda line: line.appears_on_payslip)" t-as="line">
+                              <tr t-if="line.code == 'TotEar'">
+                                <td> Total Earnings: </td>
+                                <td style="text-align: right"><b><span t-esc="line.amount" t-esc-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/></b> </td>
+                              </tr>
+                              <tr t-if="line.code == 'TotDed'">
+                                <td> Total Deductions: </td>
+                                <td style="text-align: right"><b><span t-esc="line.amount" t-esc-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/></b> </td>
+                              </tr>
+                              <tr t-if="line.code == 'FNP'">
+                                <td> Take Home Pay: </td>
+                                <td style="text-align: right"> <b><span t-esc="line.amount" t-esc-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/></b></td>
+                              </tr>
+                            </t>
+                          </table>
+                      </div>
+                  </div>
+              </div>
+            </t>
+	       </t>
+	    </t>
+	</template>
+</odoo>
+

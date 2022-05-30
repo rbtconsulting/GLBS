@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+      <record id="pan_form_view" model="ir.ui.view">
+            <field name="name">Personnel Action Notice</field>
+            <field name="model">hr.personal_action_notice</field>
+            <field name="arch" type="xml">
+              <form string="Personnel Action Notice">
+	                <group>
+                        <group string="General Information">
+                            <field name="emp_no" invisible="1"/>
+                            <field name="employee_id" options="{'no_open':True,'no_create':True,'no_create_edit':True}"/>
+                        	<field name="efectivity_date"/>
+                        	<field name="revision_no"/>   
+                        </group>
+                        <separator/>
+	                </group>
+                    <group string="Type of Movement">
+	                      <group string="From">
+	                      	<field name="dep" options="{'no_open':True,'no_create':True,'no_create_edit':True}"/>     
+	                        <field name="pos" options="{'no_open':True,'no_create':True,'no_create_edit':True}"/>
+	                        <field name="emp_typ" options="{'no_open':True,'no_create':True,'no_create_edit':True}"/>
+	                        <field name="wage"/>
+	                        <field name="rep_to" invisible="1" />
+	                        <field name="level" invisible="1" />
+	                      </group>
+	                      <group string="To">
+	                      	<field name="to_dep" options="{'no_open':True,'no_create':True,'no_create_edit':True}"/>     
+	                        <field name="to_pos" options="{'no_open':True,'no_create':True,'no_create_edit':True}"/>   
+	                        <field name="to_emp_typ" options="{'no_open':True,'no_create':True,'no_create_edit':True}"/>
+	                        <field name="to_wage"/>
+	                       
+	                      </group>
+	                    </group>
+                    <group>
+                     <field name="remarks"/>
+                     <group string="Signatories">
+                         <field name="prep_by" options="{'no_open':True,'no_create':True,'no_create_edit':True}"/>
+                         <field name="rev_by" options="{'no_open':True,'no_create':True,'no_create_edit':True}"/>     
+                         <field name="app_by" options="{'no_open':True,'no_create':True,'no_create_edit':True}"/>          
+                     </group>
+                    </group>
+	                <footer>
+	                    <button name="print_report" string="Print" type="object" class="btn-primary"/>
+	                    <button string="Cancel" class="btn-default" special="cancel"/>
+	                </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_pan_report" model="ir.actions.act_window">
+            <field name="name">Personnel Action Notice</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hr.personal_action_notice</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+          <field name="target">new</field>
+        </record>
+
+       	<menuitem
+               name="Personnel Action Notice"
+               parent="menu_hr_reports"
+               action="action_pan_report"
+               id="menu_pan_reports"
+               sequence="100"
+           />
+       	
+       	  <record id="hr_employee_pan_information" model="ir.ui.view">
+    	    <field name="name">HR.Employee.PAN</field>
+    	    <field name="model">hr.employee</field>
+    	    <field name="inherit_id" ref="hr.view_employee_form" />
+    	    <field name="arch" type="xml">
+    	        
+    	        <xpath expr="//div[@name='button_box']" position="inside">
+    	            <button name="%(hris.action_pan_report)d" string="Personnel Action Notice"
+    	                context="{'default_employee_id':id}" 
+    	                icon="fa-file-o" type="action" groups="hr.group_hr_manager,hris.group_hr_user" class="oe_stat_button"/>
+                            
+    	        </xpath>
+    	   	</field>
+    	  </record>
+    </data>
+</odoo>

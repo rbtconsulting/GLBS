@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+  		<record id="prorate_conf_view" model="ir.ui.view">
+			<field name="name">Prorate Structure</field>
+			<field name="model">hr.prorate_config</field>
+			<field name="arch" type="xml">
+				<form>
+					<sheet>
+						<group>
+							<group>
+							<field name="des_name"/>
+							<field name="code"/>
+							<field name="remarks"/>
+							</group>
+						</group>
+						<notebook>
+						<page string="Categories">
+							<field name="categ_line_ids"/>
+						</page>
+					</notebook>
+					</sheet>	
+				</form>
+			</field>
+		</record>
+		
+		<record id="prorate_conf_tree" model="ir.ui.view">
+			<field name="name">Prorate Structure</field>
+			<field name="model">hr.prorate_config</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="des_name"/>
+					<field name="code"/>
+					<field name="categ_line_ids">
+					<field name="remarks"/>
+					</field>	
+				</tree>
+			</field>
+		</record>
+		
+		<record id="action_prorate_conf" model="ir.actions.act_window">
+			<field name="name">Prorate Structure</field>
+			<field name="res_model">hr.prorate_config</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_type">form</field>
+		
+		  </record>
+		      
+        <!-- <menuitem
+            id="menu_prorate_config"
+            action="action_prorate_conf"
+            parent="menu_hr_report_structures"
+            name = "Prorate Structure"
+            sequence="20"
+            groups="hris.group_hr_user"
+            /> -->
+    </data>
+</odoo>

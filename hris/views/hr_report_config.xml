@@ -1,0 +1,504 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+         <menuitem id="menu_hr_report_structures" 
+	        	  parent="hr_payroll.menu_hr_payroll_configuration" 
+	        	  groups="hris.group_hr_user" 
+	        	  sequence="40" 
+	        	  name="Report Structures" />
+         
+        <record id="alphalist_main_config_view_tree" model="ir.ui.view">
+         	<field name="name">Alphalist Main Structure</field>
+         	<field name="model">hr.alpha_list.main_config</field>
+         	<field name="arch" type="xml">
+         	    <tree>
+         	        <field name="name" />
+         	        <field name="alphalist_type" />
+         	        <field name="active" />
+         	    </tree>
+         	</field>
+        </record>
+        <record id="alphalist_main_config_view_form" model="ir.ui.view">
+        	<field name="name">Alphalist Main Structure</field>
+        	<field name="model">hr.alpha_list.main_config</field>
+        	<field name="arch" type="xml">
+        	    <form>
+        	    	<sheet>
+        	    	    <group>
+        	    	        <group>
+        	    	            <field name="name" />
+        	    	            <field name="alphalist_type" widget="radio" />
+        	    	            <field name="active" />
+        	    	        </group>
+        	    	    </group>
+        	    	    <notebook>
+        	    	    	<page string="Structures">
+        	    	      		<field name="config_line" />
+        	    	        </page>
+        	    	    </notebook>
+        	    	</sheet>
+        	    </form>
+        	</field>
+        </record>    
+        
+        <record id="view_alpha_list_tree" model="ir.ui.view">
+            <field name="name">hr.alphalist.tree</field>
+            <field name="model">hr.alpha_list.config</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Employee Function" default_order = "code asc">
+                   <field name="name"/>
+                    <field name="code"/>
+                    <field name="rule_ids"/>
+                    <field name="ytd_config_ids" />
+                    <field name="categ_id" />
+                    <field name="prev_record" />
+                    <field name="boolean_value" />
+                    <field name="include_limit" />
+                    <field name="earner_type" />
+                    <field name="include_excess" />
+                </tree>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="view_alpha_list_form">
+               <field name="name">hr.alpahlist.form</field>
+               <field name="model">hr.alpha_list.config</field>
+               <field name="arch" type="xml">
+               <form string="Employee Function">
+                   <group col="4">
+                       <field name="name"/>
+                       <field name="code"/>
+                       <field name="categ_id" options="{'no_option':True, 'no_create':True, 'no_create_edit':True}" />
+                       <field name="prev_record" />
+                       <field name="boolean_value" />
+                       <field name="include_limit" />
+                       <field name="include_excess" />
+                   </group>
+                   <notebook colspan="4">
+                        <page string="Salary Rules">
+                          <field name="rule_ids" domain="[('parent_rule_id','=',False)]">
+                            <tree>
+                               <field name="name"/>
+                               <field name="code"/>
+                               <field name="category_id"/>
+                            </tree>
+                          </field>
+                        </page>
+                   </notebook>
+                   <notebook>
+                       <page string="Structure">
+                           <field name="config_ids" options="{'no_option':True, 'no_create':True, 'no_create_edit':True}"/>
+                       </page>
+                   </notebook>
+                   <group>
+                       <field name="condition_operator" options="{'no_option':True, 'no_create':True, 'no_create_edit':True}"/>
+                   </group>
+                   <notebook>
+                       <page string="Structure">
+                           <field name="config_ids2" options="{'no_option':True, 'no_create':True, 'no_create_edit':True}" />                           
+                       </page>
+                   </notebook>
+                   <notebook>
+                       <page string="Year to Date">
+                           <field name="ytd_config_ids" options="{'no_option':True, 'no_create':True, 'no_create_edit':True}" />
+                       </page>
+                   </notebook>
+               </form>
+           </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_view_alpha_list_form">
+           <field name="name">Alphalist Structure</field>
+           <field name="res_model">hr.alpha_list.main_config</field>
+           <field name="view_type">form</field>
+           <field name="view_mode">tree,form</field>
+        </record>
+       	
+        <menuitem
+            id="menu_alpha_list_config"
+            action="action_view_alpha_list_form"
+            parent="menu_hr_report_structures"
+            sequence="5"
+            groups="hris.group_hr_user"
+            />
+        
+        <!--Alphalist Category-->
+         <record model="ir.ui.view" id="view_alpha_list_category_form">
+               <field name="name">hr.alpahlist..category.form</field>
+               <field name="model">hr.alphalist_config.category</field>
+               <field name="arch" type="xml">
+               <form string="Alphalist Category">
+                   <group>
+                       <group>
+                           <field name="sequence" />
+                           <field name="name" />
+                           <field name="parent_id" options="{'no_open':True, 'no_create':True, 'no_create_edit':True}" />
+                       </group>
+                   </group>
+               </form>
+           </field>
+        </record>
+        
+        <record model="ir.ui.view" id="view_alpha_list_category_tree">
+               <field name="name">hr.alpahlist.category.tree</field>
+               <field name="model">hr.alphalist_config.category</field>
+               <field name="arch" type="xml">
+               <tree string="Alphalist Category">
+                    <field name="sequence" widget="handle"/>
+                    <field name="name" />
+                    <field name="parent_id" options="{'no_open':True, 'no_create':True, 'no_create_edit':True}" />
+               </tree>
+           </field>
+        </record>
+        
+        <record model="ir.actions.act_window" id="action_view_alpha_list_category_form">
+           <field name="name">Alphalist Structure Category</field>
+           <field name="res_model">hr.alphalist_config.category</field>
+           <field name="view_type">form</field>
+           <field name="view_id" ref="view_alpha_list_category_tree" />
+           <field name="view_mode">tree,form</field>
+        </record>
+       	
+        <menuitem
+            id="menu_alpha_list_category_config"
+            action="action_view_alpha_list_category_form"
+            parent="menu_hr_report_structures"
+            sequence="10"
+            groups="hris.group_hr_user"
+             />
+        <!--Alphalist Category-->
+        
+        <!--Annualization Structure-->
+        <record model="ir.ui.view" id="view_annualization_structure_form">
+            <field name="name">hr.annulization_structure.form</field>
+            <field name="model">hr.annulization_structure.config</field>
+            <field name="arch" type="xml">
+               <form string="Annualization Structure">
+                   <group>
+                        <field name="name" />
+                        <field name="annulization_type" />
+                        <field name="earner_type"/>
+                        <field name="ytd_ids" widget="many2many_tags" options="{'no_create':True,'no_open':True, 'no_create_edit':True}"/>
+                        <field name="ytd_amount"/>
+                        <field name="sequence"/>
+                        <field name="computation"/>
+                        <field name="code" invisible="1"/>
+                        <field name="salary_rule_ids" widget="many2many_tags"/>
+                        <field name="condition" />
+                        <field name="active" />
+                   </group>
+               </form>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="view_annualization_structure_tree">
+            <field name="name">hr.annulization_structure.tree</field>
+            <field name="model">hr.annulization_structure.config</field>
+            <field name="arch" type="xml">
+            <tree>
+                <field name="sequence" widget="handle"/>
+                <field name="name" />
+                <field name="annulization_type" />
+                <field name="ytd_ids" widget="many2many_tags"/>
+                <field name="computation"/>
+                <field name="salary_rule_ids" />
+                <field name="condition" />
+                <field name="code" invisible="1"/>
+                <field name="active" />
+           </tree>
+           </field>
+        </record>
+        
+        <record model="ir.actions.act_window" id="action_view_annulization_structure">
+           <field name="name">Annualization Structure</field>
+           <field name="res_model">hr.annulization_structure.config</field>
+           <field name="view_type">form</field>
+           <field name="view_mode">tree,form</field>
+        </record>
+        
+        <menuitem
+            id="menu_annulization_structure_config"
+            action="action_view_annulization_structure"
+            parent="menu_hr_report_structures"
+            sequence="10"
+            groups="hris.group_hr_user"
+             />
+        
+        <!--Year to Date-->
+        <record id="year_to_date_config_view_tree" model="ir.ui.view">
+                <field name="name">Year to Date Structure</field>
+                <field name="model">hr.year_to_date.config</field>
+                <field name="arch" type="xml">
+                    <tree>
+                        <field name="name" />
+                        <field name="active" />
+                    </tree>
+                </field>
+        </record>
+
+        <record id="year_to_date_config_view_form" model="ir.ui.view">
+                <field name="name">Year to Date Structure</field>
+                <field name="model">hr.year_to_date.config</field>
+                <field name="arch" type="xml">
+                    <form>
+                        <sheet>
+                            <group>
+                                <group>
+                                    <field name="name" />
+                            			<field name="salary_rule_ids" widget="many2many_tags" options="{'no_create':True,'no_open':True, 'no_create_edit':True}"/>
+                                    <field name="active" />
+                                </group>
+                            </group>
+                        </sheet>
+                    </form>
+                </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_year_to_date_config">
+           <field name="name">Year To Date Structure</field>
+           <field name="res_model">hr.year_to_date.config</field>
+           <field name="view_type">form</field>
+           <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem
+            id="menu_year_to_date_config"
+            action="action_year_to_date_config"
+            parent="menu_hr_report_structures"
+            sequence="25"
+            groups="hris.group_hr_user" />
+
+        <!--End Year to Date-->
+        <record id="payroll_register_config_view_tree" model="ir.ui.view">
+            <field name="name">payroll.register.config</field>
+            <field name="model">payroll.register.config</field>
+             <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree>
+                   <field name="name" />
+                </tree>
+            </field>
+        </record>
+        
+        <record id="payroll_register_config_view_form" model="ir.ui.view">
+              <field name="name">payroll.register.config</field>
+              <field name="model">payroll.register.config</field>
+              <field name="arch" type="xml">
+	              <form>
+	                 <group>
+	                     <group>
+	                 		<field name="name" />
+	                 		<field name="active" />
+	                     </group>
+	                 </group>
+	                 <notebook>
+                        <page name="structure" string="Structures">
+		                     <field name="config_line" nolabel="1" >
+		                     	<tree>
+		                     		<field name="sequence" />
+		                     		<field name="name" />
+		                     		<field name="salary_rule_ids" options="{'no_open':True, 'no_create':True, 'no_create_edit':True}" />
+		                     		<field name="from_salary_computation" />
+		                     		<field name="from_worked_days" />
+		                     	</tree>
+		                     	<form>
+		                     	    <sheet>
+		                     	        <group>
+		                     	            <group>
+					                     		<field name="name" />
+					                     		<field name="sequence" />
+		                     	            </group>
+		                     	            <group>
+		                     	                <field name="from_salary_computation" />
+					                     		<field name="from_worked_days" />
+					                     		<field name="active" />
+		                     	            </group>
+		                     	        </group>
+		                     	        <notebook>
+		                     	        	<page name="salary_rule" string="Salary Rules">
+		                     	            	<field name="salary_rule_ids" nolabel="1" options="{'no_open':True, 'no_create':True, 'no_create_edit':True}" />
+					                     	</page>
+					                    </notebook>
+		                     	    </sheet>
+		                     	</form>
+		                     </field>
+	                   	</page>
+	                 </notebook>	                  
+	             </form>
+          </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_payroll_register_config">
+           <field name="name">Payroll Register Structure</field>
+           <field name="res_model">payroll.register.config</field>
+           <field name="view_type">form</field>
+           <field name="view_mode">tree,form</field>
+        </record>
+       
+        <menuitem
+            id="menu_action_payroll_register_config"
+            action="action_payroll_register_config"
+            parent="menu_hr_report_structures"
+            sequence="30"
+            groups="hris.group_hr_user"
+             />
+        
+        <!--Payslip Structure-->
+        <record id="view_payslip_template" model="ir.ui.view">
+            <field name="name">payslip template</field>
+            <field name="model">hr.payslip.template</field>
+            <field name="arch" type="xml">
+	            <form string="Payslip Templates">
+                    <sheet>
+                        <group>
+                            <field name="name" />
+                            <field name="payslip_template" widget="radio" invisible="1" />
+                            <field name="report_template_id" options="{'no_create_edit':True, 'no_create':True}" /> 
+                        </group>
+                        <notebook>
+	                           	<page name="earnings" string="Earnings">
+		                           	<field name="salary_rule_earnings" options="{'no_open':True, 'no_create_edit':True, 'no_create':True}">
+		                           		<tree>
+		                           		    <field name="name" />
+		                           		</tree>
+		                           	</field>
+		                           	
+		                           	<field string="Adjustments" name="salary_rule_earning_inputs" options="{'no_open':True, 'no_create_edit':True, 'no_create':True}">
+		                           		<tree>
+		                           		    <field name="name" />
+		                           		</tree>
+	                           		</field>
+	                           	</page>
+	                           	<page name="deductions" string="Deductions">
+		                           	<field name="salary_rule_deductions" options="{'no_open':True, 'no_create_edit':True, 'no_create':True}">
+		                           		<tree>
+		                           		    <field name="name" />
+		                           		</tree>
+		                           	</field>
+		                           	<field name="salary_rule_deduction_inputs" options="{'no_open':True, 'no_create_edit':True, 'no_create':True}">
+		                           		<tree>
+		                           		    <field name="name" />
+		                           		</tree>
+                           			</field>
+                           		</page>
+                           		<page name="loans" string="Loans">
+		                           	<field name="salary_rule_loans" options="{'no_open':True, 'no_create_edit':True, 'no_create':True}">
+		                           		<tree>
+		                           		    <field name="name" />
+		                           		</tree>
+		                           	</field>
+                           		</page>
+                           		<page name="leaves_included" string="Leaves included on payslip">
+                           		    <field name="holiday_status_ids" options="{'no_open':True, 'no_create_edit':True, 'no_create':True}">
+		                           		<tree>
+		                           		    <field name="name" />
+		                           		</tree>
+                           			</field>
+                           		</page>
+                           </notebook>
+                    </sheet>
+              	</form>
+            </field>
+        </record>
+        
+        <record id="view_payslip_template_tree" model="ir.ui.view">
+            <field name="name">payslip template tree</field>
+            <field name="model">hr.payslip.template</field>
+            <field name="arch" type="xml">
+	            <tree>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        
+        <record model="ir.actions.act_window" id="open_payslip_template">
+            <field name="name">Payslip Template</field>
+            <field name="res_model">hr.payslip.template</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem
+            name="Payslip Structure"
+            parent="menu_hr_report_structures"
+            sequence="15"
+            action="open_payslip_template"
+            id="menu_payslip_templates"
+            groups="hris.group_hr_user"
+           />
+    
+        <!--End of Payslip Structure-->
+    	
+    	<!-- 13TH Month Pay -->        
+        <record id="th_month_pay_view_tree" model="ir.ui.view">
+            <field name="name">Thirteenth Month Pay Structure</field>
+            <field name="model">hr.th.month_pay.config</field>
+             <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree>
+                   <field name="name" />
+                   <field name="active" />
+                </tree>
+            </field>
+        </record>
+        
+        <record id="th_month_pay_view_form" model="ir.ui.view">
+              <field name="name">Thirteenth Month Pay Structure</field>
+              <field name="model">hr.th.month_pay.config</field>
+              <field name="arch" type="xml">
+	              <form>
+	                 <group>
+	                     <group>
+	                 		<field name="name" />
+	                 		<field name="active" />
+	                     </group>
+	                 </group>
+	                 <notebook>
+                        <page name="structure" string="Structures">
+		                     <field name="config_line" nolabel="1" >
+		                     	<tree>
+		                     		<field name="salary_rule_ids" options="{'no_open':True, 'no_create':True, 'no_create_edit':True}" />
+		                     		<field name="ytd_config_ids" options="{'no_open':True, 'no_create':True, 'no_create_edit':True}" />
+		                     		<field name="condition" />
+		                     	</tree>
+		                     	<form>
+		                     		<group>
+		                     			<group>
+		                     				<field name="condition"/>
+		                     			</group>
+		                     		</group>
+		                     		<notebook>
+		                     			<page string="Salary Rules">
+		                     				<field name="salary_rule_ids" />
+		                     			</page>
+		                     		</notebook>
+		                     		<notebook>
+		                     			<page string="Year to Date">
+		                     				<field name="ytd_config_ids" />
+		                     			</page>
+		                     		</notebook>
+		                     	</form>
+		                     </field>
+	                   	</page>
+	                 </notebook>	                  
+	             </form>
+          </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_th_month_pay_config">
+           <field name="name">Thirteenth Month Pay Structure</field>
+           <field name="res_model">hr.th.month_pay.config</field>
+           <field name="view_type">form</field>
+           <field name="view_mode">tree,form</field>
+        </record>
+       
+        <menuitem
+            id="menu_action_th_month_pay_config"
+            action="action_th_month_pay_config"
+            parent="menu_hr_report_structures"
+            sequence="35"
+            groups="hris.group_hr_user"
+             />      
+               
+    </data>
+</odoo>

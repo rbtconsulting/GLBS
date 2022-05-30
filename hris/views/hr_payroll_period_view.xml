@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+		<!--Start of HR Payroll Period-->
+	   	<record id="hr_payroll_period_view_form" model="ir.ui.view">
+	   	    <field name="name">HR Payroll Period</field>
+	   	    <field name="model">hr.payroll.period</field>
+	   	    <field name="arch" type="xml">
+	   	        <form>
+	   	            <header>
+	   	                <button invisible="1" name="btn_generate_period" string="GENERATE PAYROLL PERIOD" type="object" class="btn btn-primary" />
+	   	            </header>
+	   	        	<sheet>
+	   	        	  	<div class="oe_button_box" name="button_box">
+	   	        	  	    <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive" >
+	   	        	  	    	<field name="active" widget="boolean_button" options="{&quot;terminology&quot;: &quot;archive&quot;}" />
+	   	        	  	    </button>
+	   	        	  	</div>
+	   	        	    <group>
+	   	        	        <group>
+	   	        	        <field name="type_hire"/>
+	    	        		    <field name="start_date"/>
+	    	        		    <field name="end_date"/>
+	   	        		    </group>
+	   	        		    <field name="period_line" nolabel="1">
+	   	        		        <form>
+	   	        		            <group>
+	   	        		                <group>
+											<field name="cut_off"/>
+			   	        		            <field name="start_date"/>
+			    	        		    	<field name="end_date"/>
+			    	        		    	<field name="date_release" />
+		    	        		    	</group>
+		    	        		   	</group>
+	   	        		        </form>
+	   	        		        <tree editable="bottom">
+									<field name="cut_off"/>
+	   	        		            <field name="start_date"/>
+	    	        		    	<field name="end_date"/>
+	    	        		    	<field name="date_release" />
+	   	        		        </tree>
+	   	        		    </field>
+	   	        	    </group>
+	   	        	</sheet>
+	   	        </form>
+	   	    </field>
+	   	</record>
+		   	
+	   	<record id="hr_payroll_period_view_tree" model="ir.ui.view">
+	   	    <field name="name">HR Payroll Period</field>
+	   	    <field name="model">hr.payroll.period</field>
+	   	    <field name="arch" type="xml">
+	   	        <tree>
+	   	        	<field name="type_hire"/>
+	   	        	<field name="start_date"/>
+	   	        	<field name="end_date"/>
+	   	        </tree>
+	   	    </field>
+	   	</record>
+	   	
+	   	<record id="action_hr_payroll_period" model="ir.actions.act_window">
+	   	    <field name="name">HR Payroll Period</field>
+	   	    <field name="res_model">hr.payroll.period</field>
+	   	    <field name="view_mode">tree,form</field>
+	   	    <field name="view_type">form</field>
+	   	    <field name="help" type="html">
+	   	        <p class="oe_nocontent_create_view">
+	   	        	Click here to add new payroll period.
+	   	        </p>
+	   	    </field>
+	   	</record>
+	   	
+	   	<menuitem
+	           id="menu_hr_payroll_period"
+	           action="action_hr_payroll_period"
+	           name="Payroll Period"
+	           parent="hr_payroll.menu_hr_payroll_configuration"
+	           sequence="18"
+	       />
+	   	<!--End of Payroll Period-->
+	   	
+	   	<!--Start of Payroll Period Line-->
+
+	 	<record id="hr_payroll_period_line_view_form" model="ir.ui.view">
+	   	    <field name="name">Payroll Periods</field>
+	   	    <field name="model">hr.payroll.period_line</field>
+	   	    <field name="arch" type="xml">
+	   	        <form>
+	   	            <sheet>
+	   	        	    <group>
+	   	        	        <group>
+	    	        		    <field name="start_date" readonly="1"/>
+	    	        		    <field name="end_date" readonly="1" />
+	    	        		   	<field name="date_release" readonly="1"/>
+	   	        		    </group>
+	   	        	    </group>
+	   	        	</sheet>
+	   	        	 <footer>
+	   	        	     <button name="btn_set_period" type="object" string="SET PERIOD" class="btn btn-primary" />
+	   	        	     <button name="Cancel" string="Cancel" special="cancel" class="btn-default" />
+	   	        	</footer>
+	   	        </form>
+	   	    </field>
+	   	</record>
+	   	
+	   	<record id="hr_payroll_period_line_view_tree" model="ir.ui.view">
+	   	    <field name="name">Payroll Period</field>
+	   	    <field name="model">hr.payroll.period_line</field>
+	   	    <field name="arch" type="xml">
+	   	        <tree editable="bottom" edit='false'>
+	   	        	<field name="start_date" />
+	   	        	<field name="end_date" />
+	   	        	<field name="date_release" />
+	   	        </tree>
+	   	       
+	   	    </field>
+	   	</record>
+	   	
+	   	<record id="action_hr_payroll_period_line" model="ir.actions.act_window">
+	   	    <field name="name">Payroll Periods</field>
+	   	    <field name="res_model">hr.payroll.period_line</field>
+	   	    <field name="view_mode">tree,form</field>
+	   	    <field name="view_type">form</field>
+	   	    <field name="target">new</field>
+	   	    <field name="view_id" ref="hr_payroll_period_line_view_tree" />
+	   	    <field name="help" type="html">
+	   	        <p class="oe_nocontent_create_view">
+	   	        	Click here to add new payroll period.
+	   	        </p>
+	   	    </field>
+	   	</record>
+	  
+	   	<!--End of Payroll Period Line-->
+	  	<record id="hr_payroll_period_line_wizard" model="ir.ui.view">
+    	    <field name="name">HR Payroll</field>
+    	    <field name="model">hr.payslip</field>
+    	    <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form" />
+    	    <field name="arch" type="xml">
+    	        <xpath expr="//field[@name='contract_id']" position="before">
+    	            <field name="date_release" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+    	        </xpath>
+    	        <xpath expr="//field[@name='date_from']" position="before">
+    	            <field name="payroll_period_id" options="{'no_open':True, 'no_create_edit':True, 'no_create':True}" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+    	        </xpath>
+    	        <xpath expr="//field[@name='date_from']" position="attributes">
+    	            <attribute name="invisible">1</attribute>
+    	        </xpath>
+    	        <xpath expr="//field[@name='date_to']" position="attributes">
+    	            <attribute name="invisible">1</attribute>
+    	        </xpath>
+    	    </field>
+    	</record>
+    	 	
+	   	<record id="hr_payroll_period_line_run_wizard" model="ir.ui.view">
+    	    <field name="name">HR Payroll Run</field>
+    	    <field name="model">hr.payslip.run</field>
+    	    <field name="inherit_id" ref="hr_payroll.hr_payslip_run_form" />
+    	    <field name="arch" type="xml">
+    	        <xpath expr="//field[@name='credit_note']" position="after">
+    	            <field name="date_release" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+    	        </xpath>
+    	        <xpath expr="//field[@name='date_start']" position="before">
+    	            <field name="payroll_period_id" options="{'no_open':True, 'no_create_edit':True, 'no_create':True}" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+    	        </xpath>
+    	        <xpath expr="//field[@name='date_start']" position="attributes">
+    	            <attribute name="invisible">1</attribute>
+    	        </xpath>
+    	        <xpath expr="//field[@name='date_end']" position="attributes">
+    	            <attribute name="invisible">1</attribute>
+    	        </xpath>
+    	    </field>
+    	</record>
+   </data> 	  
+ </odoo>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_hrpayrollregistry_template">
+        <t t-call="report.html_container">
+        <t t-call="report.internal_layout">
+        <!--<t t-foreach="docs" t-as="o">-->            
+            <div class="page">
+                <style>
+                    .table-borderless > tbody > tr > td,
+                    .table-borderless > tbody > tr > th,
+                    .table-borderless > tfoot > tr > td,
+                    .table-borderless > tfoot > tr > th,
+                    .table-borderless > thead > tr > td,
+                    .table-borderless > thead > tr > th {
+                        border: none;
+                        padding: 0;
+
+                    }
+                </style>
+                <t t-set="data_source" t-value="get_payroll_registry_details" />
+                <t t-set="totals" t-value="totals" />
+                <t t-set="dates" t-value="dates" />
+
+                <h4>Payroll Journal Register</h4>
+                <table class="table table-borderless">
+                    <tr>
+                        <td>Payroll Date:</td>
+                        <td><span t-esc="dates['DATE_PAYROLL']" /></td>
+                    </tr>
+                    <tr>
+                        <td>Payroll Period:</td>
+                        <td>
+                            <span t-esc="dates['DATE_FROM']" /> 
+                            to
+                            <span t-esc="dates['DATE_TO']" /> 
+                        </td>
+                    </tr>
+                </table>
+
+                <table class="table table-condensed">
+                    <tr>
+                        <th class="text-center">EMP. NO.</th>
+                        <th class="text-center">NAME</th>
+                        <th class="text-center">BANK ACCOUNT</th>
+                        <th class="text-center">POSITION</th>
+                        <th class="text-center">BASIC PAY</th>
+                        <th class="text-center">TOTAL WORKED HOURS</th>                        
+                        <th class="text-center">TOTAL OVERTIME</th>
+                        <th class="text-center">TOTAL NIGHT DIFFERENTIAL</th>
+                        <th class="text-center">TOTAL LEAVE/OFFICIAL BUSINESS</th>
+                        <th class="text-center">TOTAL LEAVE W/O PAY</th>
+                        <th class="text-center">TOTAL UNDERTIME/TARDINESS</th>
+                        <th class="text-center">TOTAL ABSENCES</th>
+                        <th class="text-center">ADJUSTMENT</th>
+                        <th class="text-center">OTHER INCOME</th>
+                        <th class="text-center">SSS</th>
+                        <th class="text-center">PHIC</th>
+                        <th class="text-center">HDMF</th>
+                        <th class="text-center">GROSS TAXABLE INCOME</th>
+                        <th class="text-center">WITHOLDING TAX</th>
+                        <th class="text-center">OTHER DEDUCTIONS</th>
+                        <th class="text-center">NET PAY</th>
+                    </tr>
+                    <t t-foreach="data_source" t-as="ds">
+                    <tr>
+                        <td class="text-center"><t t-if="ds.has_key('EMP_NUM')"><span t-esc="ds['EMP_NUM']" /></t></td>
+                        <td class="text-center"><t t-if="ds.has_key('EMP_NAME')"><span t-esc="ds['EMP_NAME']" /></t></td>
+                        <td class="text-center">BANK ACCOUNT</td>
+                        <td class="text-center"><t t-if="ds.has_key('EMP_POS')"><span t-esc="ds['EMP_POS']" /></t></td>
+                        <td class="text-center"><t t-if="ds.has_key('BASIC')"><span t-esc="'{:,.2f}'.format(ds['BASIC'])" /></t></td>
+                        <td class="text-center"><t t-if="ds.has_key('DTR')"><span t-esc="'{:,.2f}'.format(ds['DTR'])" /></t></td>
+                        <td class="text-center"><t t-if="ds.has_key('OT')"><span t-esc="'{:,.2f}'.format(ds['OT'])" /></t></td>
+                        <td class="text-center"><t t-if="ds.has_key('NSD')"><span t-esc="'{:,.2f}'.format(ds['NSD'])" /></t></td>
+                        <td class="text-center">0.00</td>
+                        <td class="text-center">0.00</td>
+                        <td class="text-center">0.00</td>
+                        <td class="text-center">0.00</td>
+                        <td class="text-center">0.00</td>
+                        <td class="text-center">0.00</td>
+                        <td class="text-center"><t t-if="ds.has_key('SSS')"><span t-esc="'{:,.2f}'.format(ds['SSS'])" /></t></td>
+                        <td class="text-center"><t t-if="ds.has_key('PH')"><span t-esc="'{:,.2f}'.format(ds['PH'])" /></t></td>
+                        <td class="text-center"><t t-if="ds.has_key('PAGIBIG')"><span t-esc="'{:,.2f}'.format(ds['PAGIBIG'])" /></t></td>
+                        <td class="text-center">0.00</td>
+                        <td class="text-center">0.00</td>
+                        <td class="text-center">0.00</td>
+                        <td class="text-center"><t t-if="ds.has_key('NET')"><span t-esc="'{:,.2f}'.format(ds['NET'])" /></t></td>
+                    </tr>        
+                    </t>
+                    <tr>
+                        <td class="text-center">GRAND TOTAL</td>
+                        <td class="text-center" colspan="3"><span t-esc="totals[len(totals)-1]['TOTAL_ROWS']" /> Record(s)</td>
+                        <td class="text-center"><span t-esc="totals[len(totals)-1]['TOTAL_BASIC']" /></td>
+                        <td class="text-center"><span t-esc="totals[len(totals)-1]['TOTAL_DTR']" /></td>
+                        <td class="text-center"><span t-esc="totals[len(totals)-1]['TOTAL_OT']" /></td>
+                        <td class="text-center"><span t-esc="totals[len(totals)-1]['TOTAL_NSD']" /></td>
+                        <td class="text-center">0.00</td>
+                        <td class="text-center">0.00</td>
+                        <td class="text-center">0.00</td>
+                        <td class="text-center">0.00</td>
+                        <td class="text-center">0.00</td>
+                        <td class="text-center">0.00</td>
+                        <td class="text-center"><span t-esc="totals[len(totals)-1]['TOTAL_SSS']" /></td>
+                        <td class="text-center"><span t-esc="totals[len(totals)-1]['TOTAL_PH']" /></td>
+                        <td class="text-center"><span t-esc="totals[len(totals)-1]['TOTAL_PAGIBIG']" /></td>
+                        <td class="text-center">0.00</td>
+                        <td class="text-center">0.00</td>
+                        <td class="text-center">0.00</td>
+                        <td class="text-center"><span t-esc="totals[len(totals)-1]['TOTAL_NET']" /></td>
+                    </tr>
+                </table>                
+            </div>
+        </t>
+        </t>
+        <!--</t>-->
+    </template>
+</odoo>
+

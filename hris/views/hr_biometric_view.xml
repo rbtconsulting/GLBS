@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+	<data>
+	    <record id="hr_biometric_view_form" model="ir.ui.view">
+	    	<field name="name">HR Biometric</field>
+	    	<field name="model">hr.biometric.connection</field>
+	    	<field name="arch" type="xml">
+	    	    <form>
+	    	        <header>
+	    	            <button name="btn_connect" class="btn-primary" type="object" string="Connect" states="disconnected" />
+	    	            <button name="btn_disconnect" class="btn-primary" type="object" string="Disconnect" states="connected" />
+	    	            
+	      	        	<field name="state" nolabel="1" widget="statusbar" statusbar_visible="connected,disconnected" />
+	      	        
+	      	        </header>
+	    	        <sheet>
+	    	            	<div class="oe_button_box" name="button_box">
+		    	           		
+		    	               <button name="btn_get_attendance" 
+		    	                       type="object"
+		    	                       icon="fa-download" 
+	    	        	    		   class="oe_stat_button" 
+		    	                       string="Download Logs" 
+		    	                       states="connected" 
+		    	                       />
+		    	               
+		    	           	   <button name="btn_live_capture" 
+		    	           	       	   class="oe_stat_button"
+		    	           	       	   icon="fa-refresh" 
+		    	           	       	   type="object" 
+		    	           	       	   string="Enable Capture" 
+		    	           	       	   attrs="{'invisible':['|','&amp;',('live_capture', '=', True),
+		    	           	       	   ('state', '=', 'connected'),('state', '=', 'disconnected') ]}"
+		    	           	       	   />
+		    	           	     	               
+		    	               <button name="btn_end_live_capture" 
+		    	                       class="oe_stat_button"
+		    	                       icon="fa-ban" 
+		    	                       type="object" 
+		    	                       string="Disable Capture" 
+		    	                       attrs="{'invisible':[('live_capture', '=', False)]}"
+		    	                       />
+		    	            </div>  
+		    	           	<div class="oe_title">
+		    	                <label for="name" />
+		    	                <h3><field name="name" attrs="{'readonly':[('state', '=', 'connected')]}" /></h3>
+		    	           	</div>
+	    	        	<group>
+	    	        	    <group string="Connection">
+	    	        	        <field name="ip_address" attrs="{'readonly':[('state', '=', 'connected')]}" />
+	    	        	        <field name="port" widget="char" attrs="{'readonly':[('state', '=', 'connected')]}" />
+	    	        	        <field name="timeout" attrs="{'readonly':[('state', '=', 'connected')]}" />
+	    	        	        <field name="password" attrs="{'readonly':[('state', '=', 'connected')]}" />
+	    	        	        <field name="force_udp" attrs="{'readonly':[('state', '=', 'connected')]}" />
+	    	        	        <field name="ommit_ping" attrs="{'readonly':[('state', '=', 'connected')]}" />
+	    	        	        <field name="verbose" attrs="{'readonly':[('state', '=', 'connected')]}" />
+	    	        	    </group>
+	    	        	    <group string="Device Information">
+	    	        	        <field name="device_name" />
+	    	        	        <field name="serial_number" />
+	    	        	        <field name="mac_address" />
+	    	        	    </group>
+	    	        	    <group string="Capture">
+	    	        	        <field name="live_capture" readonly="1" />
+	    	        	        <field name="end_live_capture" invisible="1" />
+	    	        	    </group>	    	        	    
+	    	        	    <group string="Remarks">
+	    	        	   		<field nolabel="1" readonly="1" name="remarks"/>
+	    	        		</group> 
+	    	       		</group>
+	    	       		<notebook>
+	    	       		    <page string="Logs">
+	    	       		        <field name="biometric_logs" readonly="1">
+	    	       		        	<tree>
+	    	       		        	    <field name="user_id" />
+	    	       		        	    <field name="bio_timestamp" />
+	    	       		        	    <field name="status" />
+	    	       		        	    <field name="punch" />
+	    	       		        	</tree>
+	    	       		        </field>
+	    	       		    </page>
+	    	       		</notebook>
+	    	        </sheet>
+	    	    </form>
+	    	</field>
+	    </record>
+	    
+	    <record id="hr_biometric_view_tree" model="ir.ui.view">
+	    	<field name="name">HR Biometric</field>
+	    	<field name="model">hr.biometric.connection</field>
+	    	<field name="arch" type="xml">
+	    		<tree decoration-success="state=='connected'" decoration-danger="state=='disconnected'">
+	    		    <field name="name" />
+	    		    <field name="ip_address" />
+	    		    <field name="port" widget="char" />
+	    		    <field name="timeout" />
+	    		    <field name="password" />
+	    		    <field name="force_udp" />
+	    		    <field name="ommit_ping" />
+	    		    <field name="device_name" />
+	    		    <field name="serial_number" />
+	    		    <field name="state" />
+	    		    <field name="remarks" />
+	    		</tree>
+	    	</field>
+	    </record>
+	   
+	    <record id="action_biometric_connection" model="ir.actions.act_window">
+	    	<field name="name">HR Biometric</field>
+	    	<field name="res_model">hr.biometric.connection</field>
+	    	<field name="view_mode">tree,form</field>
+	    	<field name="view_type">form</field>
+	    	<field name="help" type="html">
+	    	    <p class="oe_nocontent_create_view">
+	    	        Click here to create new biometric connection.
+	    	    </p>
+	    	</field>
+	    </record>
+	    
+	    <menuitem id="menu_biometric_connection" 
+	        	  name="Biometric Device" 
+	        	  action="action_biometric_connection"
+	        	  sequence="15" 
+	        	  parent="menu_hris_attendance_device" 
+	        	  />
+	</data>
+</odoo>

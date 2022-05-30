@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <menuitem
+            name="Contribution"
+            parent="hr_payslip_monthly_report.menu_hr_payslip_reports"
+            sequence="500"
+            id="menu_contribution_report"
+            groups="base.group_erp_manager"
+           />
+    </data>
+</odoo>

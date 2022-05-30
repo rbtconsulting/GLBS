@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+      <record id="emp_coe_form_view" model="ir.ui.view">
+            <field name="name">Employee's Coe</field>
+            <field name="model">employee.coe</field>
+            <field name="arch" type="xml">
+              <form string="Employee Coe">
+	                <group>
+                        <group>
+                             <field name="employee_id" options="{'no_open':True, 'no_create_edit':True, 'no_create':True}" />
+                             <field name="state" widget="radio" options="{'horizontal':True}" />
+                             <field name="date_from" />
+	                         <field name="date_to" />
+                             <field name="approved_by" options="{'no_open':True, 'no_create_edit':True, 'no_create':True}"/>
+                             <field name="temp_select" required="1"/>
+                        </group>
+                        <group string="Purpose">
+                            <field name="purpose" />
+                        </group>
+	                </group>
+	                <footer>
+	                    <button name="print_report" string="Print" type="object" class="btn-primary"/>
+	                    <button string="Cancel" class="btn-default" special="cancel" />
+	                </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_coe_report" model="ir.actions.act_window">
+            <field name="name">Employee Certificate</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">employee.coe</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+          <field name="target">new</field>
+        </record>
+
+
+       	<menuitem
+               name="Certificate Of Employment"
+               parent="menu_hr_reports"
+               action="action_coe_report"
+               id="menu_coe_reports"
+               groups="hris.group_hr_user"
+               sequence="98"
+           />
+       	
+       	<record id="hr_employee_coe_information" model="ir.ui.view">
+    	    <field name="name">HR.Employee.CoE</field>
+    	    <field name="model">hr.employee</field>
+    	    <field name="inherit_id" ref="hr.view_employee_form" />
+    	    <field name="arch" type="xml">
+    	        <xpath expr="//div[@name='button_box']" position="inside">
+    	            <button name="%(hris.action_coe_report)d" string="Certificate of Employment"
+    	                context="{'default_employee_id':id}" 
+    	                icon="fa-file-o" type="action" groups="hr.group_hr_manager,hris.group_hr_user" class="oe_stat_button"/>
+               	</xpath>
+         	</field>
+        </record>
+
+</odoo>

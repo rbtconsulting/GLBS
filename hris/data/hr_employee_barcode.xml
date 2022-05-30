@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+		<record model="ir.sequence" id="seq_emp_id">
+		    <field name="name">Employee Number</field>
+		    <field name="code">hr.employee</field>
+		    <field name="implementation">no_gap</field>
+		    <field name="padding">4</field>
+		</record>
+
+		<record model="hr.employee.category" id="regular_emp_id">
+		    <field name="name">Regular</field>
+		</record>
+
+		<record model="hr.employee.category" id="probationary_emp_id">
+		    <field name="name">Probationary</field>
+		</record>
+
+		<record model="hr.employee.category" id="contractual_emp_id">
+		    <field name="name">Contractual</field>
+		</record>
+		
+		<record id="sequence_config_category" model="ir.sequence">
+            <field name="name">Alphalist Config Sequence</field>
+            <field name="code">alphalist.config.code</field>
+            <field name="active">TRUE</field>
+            <field name="padding">4</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+        </record>
+	</data>
+</odoo>
