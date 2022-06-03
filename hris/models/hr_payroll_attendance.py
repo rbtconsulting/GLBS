@@ -3059,6 +3059,29 @@ class HRPayrollAttendance(models.Model):
                 if (holiday.holiday_status_id.leave_remarks != False \
                         and holiday.holiday_status_id.leave_remarks != 'wp'):
                     continue
+
+                if holiday.date_approved >= date_from and holiday.date_approved <= date_to and (not holiday.holiday_status_id.lockout or
+                    (holiday.holiday_status_id.lockout and holiday.date_from >= date_from and holiday.date_from <= date_to and
+                    holiday.date_to >= date_from and holiday.date_to <= date_to)):
+                    hours = abs(holiday.number_of_days) * 8
+                # if he was on leave, fill the leaves dict
+                if holiday.holiday_status_id.name in leaves:
+                    leaves[holiday.holiday_status_id.name]['number_of_hours'] += hours
+                else:
+                    leaves[holiday.holiday_status_id.name] = {
+                        'name': 'Leave with Pay',
+                        'sequence': 5,
+                        'code': 'LWP',
+                        'number_of_days': 0.0,
+                        'number_of_hours': hours,
+                        'contract_id': contract.id,
+                    }
+
+            for holiday in holidays.filtered(lambda r: r.process_type == False and r.holiday_status_id.is_ob == False):
+                # we need only the unpaid leaves
+                if (holiday.holiday_status_id.leave_remarks != False \
+                        and holiday.holiday_status_id.leave_remarks != 'wp'):
+                    continue
                 hours = 0
                 if holiday.date_approved >= date_from and holiday.date_approved <= date_to and (not holiday.holiday_status_id.lockout or
                     (holiday.holiday_status_id.lockout and holiday.date_from >= date_from and holiday.date_from <= date_to and
@@ -3100,27 +3123,31 @@ class HRPayrollAttendance(models.Model):
                         'number_of_hours': hours,
                         'contract_id': contract.id,
                     }
-                        
             for holiday in holidays.filtered(lambda r: r.process_type == False and r.holiday_status_id.is_ob == True):
-                if holiday:
-                    # we need only the paid leaves
-                    if (holiday.holiday_status_id.leave_remarks != False \
-                            and holiday.holiday_status_id.leave_remarks == 'wop'):
-                        continue
+                # we need only the paid leaves
+                if (holiday.holiday_status_id.leave_remarks != False \
+                        and holiday.holiday_status_id.leave_remarks == 'wop'):
+                    continue
 
+                hours = 0
+                lockout_ob = self.env['ir.config_parameter'].get_param('default.ob.lockout', False)
+                
+                if holiday.date_approved >= date_from and holiday.date_approved <= date_to and (not lockout_ob or 
+                    (lockout_ob and holiday.date_from >= date_from and holiday.date_from <= date_to and
+                    holiday.date_to >= date_from and holiday.date_to <= date_to)):
                     hours = abs(holiday.number_of_days) * 8.0
-                    # if he was on leave, fill the leaves dict
-                    if holiday.holiday_status_id.name in leaves:
-                        leaves[holiday.holiday_status_id.name]['number_of_hours'] += hours
-                    else:
-                        leaves[holiday.holiday_status_id.name] = {
-                            'name': 'Official Business',
-                            'sequence': 7,
-                            'code': 'OB',
-                            'number_of_days': 0.0,
-                            'number_of_hours': hours,
-                            'contract_id': contract.id,
-                        }
+                # if he was on leave, fill the leaves dict
+                if holiday.holiday_status_id.name in leaves:
+                    leaves[holiday.holiday_status_id.name]['number_of_hours'] += hours
+                else:
+                    leaves[holiday.holiday_status_id.name] = {
+                        'name': 'Official Business',
+                        'sequence': 7,
+                        'code': 'OB',
+                        'number_of_days': 0.0,
+                        'number_of_hours': hours,
+                        'contract_id': contract.id,
+                    }
 
             for holiday in lockout_holidays:
                 # we need only the paid leaves
@@ -3131,7 +3158,7 @@ class HRPayrollAttendance(models.Model):
                 holiday.write({'hr_payslip_id': not self.id and self._origin.id or self.id})
                 hours = abs(holiday.number_of_days) * 8.0
                 # if he was on leave, fill the leaves dict
-                if holiday.holiday_status_id.name in leaves:
+                if holiday.holiday_status_id.name in leaves and leaves[holiday.holiday_status_id.name]['code'] == 'LOB':
                     leaves[holiday.holiday_status_id.name]['number_of_hours'] += hours
                 else:
                     leaves[holiday.holiday_status_id.name] = {
@@ -3152,7 +3179,7 @@ class HRPayrollAttendance(models.Model):
                 holiday.write({'hr_payslip_id': not self.id and self._origin.id or self.id})
                 hours = abs(holiday.number_of_days) * 8.0
                 # if he was on leave, fill the leaves dict
-                if holiday.holiday_status_id.name in leaves:
+                if holiday.holiday_status_id.name in leaves and leaves[holiday.holiday_status_id.name]['code'] == ['LateLWP']:
                     leaves[holiday.holiday_status_id.name]['number_of_hours'] += hours
                 else:
                     leaves[holiday.holiday_status_id.name] = {
@@ -3173,7 +3200,7 @@ class HRPayrollAttendance(models.Model):
                 holiday.write({'hr_payslip_id': not self.id and self._origin.id or self.id})
                 hours = abs(holiday.number_of_days) * 8.0
                 # if he was on leave, fill the leaves dict
-                if holiday.holiday_status_id.name in leaves:
+                if holiday.holiday_status_id.name in leaves and leaves[holiday.holiday_status_id.name]['code'] == ['LateLWOP']:
                     leaves[holiday.holiday_status_id.name]['number_of_hours'] += hours
                 else:
                     leaves[holiday.holiday_status_id.name] = {
@@ -3184,7 +3211,6 @@ class HRPayrollAttendance(models.Model):
                         'number_of_hours': hours,
                         'contract_id': contract.id,
                     }
-
 
             for holiday in holidays.filtered(lambda r: r.process_type == 'converted'):
                 if holiday:
