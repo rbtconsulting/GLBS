@@ -104,7 +104,7 @@
     	        <xpath expr="//div[@name='button_box']" position="inside">
     	            <button name="%(hris.action_disciplinary_action)d" string="Disciplinary Action"
     	                context="{'default_employee_id':id}" 
-    	                icon="fa-file-o" type="action" groups="hr.group_hr_manager,hris.group_hr_user" class="oe_stat_button"/>
+    	                icon="fa-file-o" type="action" groups="hris.payroll_admin,hr.group_hr_manager,hris.group_hr_user" class="oe_stat_button"/>
     	        </xpath>
     	   	</field>
     	  </record>

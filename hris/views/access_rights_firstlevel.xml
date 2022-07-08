@@ -112,7 +112,7 @@
                     <attribute name="invisible">True</attribute>
               </xpath>
               <xpath expr="//form/sheet/div[@name='button_box']" position="attributes">
-                    <attribute name="invisible">True</attribute>
+                    <attribute name="invisible">False</attribute>
               </xpath>
                  <!--hr settings hide-->
               <!-- <xpath expr="//page[@name='hr_settings']" position="attributes">
