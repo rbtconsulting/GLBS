@@ -246,7 +246,7 @@
                     <field name="employee_code"/>
                 </field>
                 <xpath expr="//div[@class='oe_button_box']" position="inside">
-                    <button class="oe_inline oe_stat_button" type="object" name="action_kra_tree_view" icon="fa-key">
+                    <button class="oe_inline oe_stat_button" type="object" name="action_kra_tree_view" icon="fa-key" groups="hris.group_hr_manager">
                         <field string="KRA" name="kra_count" widget="statinfo" />
                     </button>
                     <button class="oe_inline oe_stat_button" type="object" name="action_value_rating_tree_view" icon="fa-line-chart">

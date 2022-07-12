@@ -9,7 +9,7 @@
 	        <field name="inherit_id" ref="employee_kra.view_employee_inherit_form_view"/>
 	        <field name="arch" type="xml">
 	          <xpath expr="//button[@name='action_value_rating_tree_view']" position="replace">
-	                <button class="oe_inline oe_stat_button" type="object" name="action_value_rating_tree_view" icon="fa-line-chart">
+	                <button class="oe_inline oe_stat_button" type="object" name="action_value_rating_tree_view" icon="fa-line-chart" groups="hris.group_hr_manager">
 	                    <field string="Competencies" name="value_rating_count" widget="statinfo" />
 	                </button>
 	            </xpath>
