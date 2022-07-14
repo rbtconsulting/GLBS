@@ -34,7 +34,7 @@ class hr_employee(models.Model):
             rec.value_rating_count = len(value_ratings)
 
     kra_id = fields.Many2one('hr.kra', related='job_id.kra_id', string="KRA", readonly=True)
-    employee_code = fields.Integer('Employee Code')
+    employee_code = fields.Char('Employee Code')
     kra_count = fields.Integer(compute='_kra_count', string="KRA")
     value_rating_count = fields.Integer(compute='_value_rating_count', string="Value Ratings")
 
@@ -204,7 +204,7 @@ class value_rating(models.Model):
             self.total_avg =  round((total /len(mapping)), 2)
 
     employee_id = fields.Many2one('hr.employee', 'Employee Name', required=True)
-    employee_code = fields.Integer(related='employee_id.employee_code', string="Employee Code" ,readonly=True)
+    employee_code = fields.Char(related='employee_id.employee_code', string="Employee Code" ,readonly=True)
     month = fields.Selection([(1, 'January'), (2, 'February'), (3, 'March'), (4, 'April'), (5, 'May'), (6, 'June'),
                               (7, 'July'), (8, 'August'), (9, 'September'), (10, 'October'), (11, 'November'), (12, 'December')], 'Month', required=True)
     year = fields.Many2one('employee.year', 'Year', required=True)
