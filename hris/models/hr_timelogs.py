@@ -532,7 +532,7 @@ class Timelogs(models.Model):
         tz_name = self._context.get('tz') or self.env.user.tz
         for i in range(rows):
             if i != 0:
-                emp = str(int(sheet.cell(i,0).value))
+                emp = str(sheet.cell(i,0).value)
                 if not emp:
                     raise ValidationError("No employee number found for row %s"%(i + 1))
                 emp_id = self.env['hr.employee'].search([('employee_num','=',emp)],limit=1)

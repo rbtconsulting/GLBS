@@ -286,7 +286,7 @@
             id="menu_open_allocation_holidays"
             parent="hr_holidays.menu_hr_holidays_my_leaves"
             action="action_server_leave_filter"
-            groups="group_approver,group_firstlevel"
+            groups="group_approver"
             sequence="40"/>
 
         <menuitem
