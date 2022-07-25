@@ -82,10 +82,10 @@
                 <field name="groups_id" eval="[(6,0,[ ref('hr_payroll_module')])]"/>
              </record>
              <record model="ir.ui.menu" id="base.menu_management" >
-                <field name="groups_id" eval="[(6,0,[ ref('base.user_root')])]"/>
+                <field name="groups_id" eval="[(6,0,[ ref('base.group_system')])]"/>
              </record>
              <record model="ir.ui.menu" id="base.menu_administration" >
-                <field name="groups_id" eval="[(6,0,[ ref('base.user_root')])]"/>
+                <field name="groups_id" eval="[(6,0,[ ref('base.group_system')])]"/>
              </record>
              <record model="ir.ui.menu" id="hr_attendance.menu_hr_attendance_root" >
                 <field name="groups_id" eval="[(4,[ref('group_firstlevel'),ref('group_approver'),ref('hr_attendance_module')])]"/>
