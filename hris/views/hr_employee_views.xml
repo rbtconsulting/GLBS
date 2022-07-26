@@ -78,6 +78,9 @@
     	    <field name="model">hr.employee</field>
     	    <field name="inherit_id" ref="hr.view_employee_form" />
     	    <field name="arch" type="xml">
+                <field name="user_id" position="after">
+                    <field name="active"/>
+                </field>
     	        <xpath expr="//field[@name='job_id']" position="attributes">
     	            <attribute name="string">Position Title</attribute>
     	        </xpath> 

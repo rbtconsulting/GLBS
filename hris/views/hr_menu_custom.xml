@@ -9,7 +9,7 @@
             <!--hr.reports-->
             <!--hr_attendance.my attendance-->
             <record model="ir.ui.menu" id="hr_attendance.menu_hr_attendance_my_attendances" >
-                <field name="groups_id" eval="[(6,0,[ ref('hide')])]"/>
+                <field name="groups_id" eval="[(6,0,[ ref('hris.payroll_admin'), ref('hr.group_hr_manager'), ref('group_firstlevel')])]"/>
             </record>
             <!--hr_attendance.employees-->
             <record model="ir.ui.menu" id="hr_attendance.menu_hr_attendance_view_employees_kanban" >

@@ -201,7 +201,7 @@ class HRContract(models.Model):
         self.wage = res and res[0] or 0
         self.old_wage = len(res) > 1 and res[1] or 0
         self.temp_wage = res and res[0] or 0
-        if not self.average_working_days:
+        if self.salary_move and not self.average_working_days:
             raise ValidationError(_("Please Enter Average Working Days!!"))
         if self.temp_wage > 0:
             rate = self.wage / self.average_working_days

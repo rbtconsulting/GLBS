@@ -190,7 +190,7 @@
     	            <attribute name="string">Employment Type</attribute>
     	        </xpath>
     	        <xpath expr="//field[@name='type_id']" position="after" >
-    	            <field name="contract_type" invisible="1" />
+    	            <field name="contract_type"/>
     	        </xpath>
 				<xpath expr="//field[@name='type_id']" position="after" >
     	            <field name="earner_type"  />
