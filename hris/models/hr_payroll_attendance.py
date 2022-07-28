@@ -3059,7 +3059,7 @@ class HRPayrollAttendance(models.Model):
                 if (holiday.holiday_status_id.leave_remarks != False \
                         and holiday.holiday_status_id.leave_remarks != 'wp'):
                     continue
-
+                hours = 0
                 if holiday.date_approved >= date_from and holiday.date_approved <= date_to and (not holiday.holiday_status_id.lockout or
                     (holiday.holiday_status_id.lockout and holiday.date_from >= date_from and holiday.date_from <= date_to and
                     holiday.date_to >= date_from and holiday.date_to <= date_to)):
