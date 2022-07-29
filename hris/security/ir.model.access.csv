@@ -144,3 +144,6 @@ access_annual_income_tax_payroll_admin,access.annual.income.tax.payroll.admin,mo
 access_leave_carry_over_firstlevel_user,access.leave.carry.over.firstlevel.user,model_leave_carry_over,group_firstlevel,1,0,1,0
 access_leave_carry_over_payroll_admin,access.leave.carry.over.payroll.admin,model_leave_carry_over,payroll_admin,1,1,1,1
 access_hr_leave_type_payroll_admin,access.hr.leave.type.payroll.admin,model_hr_leave_type,payroll_admin,1,1,1,1
+
+access_hr_payslip_worked_days_first_level_user,hr.payslip.worked_days.user,hr_payroll.model_hr_payslip_worked_days,group_firstlevel,1,0,0,0
+access_hr_payslip_worked_days_payroll_admin,hr.payslip.worked_days.payroll.admin,hr_payroll.model_hr_payslip_worked_days,payroll_admin,1,1,1,1
