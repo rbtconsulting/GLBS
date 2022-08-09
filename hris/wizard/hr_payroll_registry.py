@@ -67,7 +67,7 @@ class HRPayrollRegistry(models.TransientModel):
             date_from = self.payroll_period_from_id.start_date
             date_to = self.payroll_period_to_id and self.payroll_period_to_id.end_date or self.payroll_period_from_id.end_date
             domain = [('employee_id','in', employees.ids),('credit_note','=', False),('date_from', '>=', date_from),
-                      ('date_to','<=', date_to), ('state', '=', 'done')]
+                      ('date_to','<=', date_to), ('state', 'in', ['draft', 'done'])]
             payslips = self.env['hr.payslip'].search(domain)
             total_amount = {}
             for employee in employees.sorted(key=lambda r:r.name):

@@ -115,6 +115,15 @@
             id="menu_hr_reports"
             sequence="100"
            />
+
+        <!-- Payroll -->
+        <menuitem
+            id="hr_contract.hr_menu_contract_type"
+            action="hr_contract.action_hr_contract_type"
+            parent="hr_payroll.menu_hr_payroll_configuration"
+            sequence="3"
+            groups="base.group_no_one"/>
+
 		<menuitem id="advance_salary.menu_salary_advance" 
 		    	  action="advance_salary.action_salary_advance" 
 		    	  parent="advance_salary.parent_menu_salary_advance" 
@@ -170,7 +179,7 @@
                action="hr_payroll.action_view_hr_payslip_form"
                id="hr_payroll.menu_department_tree"
                parent="menu_payroll_batches"
-               groups="hr_payroll.group_hr_payroll_user"
+               groups="hr_payroll.group_hr_payroll_user,hris.payroll_admin"
                sequence="2"/>
 
 

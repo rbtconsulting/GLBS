@@ -64,7 +64,7 @@ class ReportHRPayrollRegistry(models.AbstractModel):
         TOTAL_BASIC = 0
         TOTAL_DED = 0
         domain = [('employee_id','in', employees.ids),('credit_note','=', False),('date_from', '>=', date_from),
-                    ('date_to','<=', date_to), ('state', '=', 'done')]
+                    ('date_to','<=', date_to), ('state', 'in', ['draft', 'done'])]
         payslips = self.env['hr.payslip'].search(domain)
         for employee in employees:
             results = {}

@@ -59,7 +59,7 @@
             sequence="10"
             action="action_payroll_registry"
             id="menu_payroll_registry"
-            groups="hris.group_hr_user"
+            groups="base.group_system,hris.payroll_admin"
            />
 
 </odoo>
