@@ -141,7 +141,7 @@ class HRPayrollRegistry(models.TransientModel):
             date_to = rec.payroll_period_to_id and rec.payroll_period_to_id.end_date or rec.payroll_period_from_id.end_date
             payslips = self.env['hr.payslip'].search([('date_from', '>=', date_from),
                                                       ('date_to','<=', date_to),
-                                                      ('state', '=', 'done'),
+                                                      ('state', 'in', ['draft', 'done']),
                                                       ('credit_note','=', False)
                                                     ])
             rec.employee_ids = [(6, 0, payslips.mapped('employee_id.id'))]
