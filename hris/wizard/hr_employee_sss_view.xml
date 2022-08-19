@@ -55,7 +55,7 @@
             sequence="3"
             action="action_employee_sss"
             id="menu_sss_contribution"
-            groups="base.group_erp_manager"
+            groups="base.group_erp_manager,hris.payroll_admin"
            />
 	</data>
 </odoo>

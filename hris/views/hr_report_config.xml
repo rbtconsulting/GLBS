@@ -3,7 +3,7 @@
     <data>
          <menuitem id="menu_hr_report_structures" 
 	        	  parent="hr_payroll.menu_hr_payroll_configuration" 
-	        	  groups="hris.group_hr_user" 
+	        	  groups="hris.group_hr_user,hris.payroll_admin" 
 	        	  sequence="40" 
 	        	  name="Report Structures" />
          
@@ -120,7 +120,7 @@
             action="action_view_alpha_list_form"
             parent="menu_hr_report_structures"
             sequence="5"
-            groups="hris.group_hr_user"
+            groups="hris.group_hr_user,hris.payroll_admin"
             />
         
         <!--Alphalist Category-->
@@ -165,7 +165,7 @@
             action="action_view_alpha_list_category_form"
             parent="menu_hr_report_structures"
             sequence="10"
-            groups="hris.group_hr_user"
+            groups="hris.group_hr_user,hris.payroll_admin"
              />
         <!--Alphalist Category-->
         
@@ -266,7 +266,7 @@
             action="action_year_to_date_config"
             parent="menu_hr_report_structures"
             sequence="25"
-            groups="hris.group_hr_user" />
+            groups="hris.group_hr_user,hris.payroll_admin" />
 
         <!--End Year to Date-->
         <record id="payroll_register_config_view_tree" model="ir.ui.view">
@@ -340,7 +340,7 @@
             action="action_payroll_register_config"
             parent="menu_hr_report_structures"
             sequence="30"
-            groups="hris.group_hr_user"
+            groups="hris.group_hr_user,hris.payroll_admin"
              />
         
         <!--Payslip Structure-->
@@ -424,7 +424,7 @@
             sequence="15"
             action="open_payslip_template"
             id="menu_payslip_templates"
-            groups="hris.group_hr_user"
+            groups="hris.group_hr_user,hris.payroll_admin"
            />
     
         <!--End of Payslip Structure-->
@@ -497,7 +497,7 @@
             action="action_th_month_pay_config"
             parent="menu_hr_report_structures"
             sequence="35"
-            groups="hris.group_hr_user"
+            groups="hris.group_hr_user,hris.payroll_admin"
              />      
                
     </data>

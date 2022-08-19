@@ -159,12 +159,14 @@
                   name="Timelogs"
                   parent="hr_attendance.menu_hr_attendance_manage_attendances"
                   sequence="11"
+                  groups="hris.payroll_admin"
                   action="action_hr_timelogs" />
 
         <menuitem id="menu_hr_timelogs_parser"
                   name="Parser"
                   parent="menu_hris_attendance_device"
                   sequence="12"
+                  groups="hris.payroll_admin"
                   action="action_hr_timelogs_parser" />
     </data>
 </odoo>

@@ -76,6 +76,7 @@
 	           name="Payroll Period"
 	           parent="hr_payroll.menu_hr_payroll_configuration"
 	           sequence="18"
+               groups="base.group_erp_manager,hris.payroll_admin"
 	       />
 	   	<!--End of Payroll Period-->
 	   	

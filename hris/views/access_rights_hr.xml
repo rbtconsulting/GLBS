@@ -23,34 +23,44 @@
         </record>
         <!--leave reports-->
         <record model="ir.ui.menu" id="hr_holidays.menu_hr_holidays_report" >
-            <field name="groups_id" eval="[(6,0,[ ref('hris.group_hr_user')])]"/>
+            <field name="groups_id" eval="[(6,0,[ ref('hris.payroll_admin')])]"/>
+        </record>
+        <record model="ir.ui.menu" id="hr_holidays.menu_hr_available_holidays_report_tree" >
+            <field name="groups_id" eval="[(6,0,[ ref('hris.payroll_admin')])]"/>
+        </record>
+        <record model="ir.ui.menu" id="hr_holidays.menu_account_central_journal" >
+            <field name="groups_id" eval="[(6,0,[ ref('hris.payroll_admin')])]"/>
         </record>
         <!--leave config-->
          <record model="ir.ui.menu" id="hr_holidays.menu_hr_holidays_configuration" >
-            <field name="groups_id" eval="[(6,0,[ ref('hris.group_hr_user')])]"/>
+            <field name="groups_id" eval="[(6,0,[ ref('hris.payroll_admin')])]"/>
         </record>
         <!--leaves dashboard-->
        <record model="ir.ui.menu" id="hr_holidays.menu_hr_holidays_dashboard" >
-            <field name="groups_id" eval="[(6,0,[ ref('hris.group_hr_user')])]"/>
+            <field name="groups_id" eval="[(6,0,[ ref('hris.payroll_admin')])]"/>
+        </record>
+        <!-- manage attendances -->
+        <record model="ir.ui.menu" id="hr_attendance.menu_hr_attendance_manage_attendances" >
+            <field name="groups_id" eval="[(4, [ref('hris.payroll_admin'),ref('hris.group_approver'),ref('hris.group_hr_user'),ref('hris.group_firstlevel')])]"/>
         </record>
         <!--attendance report-->
         <record model="ir.ui.menu" id="hr_attendance.menu_hr_attendance_report" >
-            <field name="groups_id" eval="[(6,0,[ ref('hris.group_hr_user')])]"/>
+            <field name="groups_id" eval="[(6,0,[ ref('hris.payroll_admin')])]"/>
         </record>
         <!--hr_payroll payslip-->
          <record model="ir.ui.menu" id="hr_payroll.menu_hr_payslip_run" >
-            <field name="groups_id" eval="[(6,0,[ ref('hris.group_hr_user')])]"/>
+            <field name="groups_id" eval="[(6,0,[ ref('hris.payroll_admin')])]"/>
         </record>
         <!-- hr_payroll config-->
          <record model="ir.ui.menu" id="hr_payroll.menu_hr_payroll_configuration" >
-            <field name="groups_id" eval="[(6,0,[ ref('hris.group_hr_user')])]"/>
+            <field name="groups_id" eval="[(6,0,[ ref('hris.payroll_admin')])]"/>
         </record>
         <!--hr_holidays.  leaves-->
         <record model="ir.ui.menu" id="hr_holidays.menu_open_department_leave_approve" >
             <field name="groups_id" eval="[(6,0,[ref('hris.group_hr_user')])]"/>
         </record>
         <record model="ir.ui.menu" id="hris.menu_hr_manage_schedule" >
-            <field name="groups_id" eval="[(6,0,[ ref('hris.group_hr_user')])]"/>
+            <field name="groups_id" eval="[(6,0,[ref('hris.group_hr_user'),ref('hris.group_firstlevel'),ref('hris.group_approver'),ref('hris.payroll_admin')])]"/>
         </record>
          <record model="ir.ui.menu" id="hr_holidays.menu_open_company_allocation" >
             <field name="groups_id" eval="[(6,0,[ ref('hris.group_hr_user')])]"/>
@@ -62,7 +72,7 @@
             <field name="groups_id" eval="[(6,0,[ ref('hris.group_hr_user')])]"/>
         </record>
         <record model="ir.ui.menu" id="hr_attendance.menu_hr_attendance_view_attendances" >
-                <field name="groups_id" eval="[(6,0,[ref('hris.group_hr_user'),ref('hris.group_firstlevel'),ref('hris.group_approver')])]"/>
+                <field name="groups_id" eval="[(6,0,[ref('hris.group_hr_user'),ref('hris.group_firstlevel'),ref('hris.group_approver'),ref('hris.payroll_admin')])]"/>
         </record>
 
         <!-- personal info and work info tabs only -->

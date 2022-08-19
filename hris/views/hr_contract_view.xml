@@ -330,7 +330,7 @@
 		<menuitem id="menu_hr_awd_config" 
 	   	    	  action="action_hr_awd_config" 
 	   	    	  parent="hr_payroll.menu_hr_payroll_configuration" 
-             	  groups="hris.group_hr_user"
+             	  groups="hris.group_hr_user,hris.payroll_admin"
 	   	    	  sequence="19" />
 		
 		<!--Minimum Wage Earner-->
@@ -372,7 +372,7 @@
 		<menuitem id="menu_hr_mwe_config" 
 	   	    	  action="action_hr_mwe_config" 
 	   	    	  parent="hr_payroll.menu_hr_payroll_configuration" 
-             	  groups="hris.group_hr_user"
+             	  groups="hris.group_hr_user,hris.payroll_admin"
 	   	    	  sequence="20" />
 		<!-- End of Minimum Wage Earner -->
     </data>

@@ -50,7 +50,7 @@
             sequence="13"
             action="action_bank_account"
             id="menu_bank_account"
-            groups="hris.group_hr_user"
+            groups="hris.group_hr_user,hris.payroll_admin"
            />
 
     <record id="view_bank_account_excel" model="ir.ui.view">
@@ -103,7 +103,7 @@
             sequence="14"
             action="action_bank_account_excel"
             id="menu_bank_account_excel"
-            groups="hris.group_hr_user"
+            groups="hris.group_hr_user,hris.payroll_admin"
            />
            
 	    <record id="view_bank_metrobank" model="ir.ui.view">
@@ -156,7 +156,7 @@
             sequence="15"
             action="action_bank_metrobank"
             id="menu_metrobank"
-            groups="hris.group_hr_user"
+            groups="hris.group_hr_user,hris.payroll_admin"
            />
 
 

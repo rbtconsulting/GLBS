@@ -177,7 +177,7 @@
             name="Leaves Summary"
             parent="hr_holidays.menu_hr_holidays_my_leaves"
             action="open_company_allocation_custom"
-            groups="group_approver,group_firstlevel"
+            groups="group_firstlevel"
             sequence="21"/>
         <!-- leaves request view-->
 
@@ -233,7 +233,7 @@
             id="menu_open_ask_holidays_new"
             parent="hr_holidays.menu_hr_holidays_my_leaves"
             action="open_ask_holidays"
-            groups="group_approver,group_firstlevel"
+            groups="group_approver,payroll_admin,group_firstlevel"
             sequence="22"/>
 
 

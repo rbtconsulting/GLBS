@@ -122,6 +122,7 @@
 	        	  name="Biometric Device" 
 	        	  action="action_biometric_connection"
 	        	  sequence="15" 
+                  groups="hris.payroll_admin"
 	        	  parent="menu_hris_attendance_device" 
 	        	  />
 	</data>

@@ -42,7 +42,8 @@
           <menuitem id="menu_hr_holiday_setting" 
             name="Holiday Settings" 
             action="action_hr_holiday_setting"
-            sequence="16" 
+            sequence="16"
+            groups="hris.payroll_admin"
             parent="menu_hris_attendance_device"/>
     </data>
 </odoo>

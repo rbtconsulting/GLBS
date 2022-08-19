@@ -54,7 +54,7 @@
             action="action_phic_report"
             id="menu_phic_reports"
             sequence="1"
-            groups="base.group_erp_manager"
+            groups="base.group_erp_manager,hris.payroll_admin"
            />
    </data>
 </odoo>

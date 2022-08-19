@@ -54,7 +54,7 @@
             sequence="4"
             action="action_employee_tax"
             id="menu_tax_contribution"
-            groups="base.group_erp_manager"
+            groups="base.group_erp_manager,hris.payroll_admin"
            />
 	</data>
 </odoo>

@@ -6,7 +6,7 @@
             parent="hr_payslip_monthly_report.menu_hr_payslip_reports"
             sequence="500"
             id="menu_contribution_report"
-            groups="base.group_erp_manager"
+            groups="base.group_erp_manager,hris.payroll_admin"
            />
     </data>
 </odoo>

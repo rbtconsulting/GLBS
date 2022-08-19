@@ -95,7 +95,8 @@
 	   	    	   parent="menu_hr_manage_schedule" 
 	        	   name="Employee Work Time"
 	        	   action="action_hr_employee_work_time" 
-	        	   sequence="2"
+	        	   groups="hris.payroll_admin"
+                   sequence="2"
 	        	    />
 	    <!--End of Employee Work Time-->
 	</data>

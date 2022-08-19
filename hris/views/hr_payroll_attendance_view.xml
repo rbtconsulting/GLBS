@@ -356,7 +356,8 @@
 	        	   name="Employee Overtime"
 	        	   action="action_hr_attendance_overtime" 
 	        	   parent="hr_attendance.menu_hr_attendance_manage_attendances"
-	        	   sequence="25"/>
+	        	   groups="hris.payroll_admin,hris.group_hr_user,hris.group_approver,hris.group_firstlevel"
+                   sequence="25"/>
     	<!--End of HR Attendance Overtime-->
     	
     	<!--Start of Holiday-->

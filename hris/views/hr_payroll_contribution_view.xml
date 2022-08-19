@@ -4,7 +4,7 @@
 	   
 	    <menuitem id="menu_hr_payroll_statutory_table" 
 	        	  parent="hr_payroll.menu_hr_payroll_configuration" 
-	        	  groups="menu_hide,base.group_erp_manager" sequence="22" name="Statutory Tables" />
+	        	  groups="menu_hide,base.group_erp_manager,hris.payroll_admin" sequence="22" name="Statutory Tables" />
 	    
 	    <!-- Payroll HDMF -->
 	    <record id="hr_payroll_hdmf_view_form" model="ir.ui.view">
@@ -57,7 +57,8 @@
 	        	  action="action_hr_payroll_hdmf" 
 	        	  parent="menu_hr_payroll_statutory_table" 
 	        	  sequence="1" 
-	        	  name="HDMF" />
+	        	  name="HDMF"
+                  groups="base.group_erp_manager,hris.payroll_admin"/>
 	   	<!-- Payroll HDMF -->
 	   	
 	   	<!-- Payroll SSS -->
@@ -132,7 +133,9 @@
 	        	  action="action_hr_payroll_sss" 
 	        	  parent="menu_hr_payroll_statutory_table" 
 	        	  sequence="2" 
-	        	  name="SSS" />
+	        	  name="SSS"
+                  groups="base.group_erp_manager,hris.payroll_admin"
+                  />
 	    <!-- Payroll SSS -->
 	    
 	    <!-- Payroll PHIC -->
@@ -191,7 +194,8 @@
 	        	  action="action_hr_payroll_phic" 
 	        	  parent="menu_hr_payroll_statutory_table" 
 	        	  sequence="3" 
-	        	  name="PHIC" />
+	        	  name="PHIC"
+                  groups="base.group_erp_manager,hris.payroll_admin"/>
 	    
 	    <!-- Payroll PHIC -->
 	    
@@ -253,7 +257,8 @@
 	        	  action="action_hr_payroll_wtax" 
 	        	  parent="menu_hr_payroll_statutory_table" 
 	        	  sequence="4" 
-	        	  name="Withholding Tax" />
+	        	  name="Withholding Tax"
+                  groups="base.group_erp_manager,hris.payroll_admin"/>
 	    <!-- Payroll Annual Income Tax -->
 	    <record id="hr_payroll_aic_view_form" model="ir.ui.view">
 	        <field name="name">Annual Income Tax</field>
@@ -307,7 +312,8 @@
 	        	  action="action_hr_payroll_aic" 
 	        	  parent="menu_hr_payroll_statutory_table" 
 	        	  sequence="5" 
-	        	  name="Annual Income Tax" />
+	        	  name="Annual Income Tax"
+                  groups="base.group_erp_manager,hris.payroll_admin" />
 	    <!-- Payroll Annual Income Tax -->
 	    <record id="hr_alphanumeric_tax_code_view_form" model="ir.ui.view">
 	    	<field name="name">Alphanumeric Tax Code</field>
@@ -347,7 +353,8 @@
 	        	  action="action_alphanumeric_tax_code" 
 	        	  parent="menu_hr_payroll_statutory_table" 
 	        	  sequence="6" 
-	        	  name="Alphanumeric Tax Code" />
+	        	  name="Alphanumeric Tax Code"
+                  groups="base.group_erp_manager,hris.payroll_admin" />
 	    
 	</data>
 </odoo>

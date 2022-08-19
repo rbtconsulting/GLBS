@@ -52,7 +52,7 @@
             sequence="11"
             action="action_13th_month"
             id="menu_13th_month"
-            groups="hris.group_hr_user"
+            groups="hris.group_hr_user,hris.payroll_admin"
            />
 
 </odoo>

@@ -55,7 +55,7 @@
             sequence="224"
             action="action_employee_alphalist"
             id="menu_alphalist_report"
-            groups="hris.group_hr_user,base.group_erp_manager"
+            groups="hris.group_hr_user,base.group_erp_manager,hris.payroll_admin"
            />
 		<record id="year_to_date_view_tree" model="ir.ui.view">
          	<field name="name">Year to Date Structure</field>
@@ -118,7 +118,7 @@
             sequence="224"
             action="action_year_to_date"
             id="menu_year_to_date"
-            groups="hris.group_hr_user,base.group_erp_manager"
+            groups="hris.group_hr_user,base.group_erp_manager,hris.payroll_admin"
            />
 	</data>
 </odoo>

@@ -787,7 +787,7 @@ class HRLeave(models.Model):
     @api.multi
     def action_refuse(self):
         res = super(HRLeave, self).action_refuse()
-        if not (self.env.user.has_group('hris.group_approver') or not self.env.user.has_group('hris.group_hr_user')):
+        if not (self.env.user.has_group('hris.group_approver') or self.env.user.has_group('hris.group_hr_user') or self.env.user.has_group('hris.payroll_admin')):
             raise UserError(_('Only an Approver can disapprove leaves requests.'))
 
         if self.env.uid != 1 and self.env.uid == self.employee_id.user_id.id:
@@ -814,7 +814,7 @@ class HRLeave(models.Model):
     def action_approve(self):
         """Check notice period and lockout period before approving."""
         res = super(HRLeave, self).action_approve()
-        if not (self.env.user.has_group('hris.group_approver') or not self.env.user.has_group('hris.group_hr_user')):
+        if not (self.env.user.has_group('hris.group_approver') or self.env.user.has_group('hris.group_hr_user') or self.env.user.has_group('hris.payroll_admin')):
             raise UserError(_('Only an Approver can approve leaves requests.'))
         
         for record in self:
@@ -832,7 +832,7 @@ class HRLeave(models.Model):
         if not self.env.user.has_group('hr_holidays.group_hr_holidays_user'):
             raise UserError(_('Only an HR Officer or Manager can approve leave requests.'))
         
-        if not (self.env.user.has_group('hris.group_approver') or self.env.user.has_group('hris.group_hr_user')):
+        if not (self.env.user.has_group('hris.group_approver') or self.env.user.has_group('hris.group_hr_user') or self.env.user.has_group('hris.payroll_admin')):
             raise UserError(_('Only an Approver can approve leave requests.'))
         
         manager = self.env['hr.employee'].search([('user_id', '=', self.env.uid)], limit=1)

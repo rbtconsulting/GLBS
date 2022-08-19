@@ -1,13 +1,14 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_hr_emergency_contacts_hr,ir_emergency_contacts_hr,model_hr_emergency_contacts,hris.group_hr_user,1,1,1,1
 access_hr_training_hr,ir_hr_training_hr,hr_experience.model_hr_training,hris.group_hr_user,1,1,1,1
-access_hr_employee_user_hr,hr.employee user_hr,hr.model_hr_employee,hris.group_hr_user,1,1,1,1
+access_hr_employee_user_hr,hr.employee user_hr,hr.model_hr_employee,hris.group_hr_user,1,0,0,0
 access_hr_employee_category_hr,hr.employee.category.hr1,hr.model_hr_employee_category,hris.group_hr_user,1,1,1,1
 access_hr_attachment_hr,hr.attachment.hr,base.model_ir_attachment,hris.group_hr_user,1,1,1,1
+access_hr_contract_payroll,hr.contract.payroll,hr_contract.model_hr_contract,hris.payroll_admin,1,1,1,1
 access_hr_contract,hr.contract,hr_contract.model_hr_contract,hris.group_hr_user,1,1,1,1
 access_hr_emergency_contacts_user,ir_emergency_contacts_user,model_hr_emergency_contacts,group_firstlevel,1,1,1,0
 access_hr_training_user,ir_hr_training_user,hr_experience.model_hr_training,group_firstlevel,1,1,1,0
-access_hr_employee_user_user,hr.employee user_user,hr.model_hr_employee,group_firstlevel,1,1,1,0
+access_hr_employee_user_user,hr.employee user_user,hr.model_hr_employee,group_firstlevel,1,0,0,0
 access_hr_employee_category_user,hr.employee.category.user,hr.model_hr_employee_category,group_firstlevel,1,1,1,0
 access_hr_payslip_emp,hr.payslip_emp,hr_payroll.model_hr_payslip,group_firstlevel,1,1,1,1
 access_hr_res_partner_user,ir_res_partner_user,base.model_res_partner,group_firstlevel,1,1,1,0
@@ -82,7 +83,9 @@ access_hr_compensation_others,hr.compensation_others,model_hr_compensation_other
 access_hr_personal_action_notice,hr.personal_action_notice,model_hr_personal_action_notice,hris.group_hr_user,1,1,1,1
 access_alphanumeric_tax_code,alphanumeric.tax.code,model_alphanumeric_tax_code,hris.group_hr_user,1,1,1,1
 access_payroll_register_config,payroll.register.config,model_payroll_register_config,hris.group_hr_user,1,1,1,1
+access_payroll_register_config_admin,payroll.register.config.admin,model_payroll_register_config,hris.payroll_admin,1,1,1,1
 access_payroll_register_rule_config,payroll.register.rule.config,model_payroll_register_rule_config,hris.group_hr_user,1,1,1,1
+access_payroll_register_rule_config_admin,payroll.register.rule.config.admin,model_payroll_register_rule_config,hris.payroll_admin,1,1,1,1
 access_alpha_list_config,hr.alpha_list.config,model_hr_alpha_list_config,hris.group_hr_user,1,1,1,1
 access_alpha_list_main_config,hr.alpha_list.main_config,model_hr_alpha_list_main_config,hris.group_hr_user,1,1,1,1
 access_hr_payslip_template_user,hr.payslip.template.user,model_hr_payslip_template,hris.group_hr_user,1,1,1,1
@@ -101,7 +104,9 @@ access_hr_employee_clearance_config_line_firstlevel,hr.employee.clearance.config
 access_hr_employee_clearance_config_line_approver,hr.employee.clearance.config.line.approver,model_hr_employee_clearance_config_line,group_approver,1,1,0,0
 access_hr_employee_clearance_config_line_manager,hr.employee.clearance.config.line.manager,model_hr_employee_clearance_config_line,hris.group_hr_user,1,1,1,1
 access_hr_th_month_pay_config_manager,hr.th.month_pay.config.manager,model_hr_th_month_pay_config,hris.group_hr_user,1,1,1,1
+access_hr_th_month_pay_config_payroll,hr.th.month_pay.config.payroll,model_hr_th_month_pay_config,hris.payroll_admin,1,1,1,1
 access_hr_th_month_pay_config_line_manager,hr.th.month_pay.config.line.manager,model_hr_th_month_pay_config_line,hris.group_hr_user,1,1,1,1
+access_hr_th_month_pay_config_line_admin,hr.th.month_pay.config.line.admin,model_hr_th_month_pay_config_line,hris.payroll_admin,1,1,1,1
 access_hr_minimum_wage_earner,hr.minimum.wage.earner,model_hr_minimum_wage_earner,hris.group_hr_user,1,1,1,1
 acess_hr_year_to_date,hr.year_to_date,model_hr_year_to_date,hris.group_hr_user,1,1,1,1
 access_hr_year_to_date_line,hr.year_to_date_line,model_hr_year_to_date_line,hris.group_hr_user,1,1,1,1
@@ -147,4 +152,28 @@ access_hr_leave_type_payroll_admin,access.hr.leave.type.payroll.admin,model_hr_l
 
 access_hr_payslip_worked_days_first_level_user,hr.payslip.worked_days.user,hr_payroll.model_hr_payslip_worked_days,group_firstlevel,1,0,0,0
 access_hr_payslip_worked_days_payroll_admin,hr.payslip.worked_days.payroll.admin,hr_payroll.model_hr_payslip_worked_days,payroll_admin,1,1,1,1
+
+access_hr_payslip_run_payroll,access.hr.payslip.run.payroll,model_hr_payslip_run,hris.payroll_admin,1,1,1,1
+access_hr_payroll_period_admin,access.hr.payroll.period.admin,model_hr_payroll_period,hris.payroll_admin,1,1,1,1
+access_hr_minimum_wage_earner_admin,access.hr.minimum.wage.earner.admin,model_hr_minimum_wage_earner,hris.payroll_admin,1,1,1,1
+access_hr_employee_work_location,access.hr.employee.work.location,model_hr_employee_work_location,hris.payroll_admin,1,1,1,1
+access_payroll_hdmf_contribution_admin,access.payroll.hdmf.contribution.admin,model_payroll_hdmf_contribution,hris.payroll_admin,1,1,1,1
+access_payroll_sss_contribution_admin,access.payroll.sss.contribution.admin,model_payroll_sss_contribution,hris.payroll_admin,1,1,1,1
+access_payroll_phic_contribution_admin,access.payroll.phic.contribution.admin,model_payroll_phic_contribution,hris.payroll_admin,1,1,1,1
+access_payroll_withholding_tax_contribution_payroll,access.payroll.withholding.tax.contribution.payroll,model_payroll_withholding_tax_contribution,hris.payroll_admin,1,1,1,1
+access_alphanumeric_tax_code_payroll,access.alphanumeric.tax.code.payroll,model_alphanumeric_tax_code,hris.payroll_admin,1,1,1,1
+access_hr_payslip_template_payroll,access.hr.payslip.template.payroll,model_hr_payslip_template,hris.payroll_admin,1,1,1,1
+access_hr_holidays_payroll,access.hr.holidays.payroll,model_hr_holidays,hris.payroll_admin,1,1,1,1
+access_leave_carry_over_hr_manager,access.leave.carry.over.hr.manager,model_leave_carry_over,hris.group_hr_user,1,1,1,1
+access_leave_carry_over_approver,access.leave.carry.over.approver,model_leave_carry_over,hris.group_approver,1,1,1,1
+access_hr_employee_schedule_work_time_lines_payroll,access.hr.employee.schedule.work.time.lines.payroll,model_hr_employee_schedule_work_time_lines,hris.payroll_admin,1,1,1,1
+access_hr_attendance_holidays_payroll,access.hr.attendance.holidays.payroll,model_hr_attendance_holidays,hris.payroll_admin,1,1,1,1
+access_hr_employee_schedule_work_time_payroll,access.hr.employee.schedule.work.time,model_hr_employee_schedule_work_time,hris.payroll_admin,1,1,1,1
+access_hr_holiday_setting_payroll,access.hr.holiday.setting.payroll,model_hr_holiday_setting,hris.payroll_admin,1,1,1,1
+access_hr_timelog_parser_payroll,access.hr.timelog.parser.payroll,model_hr_timelog_parser,hris.payroll_admin,1,1,1,1
+access_hr_biometric_connection_payroll,access.hr.biometric.connection.payroll,model_hr_biometric_connection,hris.payroll_admin,1,1,1,1
+access_hr_biometric_log_payroll,access.hr.biometric.log.payroll,model_hr_biometric_log,hris.payroll_admin,1,1,1,1
+access_hr_employee_payroll,access.hr.employee.payroll,hr.model_hr_employee,hris.payroll_admin,1,1,1,1
+access_hr_employee_clearance_approver_payroll,access.hr.employee.clearance.approver.payroll,model_hr_employee_clearance_approver,hris.payroll_admin,1,1,1,1
+
 
