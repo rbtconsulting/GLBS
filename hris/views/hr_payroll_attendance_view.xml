@@ -210,7 +210,7 @@
     	                    	class="btn btn-primary" />
 
 						<button name="btn_approved"
-	                        	groups="hris.group_approver,hris.group_hr_user"
+	                        	groups="hris.group_approver,hris.group_hr_user,hris.payroll_admin"
 	                        	string="APPROVE" 
 	                        	states="draft" 
 	                        	type="object"
@@ -224,7 +224,7 @@
 	                         	type="object" class="btn btn-primary" />
 	                    
 	                    <button name="btn_disapproved" 
-	                        	groups="hris.group_approver,hris.group_hr_user"
+	                        	groups="hris.group_approver,hris.group_hr_user,hris.payroll_admin"
 	                        	string="DISAPPROVED" 
 	                        	states="draft" 
 	                        	type="object" 

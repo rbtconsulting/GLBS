@@ -2409,7 +2409,7 @@ class HRAttendanceOvertime(models.Model):
                 record.write({'overtime_adjustment': True})
     @api.multi
     def action_approved(self):
-        if not (self.env.user.has_group('hris.group_approver') or self.env.user.has_group('hris.group_hr_user')):
+        if not (self.env.user.has_group('hris.group_approver') or self.env.user.has_group('hris.group_hr_user') or self.env.user.has_group('hris.payroll_admin')):
             raise UserError(_('Only an Approver can approve overtime requests.'))
         
         if self.filtered(lambda r:r.state != 'draft'):
@@ -2510,7 +2510,7 @@ class HRAttendanceOvertime(models.Model):
         return leaves
 
     def action_disapproved(self):
-        if not (self.env.user.has_group('hris.group_approver') or self.env.user.has_group('hris.group_hr_user')):
+        if not (self.env.user.has_group('hris.group_approver') or self.env.user.has_group('hris.group_hr_user') or self.env.user.has_group('hris.payroll_admin')):
             raise UserError(_('Only an Approver can approve overtime requests.'))
         
         if self.filtered(lambda r:r.state != 'draft'):

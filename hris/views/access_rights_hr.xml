@@ -66,7 +66,7 @@
             <field name="groups_id" eval="[(6,0,[ ref('hris.group_hr_user')])]"/>
         </record>
         <record model="ir.ui.menu" id="hr_holidays.menu_open_ask_holidays_new" >
-            <field name="groups_id" eval="[(6,0,[ ref('hris.group_hr_user')])]"/>
+            <field name="groups_id" eval="[(6,0,[ ref('hris.group_hr_user'),ref('hris.payroll_admin')])]"/>
         </record>
         <record model="ir.ui.menu" id="hr_holidays.menu_open_allocation_holidays" >
             <field name="groups_id" eval="[(6,0,[ ref('hris.group_hr_user')])]"/>

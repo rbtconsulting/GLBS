@@ -169,5 +169,22 @@
                <field name="perm_create" eval="True"/>
                <field name="perm_unlink" eval="False"/>
          </record>
+
+        <function name="write" model="ir.model.data">
+            <function name="search" model="ir.model.data">
+                <value eval="[('module', '=', 'hr_attendance'), '|',
+                    ('name', '=', 'hr_attendance_rule_attendance_employee'),
+                    ('name', '=', 'hr_attendance_rule_attendance_manager')]"/>
+            </function>
+            <value eval="{'noupdate': False}" />
+        </function>
+
+        <record id="hr_attendance.hr_attendance_rule_attendance_employee" model="ir.rule">
+            <field name="active" eval="False"/>
+        </record>
+
+        <record id="hr_attendance.hr_attendance_rule_attendance_manager" model="ir.rule">
+            <field name="active" eval="False"/>
+        </record>
     </data>
 </odoo>
