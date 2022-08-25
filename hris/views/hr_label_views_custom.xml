@@ -37,6 +37,7 @@
                 <xpath expr="//button[4]" position="attributes">
                     <attribute name="string">Disapprove</attribute>
                     <attribute name="attrs">{'invisible': ['|', ('hr_payslip_id', '!=', False)]}</attribute>
+                    <attribute name="groups" ref="hr.group_hr_user"/>
                 </xpath>
                 <field name='payslip_status' position="after">
                     <field name="hr_payslip_id" readonly="1"/>

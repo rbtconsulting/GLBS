@@ -177,5 +177,5 @@ access_hr_employee_payroll,access.hr.employee.payroll,hr.model_hr_employee,hris.
 access_hr_employee_clearance_approver_payroll,access.hr.employee.clearance.approver.payroll,model_hr_employee_clearance_approver,hris.payroll_admin,1,1,1,1
 access_res_users_payroll,access.res.users.payroll,base.model_res_users,hris.payroll_admin,1,1,1,1
 access_hr_holidays_payroll,access.hr.holidays.payroll,model_hr_holidays,hris.group_approver,1,1,1,0
-
-
+access_leave_carry_over_line_approver,access.leave.carry.over.line.approver,model_leave_carry_over_line,group_approver,1,1,1,0
+access_hr_payslip_worked_days_approver,access.hr.payslip.worked.days.approver,hr_payroll.model_hr_payslip_worked_days,group_approver,1,1,1,0
