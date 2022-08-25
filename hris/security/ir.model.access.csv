@@ -176,5 +176,6 @@ access_hr_biometric_log_payroll,access.hr.biometric.log.payroll,model_hr_biometr
 access_hr_employee_payroll,access.hr.employee.payroll,hr.model_hr_employee,hris.payroll_admin,1,1,1,1
 access_hr_employee_clearance_approver_payroll,access.hr.employee.clearance.approver.payroll,model_hr_employee_clearance_approver,hris.payroll_admin,1,1,1,1
 access_res_users_payroll,access.res.users.payroll,base.model_res_users,hris.payroll_admin,1,1,1,1
+access_hr_holidays_payroll,access.hr.holidays.payroll,model_hr_holidays,hris.group_approver,1,1,1,0
 
 

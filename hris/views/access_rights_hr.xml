@@ -63,13 +63,13 @@
             <field name="groups_id" eval="[(6,0,[ref('hris.group_hr_user'),ref('hris.group_firstlevel'),ref('hris.group_approver'),ref('hris.payroll_admin')])]"/>
         </record>
          <record model="ir.ui.menu" id="hr_holidays.menu_open_company_allocation" >
-            <field name="groups_id" eval="[(6,0,[ ref('hris.group_hr_user')])]"/>
+            <field name="groups_id" eval="[(6,0,[ ref('hris.group_hr_user'),ref('base.group_system')])]"/>
         </record>
         <record model="ir.ui.menu" id="hr_holidays.menu_open_ask_holidays_new" >
-            <field name="groups_id" eval="[(6,0,[ ref('hris.group_hr_user'),ref('hris.payroll_admin')])]"/>
+            <field name="groups_id" eval="[(6,0,[ref('base.group_system'),ref('hris.group_hr_user'),ref('hris.payroll_admin'),ref('hris.group_approver')])]"/>
         </record>
         <record model="ir.ui.menu" id="hr_holidays.menu_open_allocation_holidays" >
-            <field name="groups_id" eval="[(6,0,[ ref('hris.group_hr_user')])]"/>
+            <field name="groups_id" eval="[(6,0,[ ref('hris.group_hr_user'),ref('base.group_system')])]"/>
         </record>
         <record model="ir.ui.menu" id="hr_attendance.menu_hr_attendance_view_attendances" >
                 <field name="groups_id" eval="[(6,0,[ref('hris.group_hr_user'),ref('hris.group_firstlevel'),ref('hris.group_approver'),ref('hris.payroll_admin')])]"/>
