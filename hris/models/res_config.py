@@ -3,6 +3,15 @@
 from odoo import fields, models, api
 from odoo.tools.safe_eval import safe_eval
 
+
+class ResPartner(models.Model):
+    _inherit = 'res.partner'
+
+    signup_token = fields.Char(groups="base.group_user")
+    signup_type = fields.Char(groups="base.group_user")
+    signup_expiration = fields.Datetime(groups="base.group_user")
+
+
 class HrPayrollConfigSettings(models.TransientModel):
     _inherit = 'hr.payroll.config.settings'
     
