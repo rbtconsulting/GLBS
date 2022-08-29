@@ -57,6 +57,10 @@
          </record> 
         <!-- accounting -->
 
+        <!-- hr.holidays -->
+       <record id="hr_holidays.property_rule_holidays_officer" model="ir.rule">
+            <field name="active" eval="False"/>
+       </record>
 
         <record id="hr_access_modules" model="ir.module.category">
             <field name="name">Modules</field>
