@@ -48,15 +48,15 @@ class BaseConfigSettings(models.TransientModel):
         self.env['ir.config_parameter'].set_param('default.ot.lockout.period', repr(self.default_ot_lockout_period))
         self.env['ir.config_parameter'].set_param('default.ob.lockout', repr(self.default_ob_lockout))
         self.env['ir.config_parameter'].set_param('default.ob.lockout.period', repr(self.default_ob_lockout_period))
-
+    
     @api.model
     def get_default_params(self, fields):
         res = {}
         # res['minimum_overtime_hours'] = float(self.env['ir.config_parameter'].get_param('minimum.overtime.hours', '1'))
         res['minimum_overtime_hours'] = float(self.env['ir.config_parameter'].get_param('minimum.overtime.hours',default=1))
-        res['default_ot_lockout'] = self.env['ir.config_parameter'].get_param('default.ot.lockout', False)
+        res['default_ot_lockout'] = self.env['ir.config_parameter'].get_param('default.ot.lockout') == 'True' and True or False
         res['default_ot_lockout_period'] = float(self.env['ir.config_parameter'].get_param('default.ot.lockout.period', 0))
-        res['default_ob_lockout'] = self.env['ir.config_parameter'].get_param('default.ob.lockout', False)
+        res['default_ob_lockout'] = self.env['ir.config_parameter'].get_param('default.ob.lockout') == 'True' and True or False
         res['default_ob_lockout_period'] = float(self.env['ir.config_parameter'].get_param('default.ob.lockout.period', 0))
         return res
 
