@@ -4,7 +4,7 @@
 
        <!--hr. experience -->
         <record model="ir.ui.menu" id="hr_attendance.menu_hr_attendance_my_attendances" >
-            <field name="groups_id" eval="[(6,0,[ ref('hris.payroll_admin'), ref('hr.group_hr_manager'), ref('group_firstlevel')])]"/>
+            <field name="groups_id" eval="[(6,0,[ ref('hris.payroll_admin'), ref('hr.group_hr_manager'), ref('group_firstlevel'), ref('group_approver')])]"/>
         </record>
         <record model="ir.ui.menu" id="hr_experience.menu_hr_experience" >
             <field name="groups_id" eval="[(6,0,[ ref('hris.group_hr_user')])]"/>

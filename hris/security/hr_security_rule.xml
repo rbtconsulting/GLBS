@@ -93,7 +93,7 @@
          <record model="ir.rule" id="view_rule_leaves_HR">
               <field name="name">HR leaves</field>
               <field name="model_id" ref="hr_holidays.model_hr_holidays"/>
-              <field name="groups" eval="[(4,[ref('hris.group_hr_user'),ref('group_timekeeper')])]" />
+              <field name="groups" eval="[(4,[ref('hris.group_hr_user'),ref('group_timekeeper'),ref('hris.payroll_admin')])]" />
               <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
          </record>
 
