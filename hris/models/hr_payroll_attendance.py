@@ -2223,7 +2223,6 @@ class HRAttendanceHoliday(models.Model):
     holiday_type = fields.Selection([('regular', 'Regular Holidays'),
                                      ('special', 'Special Non-working')], 'Holiday Type',
                                     required=True)
-
     work_location_id = fields.Many2one('hr.employee.work_location', 'Work Location')
 
 
@@ -2241,12 +2240,13 @@ class HRAttendanceOvertime(models.Model):
         current_uid = context.get('uid')
         user = self.env['res.users'].browse(current_uid)
         approver = self.env['res.users'].has_group('hris.group_approver')
+        first_level = self.env['res.users'].has_group('hris.group_firstlevel')
         current_user = self.env.user.groups_id.mapped('id')
         if not context.get('is_approve'):
             for record in self:
                 emp = self.env['hr.employee'].search([('user_id','=',user.id)],limit=1)
                 if record.employee_id.parent_id.id == emp.id and record.employee_id.id != emp.id:
-                    if  user.id != 1 and approver in current_user:
+                    if user.id != 1 and first_level in current_user:
                         raise ValidationError("Unable to edit/create others record")
 
 
@@ -2520,8 +2520,8 @@ class HRAttendanceOvertime(models.Model):
             if self.env.uid == record.employee_id.user_id.id:
                 raise ValidationError(_('Unable to disapprove own overtime!'))
 
-        if self.holiday_id:
-            self.holiday_id.action_refuse()
+            if record.holiday_id:
+                record.holiday_id.action_refuse()
         self.remove_from_attendance()
         return self.write({'state': 'disapproved'})
 

@@ -309,7 +309,7 @@ class HREmployee(models.Model):
     biometric_device_id = fields.Integer(string='Biometric Device ID')
     address = fields.Char(string='Address')
     id_company = fields.Many2one('res.company', string="Company")
-    bank_account_no = fields.Integer('Bank Account Number')
+    bank_account_no = fields.Char('Bank Account Number', size=64)
     
 class HRAcademicExperience(models.Model):
     _name = 'hr.academic_experience'
