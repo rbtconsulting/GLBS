@@ -1356,8 +1356,8 @@ class HRAttendance(models.Model):
         check_in = self.schedule_in and datetime.strptime(self.schedule_in, '%Y-%m-%d %H:%M:%S').date()
         check_out = self.schedule_out and datetime.strptime(self.schedule_out, '%Y-%m-%d %H:%M:%S').date()
         attendances = self.env['hr.attendance'].search([('employee_id', '=', self.employee_id.id)])
-        before_check_in = self.get_before_check_in(check_in, schedule_week_days)
-        after_check_out = self.get_after_check_out(check_out, schedule_week_days)
+        before_check_in = check_in and self.get_before_check_in(check_in, schedule_week_days)
+        after_check_out = check_out and self.get_after_check_out(check_out, schedule_week_days)
         leaves = self.leave_ids.filtered(lambda l: not l.holiday_status_id.is_ob)
         attendance_before = attendances.filtered(lambda l: l.schedule_in and datetime.strptime(l.schedule_in, '%Y-%m-%d %H:%M:%S').date() == before_check_in and l.worked_hours > 0)
         attendance_after = attendances.filtered(lambda l: l.schedule_in and datetime.strptime(l.schedule_in, '%Y-%m-%d %H:%M:%S').date() == after_check_out and l.worked_hours > 0)
@@ -2223,7 +2223,34 @@ class HRAttendanceHoliday(models.Model):
     holiday_type = fields.Selection([('regular', 'Regular Holidays'),
                                      ('special', 'Special Non-working')], 'Holiday Type',
                                     required=True)
+    recurring_holiday = fields.Boolean("Is Recurring?")
     work_location_id = fields.Many2one('hr.employee.work_location', 'Work Location')
+
+    @api.constrains('holiday_start', 'holiday_end')
+    def check_duplicate_holiday(self):
+        for rec in self:
+            holidays = self.env['hr.attendance.holidays'].search_count([
+                    ('holiday_start', '=', rec.holiday_start),
+                    ('holiday_end', '=', rec.holiday_end),
+                    ('holiday_type', '=', rec.holiday_type)
+                ])
+            if holidays > 1:
+                raise ValidationError(_("Duplicate holidays not allowed!!"))
+
+    def cron_recurring_holidays(self):
+        holiday_obj = self.env['hr.attendance.holidays']
+        recurring_holidays = holiday_obj.search([('recurring_holiday', '=', True)])
+        for holiday in recurring_holidays:
+            next_start_date = datetime.strptime(holiday.holiday_start, '%Y-%m-%d %H:%M:%S')
+            next_end_date = datetime.strptime(holiday.holiday_end, '%Y-%m-%d %H:%M:%S')
+            holiday_obj.create({
+                    'name': holiday.name,
+                    'holiday_start': next_start_date.replace(year=datetime.today().year),
+                    'holiday_end': next_end_date.replace(year=datetime.today().year),
+                    'holiday_type': holiday.holiday_type,
+                    'recurring_holiday': holiday.recurring_holiday,
+                    'work_location_id': holiday.work_location_id or False,
+                })
 
 
 class HRAttendanceOvertime(models.Model):

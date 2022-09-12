@@ -373,6 +373,7 @@
     		    	            <field name="holiday_start" />
     		    	            <field name="holiday_end" />
     		    	            <field name="holiday_type" />
+                                <field name="recurring_holiday" />
     		    	            <field name="work_location_id" options="{'no_create':True, 'no_create_edit':True, 'no_open':True}"/>
     		    	        </group>
     		    	

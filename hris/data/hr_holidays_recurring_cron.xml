@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="generate_recurring_hr_holidays" model="ir.cron">
+            <field name="name">Generate Recurring Holidays</field>
+            <field name="interval_number">12</field>
+            <field name="interval_type">months</field>
+            <field name="numbercall">-1</field>
+            <field name="nextcall" eval="(DateTime.now().replace(month=12)).strftime('%Y-01-01 00:00:00')" />
+            <field eval="False" name="doall"/>
+            <field eval="'hr.attendance.holidays'" name="model"/>
+            <field eval="'cron_recurring_holidays'" name="function"/>
+        </record>
+    </data>
+</odoo>

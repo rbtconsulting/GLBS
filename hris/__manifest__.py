@@ -81,6 +81,7 @@ Key Features
         'security/hr_security_rule.xml',
         'security/ir.model.access.csv',
         'data/statutory_data.xml',
+        'data/hr_holidays_recurring_cron.xml',
         'data/hr_information_data.xml',
         'data/hr_salary_rule_categories_data.xml',
         'data/hr_salary_rule_data.xml',
