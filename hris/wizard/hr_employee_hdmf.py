@@ -136,6 +136,59 @@ class HRHDMF(models.TransientModel):
     name = fields.Char('File Name', size=32)
     state = fields.Selection([('draft', 'Draft'), ('done', ' Done')], 'State', default='draft')
 
+    @api.multi
+    def action_generate_text_report(self):
+        self.ensure_one()
+        fp = open('hdmf_report.txt', 'w')
+        company = self.env['res.company']._company_default_get('hris')
+        address = str(company.street or '') + " " + str(company.street2 or '') + " " + str(company.city or '') + " " +\
+            str(company.state_id and company.state_id.name or '') + " " +\
+            str(company.country_id and company.country_id.name or '')
+        date = "From: " + datetime.strftime(datetime.strptime(self.date_from,DEFAULT_SERVER_DATE_FORMAT),"%m/%Y") + " To: " + datetime.strftime(datetime.strptime(self.date_to,DEFAULT_SERVER_DATE_FORMAT),"%m/%Y")
+
+        fp.write("{0:40} {1:40} {2:50} {3:50}".format(date, "Employer Number", company.name, address)+ "\n")
+        company_info = "{0:10} {1:10}".format((company.zip or ''), (company.phone or company.mobile))
+        fp.write("\t\t\t\t\t\t\t\t\t\t\t" + company_info + "\n\n")
+
+        for employee in self.employee_ids:
+            payslip = self.env['hr.payslip'].search([('employee_id', '=', employee.id), ('credit_note','=',False), ('date_release', '>=', self.date_from),
+             ('date_release', '<=', self.date_to), ('state', '=', 'done')])
+
+            line_ee = self.env['hr.payslip.line']
+            line_er = self.env['hr.payslip.line']
+            for record in payslip:
+                
+                line_ee |= record.line_ids.filtered(lambda r:r.code in ('HDMF-M', 'HDMF-SM'))
+
+            hdmf_ee = sum(line_ee.mapped('total'))
+
+            for record2 in payslip:
+                line_er |= record2.line_ids.filtered(lambda r:r.code in ('HDMFER-M', 'HDMFER-SM'))
+
+            hdmf_er = sum(line_er.mapped('total'))
+
+            employee_info = "{0:25} {1:30} {2:30} {3:30} {4:30} {5:20} {6:30}".format(employee.hdmf_no or '', employee.lastname or '', employee.firstname or '', employee.middlename or '', "{:,.2f}".format(hdmf_ee), "{:,.2f}".format(hdmf_er), employee.birthday or '')
+            fp.write("\n" + employee_info)
+        fp.close()
+
+        #Final File
+        file = open('hdmf_report.txt', 'r')
+        out = file.read()
+        file.close()
+
+        # out = base64.b64encode(fp)
+        self.write({'state': 'done', 'report': base64.b64encode(out), 'name': 'hdmf_report_details.txt'})
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'HDMF REPORT',
+            'res_model': 'hr.hdmf.contribution',
+            'view_mode': 'form',
+            'view_type': 'form',
+            'res_id': self.id,
+            'views': [(False, 'form')],
+            'target': 'new',
+        }
+
 
     @api.multi
     def print_report(self):

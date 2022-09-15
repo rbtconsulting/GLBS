@@ -301,6 +301,8 @@ class Timelogs(models.Model):
                 last_attendance_before_check_in = self.env['hr.attendance'].search([
                     ('employee_id', '=', record.employee_id.id),
                     ('check_in', '<=', record.check_in),
+                    ('worked_hours', '=', 0),
+                    ('ob_hours', '=', 0)
                 ], order='check_in desc', limit=1)
                 #new time-in between time-in and time-out 
                 if last_attendance_before_check_in and last_attendance_before_check_in.check_out and last_attendance_before_check_in.check_out >= record.check_in:
@@ -332,6 +334,8 @@ class Timelogs(models.Model):
                     last_attendance_before_check_out = self.env['hr.attendance'].search([
                         ('employee_id', '=', record.employee_id.id),
                         ('check_in', '<', record.check_out),
+                        ('worked_hours', '=', 0),
+                        ('ob_hours', '=', 0)
                     ], order='check_in desc', limit=1)
                     #get last attendance before this new attendance
                     if last_attendance_before_check_out and last_attendance_before_check_in != last_attendance_before_check_out:
@@ -364,7 +368,8 @@ class Timelogs(models.Model):
                 date_set = set([cutoff_start.date() + timedelta(days=i) for i in range(delta.days + 1)])
                 missing_dates += sorted(date_set - set(timelog_dates))
                 if check_in.date() in timelog_dates:
-                    check_emp = emp.filtered(lambda l: datetime.strptime(l.check_in, '%Y-%m-%d %H:%M:%S').date() == datetime.strptime(record.check_in, '%Y-%m-%d %H:%M:%S').date())
+                    check_emp = emp.filtered(lambda l: datetime.strptime(l.check_in, '%Y-%m-%d %H:%M:%S').date() == datetime.strptime(record.check_in, '%Y-%m-%d %H:%M:%S').date() and (
+                        l.worked_hours == 0 and l.ob_hours == 0))
                     if check_emp:
                         check_emp.write({'check_in': record.check_in,
                                'check_out': record.check_out,

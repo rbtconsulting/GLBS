@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
+
         <record id="view_employee_hdmf" model="ir.ui.view">
             <field name="name">HDMF Contribution Report</field>
             <field name="model">hr.hdmf.contribution</field>
@@ -29,6 +30,7 @@
                     </group>
                     <footer states="draft">
                          <button name="action_generate_xls_report" string="PRINT EXCEL" type="object" class="oe_highlight" />
+                         <button name="action_generate_text_report" string="PRINT TEXT" type="object" class="oe_highlight" />
                          <button name="print_report" string="PRINT PDF" type="object" class="btn-primary" />
                          <button string="Cancel" class="btn-default" special="cancel" />
                     </footer>
