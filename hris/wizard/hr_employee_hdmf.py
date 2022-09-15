@@ -34,34 +34,24 @@ class HRHDMF(models.TransientModel):
         col = 0
         ws1.write_merge(row, row, 3, 6, "HDMF REPORT", header_content_style)
         row += 2
-        ws1.write(row, col + 0, "From : " + datetime.strftime(datetime.strptime(self.date_from,DEFAULT_SERVER_DATE_FORMAT),"%m/%Y"), sub_header_style)
-        # ws1.write(row, col + 1, datetime.strftime(datetime.strptime(self.date_from,DEFAULT_SERVER_DATE_FORMAT),"%m/%Y"), sub_header_content_style)
-        ws1.write(row, col + 1, "To : " + datetime.strftime(datetime.strptime(self.date_to,DEFAULT_SERVER_DATE_FORMAT),"%m/%Y"), sub_header_style)
-        # ws1.write(row, col + 3, datetime.strftime(datetime.strptime(self.date_to,DEFAULT_SERVER_DATE_FORMAT),"%m/%Y"), sub_header_content_style)
-        ws1.write(row, col + 3, 'Employer Number', sub_header_content_style)
-        ws1.write_merge(row, row, col + 5, col + 6, company.name, sub_header_style)
-        address = str(company.street) + str(company.street2) + str(company.city) + str(company.state_id and company.state_id.name or '') + str(company.country_id and company.country_id.name or '')
-        ws1.write_merge(row, row, col + 8, col + 10, address, sub_header_style)
-        
-        # ws1.write(row, col + 0, company.name, sub_header_style)
-        # ws1.write(row, col + 3, "Employer's HDMF No. :", sub_header_style)
-        # ws1.write(row, col + 5, company.pagibig_num or '', sub_header_style)
-        # row += 2
-        # # ws1.write(row, col+0, "From :", sub_header_style)
-        # # ws1.write(row, col+1, datetime.strftime(datetime.strptime(self.date_from,DEFAULT_SERVER_DATE_FORMAT),"%d/%m/%Y"), sub_header_content_style)
+        ws1.write(row, col + 0, company.name, sub_header_style)
+        ws1.write(row, col + 3, "Employer's HDMF No. :", sub_header_style)
+        ws1.write(row, col + 5, company.pagibig_num or '', sub_header_style)
+        row += 2
+        ws1.write(row, col+0, "From :", sub_header_style)
+        ws1.write(row, col+1, datetime.strftime(datetime.strptime(self.date_from,DEFAULT_SERVER_DATE_FORMAT),"%d/%m/%Y"), sub_header_content_style)
         row += 1
-        ws1.write(row, col+8, company.zip or '', sub_header_style)
-        ws1.write(row, col+10, company.phone or company.mobile, sub_header_style)
-        # ws1.write(row, col+1, datetime.strftime(datetime.strptime(self.date_to,DEFAULT_SERVER_DATE_FORMAT),"%d/%m/%Y"), sub_header_content_style)
+        ws1.write(row, col+0, "To :", sub_header_style)
+        ws1.write(row, col+1, datetime.strftime(datetime.strptime(self.date_to,DEFAULT_SERVER_DATE_FORMAT),"%d/%m/%Y"), sub_header_content_style)
         row += 2
         ws1.write(row, col + 0, "HDMF No.", header_style)
-        # ws1.write(row, col + 1, "TIN No.", header_style)
-        ws1.write(row, col + 1, "LAST NAME", header_style)
-        ws1.write(row, col + 2, "FIRST NAME", header_style)
-        ws1.write(row, col + 3, "MIDDLE NAME", header_style)
-        ws1.write(row, col + 4, "Employee Contribution", header_style)
-        ws1.write(row, col + 5, "Employer Contribution", header_style)
-        ws1.write(row, col + 6, "BIRTH DATE", header_style)
+        ws1.write(row, col + 1, "TIN No.", header_style)
+        ws1.write(row, col + 2, "LAST NAME", header_style)
+        ws1.write(row, col + 3, "FIRST NAME", header_style)
+        ws1.write(row, col + 4, "MIDDLE NAME", header_style)
+        ws1.write(row, col + 5, "BIRTH DATE", header_style)
+        ws1.write(row, col + 6, "EE", header_style)
+        ws1.write(row, col + 7, "ER", header_style)
         row += 1
         
         hdmf_tot_ee = 0
@@ -85,24 +75,22 @@ class HRHDMF(models.TransientModel):
             hdmf_er = sum(line_er.mapped('total'))            
             
             ws1.write(row, col + 0, employee.hdmf_no or '', row_style)
-            # ws1.write(row, col + 1, employee.identification_id or '', row_style)
-            ws1.write(row, col + 1, employee.lastname, row_style)
-            ws1.write(row, col + 2, employee.firstname, row_style)
-            ws1.write(row, col + 3, employee.middlename or '', row_style)
-            ws1.write(row, col + 4, "{:,.2f}".format(hdmf_ee), total_row_style)
-            ws1.write(row, col + 5, "{:,.2f}".format(hdmf_er), total_row_style)
-            ws1.write(row, col + 6, employee.birthday or '', row_style)
+            ws1.write(row, col + 1, employee.identification_id or '', row_style)
+            ws1.write(row, col + 2, employee.lastname, row_style)
+            ws1.write(row, col + 3, employee.firstname, row_style)
+            ws1.write(row, col + 4, employee.middlename or '', row_style)
+            ws1.write(row, col + 5, employee.birthday or '', row_style)
+            ws1.write(row, col + 6, "{:,.2f}".format(hdmf_ee), total_row_style)
+            ws1.write(row, col + 7, "{:,.2f}".format(hdmf_er), total_row_style)
             row += 1
-
-        # Total
+            
             hdmf_tot_ee += hdmf_ee
             hdmf_tot_er += hdmf_er
-        
+            
         row += 1
-        ws1.write_merge(row, row, 0, 3, "TOTAL", total_style)
-        ws1.write(row, col + 4, "{:,.2f}".format(hdmf_tot_ee), total_style)
-        ws1.write(row, col + 5, "{:,.2f}".format(hdmf_tot_er), total_style)
-        ws1.write(row, col + 6, "", total_style)
+        ws1.write_merge(row, row, 0, 5, "TOTAL", total_style)
+        ws1.write(row, col + 6, "{:,.2f}".format(hdmf_tot_ee), total_style)
+        ws1.write(row, col + 7, "{:,.2f}".format(hdmf_tot_er), total_style)
         wb1.save(fp)
         
         out = base64.encodestring(fp.getvalue())
