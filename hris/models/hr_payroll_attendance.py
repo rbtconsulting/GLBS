@@ -1064,8 +1064,8 @@ class HRAttendance(models.Model):
                         if leave_date_in:
                             date_from = min([context_timestamp(self, from_string(x)) for x in leave_date_in])
                             date_in = attendance.is_hide_check_time and date_from or min(date_from, date_in)
-                            attendance.late_hours = attendance.get_late_hours(grace_period, date_in, date_out, required_in,
-                                                                     required_out, lunch_break_out, lunch_break_period)
+                        attendance.late_hours = attendance.get_late_hours(grace_period, date_in, date_out, required_in,
+                                                                 required_out, lunch_break_out, lunch_break_period)
 
                     elif not is_holiday and not (not attendance.worked_hours and not attendance.ob_hours
                             and attendance.leave_ids.filtered(lambda l: not l.holiday_status_id.is_ob)):
