@@ -368,22 +368,27 @@ class Timelogs(models.Model):
                 date_set = set([cutoff_start.date() + timedelta(days=i) for i in range(delta.days + 1)])
                 missing_dates += sorted(date_set - set(timelog_dates))
                 if check_in.date() in timelog_dates:
-                    check_emp = emp.filtered(lambda l: datetime.strptime(l.check_in, '%Y-%m-%d %H:%M:%S').date() == datetime.strptime(record.check_in, '%Y-%m-%d %H:%M:%S').date() and (
-                        l.worked_hours == 0 and l.ob_hours == 0))
-                    if check_emp:
+                    check_emp = emp.filtered(lambda l: datetime.strptime(l.check_in, '%Y-%m-%d %H:%M:%S').date() == datetime.strptime(record.check_in, '%Y-%m-%d %H:%M:%S').date())
+                    if check_emp.filtered(lambda l: (l.worked_hours == 0 and l.ob_hours == 0)):
                         check_emp.write({'check_in': record.check_in,
                                'check_out': record.check_out,
                                'remarks': '',
                                'is_absent': False,
                             })
-                    else:
+                    if not check_emp:
                         attendance_obj.create_attendance(record.employee_id, record.check_in, record.check_out)
-            for date in missing_dates:
-                if date.strftime('%A').lower() in schedule_week_days:
-                    date = date.strftime('%Y-%m-%d %H:%M:%S')
-                    attendance_obj.create_attendance(record.employee_id, date, date)
 
             for val in log.timelog_line:
+                for date in missing_dates:
+                    if date.strftime('%A').lower() in schedule_week_days:
+                        date = date.strftime('%Y-%m-%d %H:%M:%S')
+                        attendance_id = attendance_obj.search([('employee_id','=',val.employee_id.id),
+                                                               '|', ('check_in', '=', date),
+                                                               ('check_out', '=', date)], limit=1)
+                        if attendance_id.filtered(lambda l: l.worked_hours == 0 and l.ob_hours == 0):
+                            attendance_id.write({'is_absent': True})
+                        if not attendance_id:
+                            attendance_obj.create_attendance(record.employee_id, date, date)
                 attendance_id = attendance_obj.search([('employee_id','=',val.employee_id.id),('remarks','=','ABS')])
                 for date in attendance_id:
                     if date.schedule_in == False:
@@ -391,7 +396,7 @@ class Timelogs(models.Model):
 
                 attendance = attendance_obj.search([('employee_id','=',val.employee_id.id),('remarks','=','ABS')])
                 for att in attendance:
-                    check_in =datetime.strptime(val.check_in, '%Y-%m-%d %H:%M:%S')
+                    check_in = datetime.strptime(val.check_in, '%Y-%m-%d %H:%M:%S')
                     check_in = check_in.strftime("%Y-%m-%d")
                     schedule_date = datetime.strptime(att.schedule_in, '%Y-%m-%d %H:%M:%S')
                     schedule_date = schedule_date.strftime("%Y-%m-%d")

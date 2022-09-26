@@ -238,14 +238,14 @@ class HREmployee(models.Model):
                 }
            }
         
-        if self.hdmf_no and not self.hdmf_no.isdigit():
-            self.hdmf_no = ''
-            return {
-                'warning' : {
-                'title': _('Warning'),
-                'message':_('Invalid HDMF Format')
-                }
-           }
+        # if self.hdmf_no and not self.hdmf_no.isdigit():
+        #     self.hdmf_no = ''
+        #     return {
+        #         'warning' : {
+        #         'title': _('Warning'),
+        #         'message':_('Invalid HDMF Format')
+        #         }
+        #    }
             
         if self.identification_id and not self.identification_id.isdigit():
             self.identification_id = ''
@@ -310,7 +310,9 @@ class HREmployee(models.Model):
     address = fields.Char(string='Address')
     id_company = fields.Many2one('res.company', string="Company")
     bank_account_no = fields.Char('Bank Account Number', size=64)
-    
+    bank_id = fields.Many2one('res.bank', 'Bank')
+
+
 class HRAcademicExperience(models.Model):
     _name = 'hr.academic_experience'
     _description = 'Academic Experiences'

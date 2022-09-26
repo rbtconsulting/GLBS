@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="res_bdo_bank" model="res.bank">
+            <field name="name">BDO Bank</field>
+            <field name="active">True</field>
+        </record>
+
+        <record id="res_union_bank" model="res.bank">
+            <field name="name">Unionbank</field>
+            <field name="active">True</field>
+        </record>
+
+        <record id="res_mbtc_metro_bank" model="res.bank">
+            <field name="name">MBTC METROBANK MAIN CDO</field>
+            <field name="bic">209</field>
+            <field name="street">CORALES AVENUE</field>
+            <field name="city">CAGAYAN DE ORO CITY</field>
+            <field name="zip">9000</field>
+            <field name="country" ref="base.ph"/>
+            <field name="active">True</field>
+        </record>
+    </data>
+</odoo>

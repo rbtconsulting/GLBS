@@ -742,8 +742,13 @@ class HRAttendance(models.Model):
 
                 required_in_hour, required_in_minute = float_time_convert(attendance.work_time_line_id.latest_check_in)
                 required_in = date_in.replace(hour=required_in_hour, minute=required_in_minute, second=0)
+                ob_leaves = attendance.leave_ids.filtered(lambda l: l.holiday_status_id.is_ob)
 
                 if schedule_type == 'coretime':
+                    if ob_leaves:
+                        ob_date_in = (context_timestamp(self, from_string(min(ob_leaves.mapped('date_from'))))).replace(second=0)
+                        date_in = min((context_timestamp(self, from_string(attendance.check_in))).replace(second=0), ob_date_in)
+
 
 #                     obs = attendance.leave_ids.filtered(lambda r: r.holiday_status_id.is_ob)
 #                     if obs:
@@ -1436,6 +1441,9 @@ class HRAttendance(models.Model):
             ob_hours = 0
             schedule_type = attendance.work_time_line_id.work_time_id.schedule_type
             if schedule_type == 'coretime':
+                if ob_leaves:
+                    ob_date_in = (context_timestamp(self, from_string(min(ob_leaves.mapped('date_from'))))).replace(second=0)
+                    date_in = min((context_timestamp(self, from_string(attendance.check_in))).replace(second=0), ob_date_in)
                 earliest_in_hour, earliest_in_minute = float_time_convert(
                     attendance.work_time_line_id.earliest_check_in)
                 earliest_in = date_in.replace(hour=earliest_in_hour, minute=earliest_in_minute, second=0)

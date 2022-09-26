@@ -95,6 +95,7 @@ Key Features
         'data/alphanumeric_tax_code.xml',
         'data/hr_annualization_structure.xml',
         'data/bir1601c_report_data.xml',
+        'data/res_bank_data.xml',
         
         'views/hr_employee_views.xml',
         'views/hr_attendance_change.xml',

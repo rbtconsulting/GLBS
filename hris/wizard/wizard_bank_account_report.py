@@ -18,7 +18,8 @@ class HRGenerateTextFile(models.TransientModel):
 
     # BDO bank FORMAT
     def action_generate_txt_report(self):
-        emp = self.env['hr.payslip'].search([('employee_id', 'in', self.employee_ids.ids),
+        employee_ids = self.employee_ids.filtered(lambda l: l.bank_id.id == self.env.ref('hris.res_bdo_bank'))
+        emp = self.env['hr.payslip'].search([('employee_id', 'in', employee_ids.ids),
                                              ('date_release', '=', self.date_release), 
                                              ('credit_note', '=', False),
                                              ('state', '=', 'done')])
@@ -103,7 +104,8 @@ class BNKACCOUNT(models.TransientModel):
         ws1.write(row, col + 6, "FIRSTNAME", row_style)
         row += 1
         
-        for employee in self.employee_ids:           
+        employee_ids = self.employee_ids.filtered(lambda l: l.bank_id.id == self.env.ref('hris.res_union_bank'))
+        for employee in employee_ids:           
             payslip = self.env['hr.payslip'].search([('employee_id', '=', employee.id), ('credit_note', '=', False),
                             ('payroll_period_id', '=', self.payroll_period_id.id), ('state', '=', 'done') ])
             
@@ -190,7 +192,8 @@ class BNKACCOUNTMetroBank(models.TransientModel):
         ws1.write(row, col + 4, "Amount", row_style)
         row += 1
 
-        for emp in self.employee_ids:
+        employee_ids = self.employee_ids.filtered(lambda l: l.bank_id.id == self.env.ref('hris.res_mbtc_metro_bank'))
+        for emp in employee_ids:
             payslip = self.env['hr.payslip'].search([('employee_id', '=', emp.id),
                                                      ('payroll_period_id', '=', self.payroll_period_id.id),
                                                      ('state', '=', 'done')], limit=1)
