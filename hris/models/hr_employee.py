@@ -293,7 +293,7 @@ class HREmployee(models.Model):
    
     sss_no = fields.Char('SSS No', size=12, track_visibility = 'onchange')
     phic_no = fields.Char('PHIC No', size=12, track_visibility = 'onchange')
-    hdmf_no = fields.Char('HDMF No', size=12, track_visibility = 'onchange')
+    hdmf_no = fields.Char('HDMF No', size=14, track_visibility = 'onchange')
     identification_id = fields.Char('TIN#', size=12, track_visibility = 'onchange')    
     
     work_location_id = fields.Many2one('hr.employee.work_location', 'Work Location')

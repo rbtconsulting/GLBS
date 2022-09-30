@@ -234,9 +234,9 @@
 	                                                    <t t-foreach="o.line_ids.filtered(lambda line: line.appears_on_payslip)" t-as="line">
 	                                                        <tr>
 	                                                            <t t-if="line.amount != 0">
-	                                                              <t t-if="line.category_id.code in ['DED','EMPCTRB','WTX'] and line.code != 'DedTax' and line.code != 'DedNonTax' and line.code != 'UT' and line.code != 'TD' and line.code != 'ABS'">
+	                                                              <t t-if="line.category_id.code in ['DED','EMPCTRB','WTX', 'ONTXDED', 'OtherTaxDed'] and line.code != 'DedTax' and line.code != 'DedNonTax' and line.code != 'UT' and line.code != 'TD' and line.code != 'ABS'">
 	                                                                 <td><span style="line-height:65%!important;" t-field="line.code"/></td>
-	                                                                 <td class="text-right"><span style="line-height:65%!important;" t-esc="line.amount" t-esc-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.company_id.currency_id}"/></td>
+                                                                     <td class="text-right"><span style="line-height:65%!important;" t-esc="line.amount" t-esc-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.company_id.currency_id}"/></td>
 	                                                              </t>
 	                                                            </t>
 	                                                        </tr>
