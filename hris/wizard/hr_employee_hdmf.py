@@ -72,7 +72,7 @@ class HRHDMF(models.TransientModel):
             for record2 in payslip:
                 line_er |= record2.line_ids.filtered(lambda r:r.code in ('HDMFER-M', 'HDMFER-SM'))
             
-            hdmf_er = sum(line_er.mapped('total'))            
+            hdmf_er = sum(line_er.mapped('total'))
             
             ws1.write(row, col + 0, employee.hdmf_no or '', row_style)
             ws1.write(row, col + 1, employee.identification_id or '', row_style)
@@ -131,11 +131,12 @@ class HRHDMF(models.TransientModel):
         company = self.env['res.company']._company_default_get('hris')
         address = str(company.street or '') + " " + str(company.street2 or '') + " " + str(company.city or '') + " " +\
             str(company.state_id and company.state_id.name or '') + " " +\
-            str(company.country_id and company.country_id.name or '') + " "+str(company.zip or '') +\
-            " " + str(company.phone or company.mobile)
-        date = "EH" + datetime.strftime(datetime.strptime(self.date_from,DEFAULT_SERVER_DATE_FORMAT),"%m%Y") + datetime.strftime(datetime.strptime(self.date_to,DEFAULT_SERVER_DATE_FORMAT),"%m%Y") + company.company_registry
+            str(company.country_id and company.country_id.name or '')
+        phone = str(company.phone or company.mobile)
+        today = datetime.now().strftime(DEFAULT_SERVER_DATE_FORMAT)
+        date = "EH" + datetime.strftime(datetime.strptime(today,DEFAULT_SERVER_DATE_FORMAT),"%m%Y")
 
-        fp.write("{0:40} {1:40} {2:50}".format(date, company.name, address)+ "\n")
+        fp.write("{0:8} {1:20} {2:70} {3:80} {4:7} {5:10}".format(date, company.company_registry, company.name, address, company.zip, phone)+ "\n")
         # company_info = "{0:10} {1:10}".format((company.zip or ''), (company.phone or company.mobile))
         # fp.write("\t\t\t\t\t\t\t\t\t\t\t" + company_info + "\n\n")
 
@@ -156,7 +157,7 @@ class HRHDMF(models.TransientModel):
 
             hdmf_er = sum(line_er.mapped('total'))
 
-            employee_info = "{0:30} {1:35} {2:35} {3:35} {4:23} {5:20} {6:20}".format(employee.hdmf_no or '', employee.lastname or '', employee.firstname or '', employee.middlename or '', "{:,.2f}".format(hdmf_ee), "{:,.2f}".format(hdmf_er), employee.birthday or '')
+            employee_info = "{0:30} {1:40} {2:40} {3:40} {4:13} {5:21} {6:8}".format(employee.hdmf_no or '', employee.lastname or '', employee.firstname or '', employee.middlename or '', "{:,.2f}".format(hdmf_ee), "{:,.2f}".format(hdmf_er), employee.birthday or '')
             fp.write("\n" + employee_info)
         fp.close()
 

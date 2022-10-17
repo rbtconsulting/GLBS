@@ -366,10 +366,10 @@ class Timelogs(models.Model):
                 timelog_dates = [fields.Datetime.context_timestamp(self, fields.Datetime.from_string(x.check_in)).date() for x in log.timelog_line]
                 delta = cutoff_end.date() - cutoff_start.date()
                 date_set = set([cutoff_start.date() + timedelta(days=i) for i in range(delta.days + 1)])
-                missing_dates += sorted(date_set - set(timelog_dates))
+                missing_dates = sorted(date_set - set(timelog_dates))
                 if check_in.date() in timelog_dates:
-                    check_emp = emp.filtered(lambda l: l.check_in and record.check_in and datetime.strptime(l.check_in, '%Y-%m-%d %H:%M:%S').date() == datetime.strptime(record.check_in, '%Y-%m-%d %H:%M:%S').date())
-                    if check_emp.filtered(lambda l: (l.worked_hours == 0 and l.ob_hours == 0)):
+                    check_emp = emp.filtered(lambda l: datetime.strptime(l.check_in, '%Y-%m-%d %H:%M:%S').date() == datetime.strptime(record.check_in, '%Y-%m-%d %H:%M:%S').date() and (l.worked_hours == 0 and l.ob_hours == 0))
+                    if check_emp:
                         check_emp.write({'check_in': record.check_in,
                                'check_out': record.check_out,
                                'remarks': '',

@@ -4573,6 +4573,15 @@ class PayrollPeriodLine(models.Model):
             if record.end_date < record.start_date:
                 raise ValidationError(_('"End date" date cannot be earlier than "Start date" date.'))
 
+    @api.constrains('start_date', 'end_date')
+    def check_dulplicate_payroll_dates(self):
+        for rec in self:
+            dates = rec.payroll_period_id.period_line.filtered(lambda l: (rec.id != l.id) and (rec.start_date >= l.start_date and rec.start_date <= l.end_date) or
+                                              (rec.end_date >= l.start_date and rec.end_date <= l.end_date)
+                                              or (rec.start_date <= l.start_date and (rec.end_date <= l.end_date or rec.end_date >= l.end_date)))
+            if len(dates) > 1:
+                raise ValidationError("These payroll period already exists!!")
+
     @api.constrains('end_date', 'date_release')
     def _check_release_date(self):
         for record in self:
