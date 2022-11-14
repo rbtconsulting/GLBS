@@ -174,6 +174,7 @@ Key Features
         'wizard/certificate_of_employment.xml',
         'wizard/personal_action_notice.xml',
         'wizard/hr_annualization_view.xml',
+        'wizard/hr_attandence_report_wizard.xml',
     ],
     'qweb': ['static/src/xml/devmode.xml'],
     'installable': True,

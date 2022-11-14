@@ -16,6 +16,8 @@ import certificate_of_employment
 import hr_job_offer_report
 import personal_action_notice
 import hr_annualization_view
+import hr_attandence_report_wizard
+
 
 
 

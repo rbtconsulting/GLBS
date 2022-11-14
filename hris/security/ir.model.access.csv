@@ -180,3 +180,4 @@ access_hr_holidays_approver,access.hr.holidays.approver,model_hr_holidays,hris.g
 access_leave_carry_over_line_approver,access.leave.carry.over.line.approver,model_leave_carry_over_line,group_approver,1,1,1,0
 access_hr_payslip_worked_days_approver,access.hr.payslip.worked.days.approver,hr_payroll.model_hr_payslip_worked_days,group_approver,1,1,1,0
 access_leave_carry_over_line_hr_officer,access.leave.carry.over.line.hr.officer,model_leave_carry_over_line,hr.group_hr_user,1,1,1,1
+access_attendance_report_wizard_hr_officer,access.attendance.report.wizard.hr.officer,model_attendance_report_wizard,hr.group_hr_user,1,1,1,1
