@@ -629,15 +629,13 @@ class HRLeave(models.Model):
             
             today = fields.Date.today()
             date_from = fields.Date.to_string(fields.Datetime.context_timestamp(self, fields.Datetime.from_string(holiday.date_from)))
-        
             domain = [
                 ('start_date', '<=', today),
-                ('end_date', '>=', date_from)
+                ('date_release', '>=', date_from)
             ]
-            
+
             cutoffs = self.env['hr.payroll.period_line'].search_count(domain)
-            
-            if  cutoffs > holiday.holiday_status_id.lockout_period:
+            if cutoffs > holiday.holiday_status_id.lockout_period:
                 raise ValidationError(_('Unable to file or process leaves.The lockout period has been reached!'))
 
 
