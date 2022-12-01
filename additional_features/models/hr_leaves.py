@@ -74,6 +74,9 @@ class HrHolidaysExtended(models.Model):
                 carry_over_line.create({'carry_over_id': record.carry_over_id.id, 'leave_id': record.id, 'amount': max(0.0, record.number_of_days_temp), 'year': record.year})
             else:
                 existing_carry_over_line.update({'amount': max(0.0, record.number_of_days_temp)})
+            if record.holiday_status_id:
+                record.curr_expiration_date = record.holiday_status_id.expiration_date
+                record.curr_date_leave_count = record.holiday_status_id.virtual_remaining_leaves
         return res
 
     @api.multi

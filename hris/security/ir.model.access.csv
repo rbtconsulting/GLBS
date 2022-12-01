@@ -170,6 +170,7 @@ access_hr_employee_schedule_work_time_lines_payroll,access.hr.employee.schedule.
 access_hr_attendance_holidays_payroll,access.hr.attendance.holidays.payroll,model_hr_attendance_holidays,hris.payroll_admin,1,1,1,1
 access_hr_employee_schedule_work_time_payroll,access.hr.employee.schedule.work.time,model_hr_employee_schedule_work_time,hris.payroll_admin,1,1,1,1
 access_hr_holiday_setting_payroll,access.hr.holiday.setting.payroll,model_hr_holiday_setting,hris.payroll_admin,1,1,1,1
+access_hr_holiday_setting_approver,access.hr.holiday.setting.approver,model_hr_holiday_setting,hris.group_approver,1,1,1,0
 access_hr_timelog_parser_payroll,access.hr.timelog.parser.payroll,model_hr_timelog_parser,hris.payroll_admin,1,1,1,1
 access_hr_biometric_connection_payroll,access.hr.biometric.connection.payroll,model_hr_biometric_connection,hris.payroll_admin,1,1,1,1
 access_hr_biometric_log_payroll,access.hr.biometric.log.payroll,model_hr_biometric_log,hris.payroll_admin,1,1,1,1

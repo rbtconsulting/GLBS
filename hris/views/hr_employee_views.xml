@@ -100,6 +100,9 @@
    	       	            <field name="lastname" />
    	       	        </group>
     	       	</xpath>
+    	       	<xpath expr="//field[@name='work_phone']" position="after">
+    	            <field name="id_company" />
+    	        </xpath>
 
     	       <!-- <xpath expr="//field[@name='address_home_id']" position='attributes'>
     	       		<attribute name="invisible">1</attribute>

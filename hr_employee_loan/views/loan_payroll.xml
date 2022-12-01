@@ -666,7 +666,7 @@
 					</xpath>
 <!--					<page string="HR Settings" position="before"-->
 					    <xpath expr="//sheet/notebook/page[3]" position="before">
-						<page string="Loan Details">
+						<page string="Loan Details" invisible="1">
 							<group col="4" colspan="4">
 								<field name="loan_ids" height="360" nolabel="1" colspan="4">
 									<tree string="Loans">
@@ -684,7 +684,7 @@
 								</field>
 							</group>
 						</page>
-						<page string="Loan Policies">
+						<page string="Loan Policies" invisible="1">
 							<group col="4" colspan="4">
 								<separator string="Loan Policies" colspan="4" />
 								<field name="loan_policy" nolabel="1" colspan="4" />

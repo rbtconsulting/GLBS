@@ -1443,7 +1443,10 @@ class HRAttendance(models.Model):
             if schedule_type == 'coretime':
                 if ob_leaves:
                     ob_date_in = (context_timestamp(self, from_string(min(ob_leaves.mapped('date_from'))))).replace(second=0)
-                    date_in = min((context_timestamp(self, from_string(attendance.check_in))).replace(second=0), ob_date_in)
+                    if ob_date_in:
+                        date_in = min((context_timestamp(self, from_string(attendance.check_in))).replace(second=0), ob_date_in)
+                    else:
+                        date_in = (context_timestamp(self, from_string(attendance.check_in))).replace(second=0)
                 earliest_in_hour, earliest_in_minute = float_time_convert(
                     attendance.work_time_line_id.earliest_check_in)
                 earliest_in = date_in.replace(hour=earliest_in_hour, minute=earliest_in_minute, second=0)
@@ -2980,6 +2983,7 @@ class HRPayrollAttendance(models.Model):
         def lockout_leaves_interval(employee_id, date_from, date_to):
             date_from = fields.Datetime.to_string(date_from)
             date_to = fields.Datetime.to_string(date_to)
+            date_release = self.payroll_period_id.date_release
             leaves = {}
             holiday_lockout_status = self.env['hr.holidays.status'].search([('is_ob', '=', False),
                                                                     ('lockout', '=', True),
@@ -2990,7 +2994,7 @@ class HRPayrollAttendance(models.Model):
             if holiday_status:
                 leave = self.env['hr.holidays'].search([('employee_id', '=', employee_id),
                                                 ('date_approved', '>=', date_from),
-                                                ('date_approved', '<=', date_to),
+                                                ('date_approved', '<=', date_release),
                                                 ('type', '=', 'remove'),
                                                 ('state', '=', 'validate'),
                                                 ('holiday_status_id', 'in', holiday_status.ids),
@@ -3014,10 +3018,12 @@ class HRPayrollAttendance(models.Model):
         def ob_lockout_interval(employee_id, date_from, date_to):
             date_from = fields.Datetime.to_string(date_from)
             date_to = fields.Datetime.to_string(date_to)
+            date_release = fields.datetime.strptime(self.payroll_period_id.date_release, "%Y-%m-%d")
+            date_release = fields.Datetime.to_string(date_release)
             holidays = []
             holiday = self.env['hr.holidays'].search([('employee_id', '=', employee_id),
                                                       ('date_approved', '>=', date_from),
-                                                      ('date_approved', '<=', date_to),
+                                                      ('date_approved', '<=', date_release),
                                                       ('type', '=', 'remove'),
                                                       ('state', '=', 'validate'),
                                                       ('date_from', '<=', date_from),
@@ -3039,6 +3045,7 @@ class HRPayrollAttendance(models.Model):
         def was_on_leave_interval(employee_id, date_from, date_to):
             date_from = fields.Datetime.to_string(date_from)
             date_to = fields.Datetime.to_string(date_to)
+            date_release = self.payroll_period_id.date_release
             # unpaid leaves
             holidays = self.env['hr.holidays'].search([
                 ('state', '=', 'validate'),
@@ -3055,7 +3062,7 @@ class HRPayrollAttendance(models.Model):
                 ('type', '=', 'remove'),
                 ('process_type', '=', False),
                 ('date_approved', '>=', date_from),
-                ('date_approved', '<=', date_to),
+                ('date_approved', '<=', date_release),
                 ('leave_adjustment', '=', True)
             ])
 

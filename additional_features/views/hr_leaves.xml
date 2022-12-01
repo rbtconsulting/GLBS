@@ -12,13 +12,13 @@
 		     		 <field name="is_carry_over" invisible="1" />
 		     		 <field name="carry_over_id"  invisible="1"  options="{'no_create':True, 'no_create_edit':True, 'no_open':True}" />
 					   <label for="number_of_carry_over" string=" "  attrs="{'invisible': [('type', '=', 'add')]}"/>
-                       <div  attrs="{'invisible': ['|',('type', '=', 'add'),('show_leave_credit','=',False)]}">
+                       <div  attrs="{'invisible': [('type', '=', 'add')]}">
 						   <table class="table">
 							   <tr>
 								   <td><strong>Current Year Leave Balance :</strong></td>
-								   <td><field name="curr_date_leave_count"  class="oe_inline" nolabel="1"/></td>
+								   <td><field name="curr_date_leave_count"  class="oe_inline" nolabel="1" force_save='1'/></td>
 								   <td><strong>Expiration :</strong></td>
-								   <td><field name="curr_expiration_date"  class="oe_inline" nolabel="1"/></td>
+								   <td><field name="curr_expiration_date"  class="oe_inline" nolabel="1" force_save='1'/></td>
 							   </tr>
 							   <tr>
 								   <td><strong>Previous Year Leave Balance :</strong></td>
