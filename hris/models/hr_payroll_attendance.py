@@ -2979,6 +2979,10 @@ class HRPayrollAttendance(models.Model):
         @param contract_ids: list of contract id
         @return: returns a list of dict containing the input that should be applied for the given contract between date_from and date_to
         """
+        leaves = {}
+        res = []
+        if not self.payroll_period_id:
+            return res
         date_release = self.payroll_period_id.date_release
 
         def lockout_leaves_interval(employee_id, date_from, date_to):
@@ -3076,8 +3080,6 @@ class HRPayrollAttendance(models.Model):
             ])
             return holidays
 
-        leaves = {}
-        res = []
         # fill only if the contract as a working schedule linked
         uom_day = self.env.ref('product.product_uom_day', raise_if_not_found=False)
         for contract in self.env['hr.contract'].browse(contract_ids):
