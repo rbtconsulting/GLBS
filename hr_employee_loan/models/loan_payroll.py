@@ -626,11 +626,17 @@ class EmployeeLoanDetails(models.Model):
         res = {}
         for i in range(0, n):
             step_1_p = p  # principal amount at the beginning of each period
-            step_2_r_m = r / (12 * 100.00)  # interest rate per month
+            if r >= 0.0:
+                step_2_r_m = r / (12 * 100.00)  # interest rate per month
+            else:
+                step_2_r_m = 0.0
             step_3_r_m = 1 + step_2_r_m  # add 1 to interest rate per month
             step_4 = step_3_r_m ** (n - i)  # Raise the step_2_r_m to the power of the number of payments required on the loan
             step_5 = step_4 - 1  #  minus 1 from step_4
-            step_6 = step_2_r_m / step_5  # Divide the interest rate per month(step_2_r_m) by the step_5
+            if step_2_r_m == 0.0:
+                step_6 = 0.0
+            else:
+                step_6 = step_2_r_m / step_5  # Divide the interest rate per month(step_2_r_m) by the step_5
             step_7 = step_6 + step_2_r_m  # Add the interest rate per month to the step_6 
             step_8_EMI = round(step_7 * step_1_p, 2)  # Total EMI to pay month
             step_9_int_comp = round(step_1_p * step_2_r_m, 2)  # Total Interest component in EMI

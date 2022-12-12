@@ -63,20 +63,20 @@
                                 t-att-src="'data:image/png;base64,%s' %o.employee_id.id_company.logo"
                                 width="100px" height="100px"/>
                             <div class="header_coe">
-                                <t t-if="o.employee_id.company_id.name">
+                                <t t-if="o.employee_id.id_company.name">
                                     <b>
-                                        <span class="header_comp" t-esc="o.employee_id.company_id.name" />
+                                        <span class="header_comp" t-esc="o.employee_id.id_company.name" />
                                     </b>
                                 </t>
                                 <div class="comp_info">
-                                    <span t-esc="o.employee_id.company_id.street" />
-                                    <span t-esc="o.employee_id.company_id.street2" />
+                                    <span t-esc="o.employee_id.id_company.street" />
+                                    <span t-esc="o.employee_id.id_company.street2" />
                                     ,
-                                    <span t-esc="o.employee_id.company_id.city" />
+                                    <span t-esc="o.employee_id.id_company.city" />
                                     <br />
-                                    <span t-esc="o.employee_id.company_id.phone" />
+                                    <span t-esc="o.employee_id.id_company.phone" />
                                     <br />
-                                    <span t-esc="o.employee_id.company_id.website" />
+                                    <span t-esc="o.employee_id.id_company.website" />
                                 </div>
                             </div>
                             <div class="cert_title">

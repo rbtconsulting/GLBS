@@ -63,6 +63,14 @@
                 </xpath>
                
                <!-- END -->
+               <!-- MAKE FIELDS REQUIRED -->
+               <xpath expr="//group[@name='duration_group']/div[1]/field[@name='trial_date_start']" position="attributes">
+                    <attribute name="attrs">{'required': [('type_id', '=', %(hr_contract.hr_contract_type_sub)d)]}</attribute>
+               </xpath>
+               <xpath expr="//group[@name='duration_group']/div[1]/field[@name='trial_date_end']" position="attributes">
+                   <attribute name="attrs">{'required': [('type_id', '=', %(hr_contract.hr_contract_type_sub)d)]}</attribute>
+               </xpath>
+               <!-- END -->
     	        <xpath expr="//field[@name='working_hours']" position="attributes">
     	        	<attribute name="invisible">1</attribute>
     	        </xpath>
@@ -184,7 +192,8 @@
     	        </xpath>
     	        
     	        <xpath expr="//group[@name='duration_group']/label[1]" position="before">
-    	            <field name='date_permanent' attrs="{'invisible': [('contract_type', '!=', 'regular')]}" />
+                    <field name='date_permanent' attrs="{'invisible': [('contract_type', '!=', 'regular')],
+                        'required': [('type_id', '==', %(hr_contract.hr_contract_type_emp)d)]}" />
     	        </xpath>
     	        <xpath expr="//field[@name='type_id']" position="attributes" >
     	            <attribute name="string">Employment Type</attribute>

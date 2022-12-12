@@ -135,8 +135,8 @@
 	                    <div class="container-fluid" id="payslip-border">
 	                        <div class="row">
 	                            <div class="col-xs-3" style="margin-left:5px;">
-	                                <img t-if="o.company_id.logo" t-att-src="'data:image/png;base64,%s' %o.company_id.logo" width="60px" height="60px"/>
-	                                <b><p id="header"><span t-field="o.company_id"/></p></b>
+	                                <img t-if="o.id_company.logo" t-att-src="'data:image/png;base64,%s' %o.id_company.logo" width="60px" height="60px"/>
+	                                <b><p id="header"><span t-field="o.id_company"/></p></b>
 	                            </div>
 	  
 	                        </div>
