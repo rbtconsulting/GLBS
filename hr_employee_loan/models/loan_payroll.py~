@@ -188,8 +188,8 @@ class LoanInstallmentDetail(models.Model):
     principal_amt = fields.Float(
         string='Principal Amount', 
         digits=(16, 2), 
-        readonly=True, 
-        states={'unpaid': [('readonly', True)]}
+        #readonly=True, 
+        #states={'unpaid': [('readonly', True)]}
     )
     amount_already_paid = fields.Float(
         string='Amount Already Paid', 

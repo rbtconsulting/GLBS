@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+       <record id="hr_salary_rule_tardiness_table" model="ir.ui.view">
+        	<field name="name">Tardiness Deduction Policy</field>
+        	<field name="model">hr.salary.rule</field>
+        	<field name="inherit_id" ref="hr_payroll.hr_salary_rule_form" />
+        	<field name="arch" type="xml">
+        	    <xpath expr="//field[@name='code']" position="after">
+        	    	<field name="is_tardiness_policy" />
+        	    </xpath>
+        	</field>
+        </record>
+        
+	    <record id="hr_tardiness_table_tree" model="ir.ui.view">
+	    	<field name="name">Tardiness Deduction Policy Tree</field>
+	    	<field name="model">tardiness.table</field>
+	    	<field name="arch" type="xml">
+	    		<tree editable="bottom">
+	    		    <field name="range1" />
+	    		    <field name="range2" />
+	    		    <field name="equivalent_min" />
+	    		</tree>
+	    	</field>
+	    </record>
+	   
+	    <record id="action_view_tardiness_table" model="ir.actions.act_window">
+	    	<field name="name">Tardiness Deduction Policy</field>
+	    	<field name="res_model">tardiness.table</field>
+	    	<field name="view_mode">tree,form</field>
+	    	<field name="view_type">form</field>
+	    </record>
+	    
+    <menuitem id="tardiness_deduction_policy_menu" 
+	        	  name="Tardiness Deduction Policy" 
+	        	  action="action_view_tardiness_table"
+	        	  sequence="13" 
+	        	  parent="hr_payroll.menu_hr_payroll_configuration" 
+	        	  /> -->
+	</data>
+</odoo>

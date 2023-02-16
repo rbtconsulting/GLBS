@@ -177,8 +177,8 @@
 					<field name="date_from" />
 					<field name="date_to" /><field name="currency_id" groups="base.group_multi_currency"/>
 					<field name="principal_amt" widget="monetary" options="{'currency_field': 'currency_id'}" sum="Principal" />
-					<field name="interest_amt" widget="monetary" options="{'currency_field': 'currency_id'}" sum="Interest" />
-					<field name="total" widget="monetary" options="{'currency_field': 'currency_id'}" sum="Total" />
+					<field name="interest_amt" widget="monetary" options="{'currency_field': 'currency_id'}" sum="Interest"  />
+					<field name="total" widget="monetary" options="{'currency_field': 'currency_id'}" sum="Total"  force_save="1" />
 					<field name="state" />
 					<field name="int_move_id" colspan="2" invisible="1" />
 					<field name="company_id" invisible="1" groups="base.group_multi_company"/>
@@ -433,7 +433,7 @@
 										attrs="{'invisible':[('state','in',['draft','cancel'])]}" />
 								</group>
 								<newline />
-								<field name="installment_lines" readonly="1" nolabel="1">
+								<field name="installment_lines" readonly="0" nolabel="1">
 									<tree editable="top" string="Installments">
 										<field name="install_no" />
 										<field name="date_from" />
@@ -441,7 +441,7 @@
 										<field name="principal_amt" widget="monetary" options="{'currency_field': 'currency_id'}" sum="Principal" />
 										<field name="interest_amt" widget="monetary" options="{'currency_field': 'currency_id'}" sum="Interest" />
 										<field name="paid_amount" widget="monetary" options="{'currency_field': 'currency_id'}" sum="Paid Total" />
-										<field name="total" widget="monetary" options="{'currency_field': 'currency_id'}" sum="Total" />
+										<field name="total" widget="monetary" options="{'currency_field': 'currency_id'}" sum="Total" readonly="0"/>
 										<field name="state" /><field name="currency_id" groups="base.group_multi_currency"/>
 										<field name="int_move_id" invisible="1" />
 										<button name="pay_installment"

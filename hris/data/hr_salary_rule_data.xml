@@ -200,6 +200,18 @@ result = adjustment_deduction + input_amount
             <field name="is_loan_payment">False</field>
         </record>
     
+    
+        <record id="hr_rule_prev_NTP" model="hr.salary.rule">
+            <field name="name">NET TAXABLE PAY(Previous)</field>
+            <field name="sequence" eval="300"/>
+            <field name="code">NTPP</field>
+            <field name="category_id" ref="hris.NTP"/>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = contract.get_prev_ntp(contract,payslip)</field>
+            <field name="note"></field>
+            <field name="is_loan_payment">False</field>
+        </record>
+    
         <record id="hr_rule_BASIC-M" model="hr.salary.rule">
             <field name="name">Basic Pay or Salary(Monthly)</field>
             <field name="sequence" eval="102"/>
