@@ -1,0 +1,74 @@
+<odoo>
+  <data>
+     <record id="analyzed_data" model="ir.ui.view">
+        <field name="name">analyzed.data</field>
+        <field name="model">hr.payslip</field>
+        <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>        
+        <field name='arch' type='xml'>
+            <xpath expr="//page[3]" position="after">
+
+              <page string="check data">
+                  <field name="attendance_data"/>
+              </page>
+             
+            </xpath>
+        </field>  
+      </record>
+ 
+    <!-- explicit list view definition -->
+    <!--
+    <record model="ir.ui.view" id="analyze_data.list">
+      <field name="name">analyze_data list</field>
+      <field name="model">analyze_data.analyze_data</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+        </tree>
+      </field>
+    </record>
+    -->
+
+    <!-- actions opening views on models -->
+    <!--
+    <record model="ir.actions.act_window" id="analyze_data.action_window">
+      <field name="name">analyze_data window</field>
+      <field name="res_model">analyze_data.analyze_data</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    -->
+
+    <!-- server action to the one above -->
+    <!--
+    <record model="ir.actions.server" id="analyze_data.action_server">
+      <field name="name">analyze_data server</field>
+      <field name="model_id" ref="model_analyze_data_analyze_data"/>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": self._name,
+        }
+      </field>
+    </record>
+    -->
+
+    <!-- Top menu item -->
+    <!--
+    <menuitem name="analyze_data" id="analyze_data.menu_root"/>
+    -->
+    <!-- menu categories -->
+    <!--
+    <menuitem name="Menu 1" id="analyze_data.menu_1" parent="analyze_data.menu_root"/>
+    <menuitem name="Menu 2" id="analyze_data.menu_2" parent="analyze_data.menu_root"/>
+    -->
+    <!-- actions -->
+    <!--
+    <menuitem name="List" id="analyze_data.menu_1_list" parent="analyze_data.menu_1"
+              action="analyze_data.action_window"/>
+    <menuitem name="Server to list" id="analyze_data" parent="analyze_data.menu_2"
+              action="analyze_data.action_server"/>
+    -->
+  </data>
+</odoo>

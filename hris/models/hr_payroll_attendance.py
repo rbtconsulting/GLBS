@@ -3496,36 +3496,36 @@ class HRPayrollAttendance(models.Model):
         worked_hours_ids += worked_hours_ids.new(attendances)
 
         # Rest Day OT Night Diff
-        rest_day_ot_night_diff = {
-            'name': _("Rest Day OT Night Diff"),
-            'sequence': 6,
-            'code': 'RestDayOTNtdff',
-            'number_of_days': 0.0,
-            'number_of_hours': 0.0,
-            'contract_id': contract.id,
-        }
+        # rest_day_ot_night_diff = {
+        #     'name': _("Rest Day OT Night Diff"),
+        #     'sequence': 6,
+        #     'code': 'RestDayOTNtdff',
+        #     'number_of_days': 0.0,
+        #     'number_of_hours': 0.0,
+        #     'contract_id': contract.id,
+        # }
 
-        for record in worked_hours:
-            rest_day_ot_night_diff['number_of_days'] += float_round(record.night_diff_hours / 8.0, precision_digits=2)
-            rest_day_ot_night_diff['number_of_hours'] += float_round(record.night_diff_hours, precision_digits=2)
+        # for record in worked_hours:
+        #     rest_day_ot_night_diff['number_of_days'] += float_round(record.night_diff_hours / 8.0, precision_digits=2)
+        #     rest_day_ot_night_diff['number_of_hours'] += float_round(record.night_diff_hours, precision_digits=2)
 
-        worked_hours_ids += worked_hours_ids.new(rest_day_ot_night_diff)
+        # worked_hours_ids += worked_hours_ids.new(rest_day_ot_night_diff)
 
         # Special Holiday Night diff
-        special_holiday_night_differential = {
-            'name': _("Special Holiday Night Differential"),
-            'sequence': 6,
-            'code': 'SpNd',
-            'number_of_days': 0.0,
-            'number_of_hours': 0.0,
-            'contract_id': contract.id,
-        }
+        # special_holiday_night_differential = {
+        #     'name': _("Special Holiday Night Differential"),
+        #     'sequence': 6,
+        #     'code': 'SpNd',
+        #     'number_of_days': 0.0,
+        #     'number_of_hours': 0.0,
+        #     'contract_id': contract.id,
+        # }
 
-        for record in worked_hours:
-            special_holiday_night_differential['number_of_days'] += float_round(record.night_diff_hours / 8.0, precision_digits=2)
-            special_holiday_night_differential['number_of_hours'] += float_round(record.night_diff_hours, precision_digits=2)
+        # for record in worked_hours:
+        #     special_holiday_night_differential['number_of_days'] += float_round(record.night_diff_hours / 8.0, precision_digits=2)
+        #     special_holiday_night_differential['number_of_hours'] += float_round(record.night_diff_hours, precision_digits=2)
 
-        worked_hours_ids += worked_hours_ids.new(special_holiday_night_differential)
+        # worked_hours_ids += worked_hours_ids.new(special_holiday_night_differential)
 
         # night diff
         night_differential = {
