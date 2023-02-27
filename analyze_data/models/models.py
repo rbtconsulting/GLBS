@@ -34,7 +34,7 @@ class AnalyzeData(models.Model):
 #             night_shift = attendance.work_time_line_id.work_time_id.night_shift
 #             ob_leaves = attendance.leave_ids.filtered(lambda l: l.holiday_status_id.is_ob)
 #             leaves = attendance.leave_ids.filtered(lambda l: not l.holiday_status_id.is_ob)
-#             """Get checkin/checkout time"""
+#             """Get checkin/checkout time"""end_time
 #             # if (attendance.leave_ids and (ob_leaves or leaves) and not attendance.spl_holiday_ids and not attendance.reg_holiday_ids
 #             #     and attendance.work_time_line_id and attendance.check_in and attendance.check_out):
 #             #     for leave in ob_leaves:
