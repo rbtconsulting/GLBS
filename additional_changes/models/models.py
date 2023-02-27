@@ -79,7 +79,6 @@ class PhicAdditional(models.Model):
 class MealAllowance(models.Model):
     _inherit = 'hr.contract'
     
-    meal_allowance = fields.Char()
     def meal_allowance_revised(self, contract, date_from, date_to):
         date_from_converted = datetime.strptime(date_from, '%Y-%m-%d').date()
         date_to_converted = datetime.strptime(date_to, '%Y-%m-%d').date()

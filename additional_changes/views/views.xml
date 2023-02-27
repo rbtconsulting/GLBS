@@ -24,7 +24,7 @@
             </xpath>
           </field>
       </record> -->
-      <record id="inherit_header_payroll" model="ir.ui.view">                                                                
+      <!-- <record id="inherit_header_payroll" model="ir.ui.view">                                                                
           <field name="name">header.payroll.form</field>
           <field name="model">hr.payslip</field>
           <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
@@ -35,7 +35,7 @@
               </header>
             </xpath>
           </field>
-      </record>
+      </record> -->
 
 <!--       
       <record id="to_check_data" model="ir.ui.view">
