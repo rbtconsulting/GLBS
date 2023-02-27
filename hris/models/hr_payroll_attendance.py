@@ -16,6 +16,9 @@ from collections import OrderedDict
 from odoo.osv.orm import setup_modifiers
 from dateutil.relativedelta import relativedelta
 
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
 
 # redefined imports
 context_timestamp = Datetime.context_timestamp
