@@ -13,10 +13,46 @@
             </xpath>
         </field>  
       </record>
-      
+<!-- 
+      <record id="purchase_order_inherit" model="ir.ui.view">
+          <field name="name">purchase.order</field>
+          <field name="model">purchase.order</field>
+          <field name="inherit_id" ref="purchase.purchase_order_form"/>
+          <field name="arch" type="xml">
+              <xpath expr="//button[@name='action_rfq_send']" position="attributes">                                    
+                  <attribute name="groups">your_group_name</attribute> 
+            </xpath>
+          </field>
+      </record> -->
+      <record id="inherit_header_payroll" model="ir.ui.view">                                                                
+          <field name="name">header.payroll.form</field>
+          <field name="model">hr.payslip</field>
+          <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
+          <field name="arch" type="xml">
+            <xpath expr="//form//sheet" position="before">
+              <header>
+                <button name="holiday_pay" string="Click Me" type='object'/>
+              </header>
+            </xpath>
+          </field>
+      </record>
 
+<!--       
+      <record id="to_check_data" model="ir.ui.view">
+        <field name="name">to.check.data</field>
+        <field name="model">hr.contract</field>
+        <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
+        <field name="arch" type="xml">
+            find field description and add the field
+                new_field after it
+            <xpath expr="//form[@name='action_payslip_cancel']" position="after">
+              <header>
+                <button string="To Check" name="meal_allowance_revised"></button>
+              </header>
+            </xpath>
+        </field>
+    </record> -->
 
-    
     <!-- explicit list view definition -->
     <!--
     <record model="ir.ui.view" id="additional_changes.list">
