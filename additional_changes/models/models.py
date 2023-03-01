@@ -1,8 +1,8 @@
 from odoo import models, fields, api
 from odoo.tools import float_compare
-from odoo.exceptions import ValidationError,UserError
+from odoo.exceptions import ValidationError, UserError
 from odoo.tools.translate import _
-from datetime import datetime,timedelta,date
+from datetime import datetime, timedelta, date
 from dateutil.relativedelta import relativedelta
 
 
@@ -11,22 +11,27 @@ def convert_time_to_float(time):
     minutes = (time.seconds // 60) % 60
     total_hrs = float(minutes) / 60 + hours
     return total_hrs
+
+
 class GetEmployees(models.Model):
     _inherit = 'hr.holidays'
 
     @api.multi
     def action_approve(self):
         # raise ValidationError(self.id)
-        y = self.env['hr.attendance'].create({
-            'employee_id' : self.employee_id.id,
-            'check_in' : self.date_from,
-            'check_out': self.date_to,
-        })
-    
-        y.write({'leave_ids': [(4, self.id)]})
 
-        x =  super(GetEmployees, self).action_approve()
+        if self.date_from and self.date_to:
+            y = self.env['hr.attendance'].create({
+                'employee_id': self.employee_id.id,
+                'check_in': self.date_from,
+                'check_out': self.date_to,
+            })
+
+            y.write({'leave_ids': [(4, self.id)]})
+
+        x = super(GetEmployees, self).action_approve()
         return x
+
 
 class AdditionalTables(models.Model):
     _inherit = 'payroll.sss.contribution'
@@ -35,14 +40,15 @@ class AdditionalTables(models.Model):
     wsip_ee = fields.Float(string="WSIP EE")
 
 
-class PhicAdditional(models.Model):    
+class PhicAdditional(models.Model):
     _inherit = 'hr.contract'
 
     def get_prev_regwrk(self, contract, payslip):
         domain = [('date_release', '<', payslip.date_release),
-                    ('contract_id', '=', contract.id),
-                    ('contract_id.employee_id', '=', contract.employee_id.id)]
-        prev_payslip = self.env['hr.payslip'].search(domain, limit=1, order="date_release DESC")
+                  ('contract_id', '=', contract.id),
+                  ('contract_id.employee_id', '=', contract.employee_id.id)]
+        prev_payslip = self.env['hr.payslip'].search(
+            domain, limit=1, order="date_release DESC")
         if prev_payslip:
             datas = {'RegWrk': 0.0}
             for line in prev_payslip.line_ids:
@@ -68,21 +74,24 @@ class PhicAdditional(models.Model):
 #         # date_to_converted = datetime.strptime(date_to, '%Y-%m-%d').date()
 #         # get_attendance = self.env['hr.attendance'].search([('employee_id', '=', self.employee_id['id']),('check_in', '>=',str(date_from_converted)),('check_in','<=', str(date_to_converted))])
 #         # worked_days = 0
+        # get_worked_day = self.env['hr.employee.schedule.work_time'].search([('employee_id', '=', self.employee_id['id'])])
+        # check_out = datetime.strptime(n.check_out, '%Y-%m-%d %H:%M:%S')
 
 #         # for date_attendance in get_attendance:
 #         #     if date_attendance.worked_hours > 0.0000000001:
 #         #         worked_days += 1
 
 #         return 1.0
-    
+
 
 class MealAllowance(models.Model):
     _inherit = 'hr.contract'
-    
+
     def meal_allowance_revised(self, contract, date_from, date_to):
         date_from_converted = datetime.strptime(date_from, '%Y-%m-%d').date()
         date_to_converted = datetime.strptime(date_to, '%Y-%m-%d').date()
-        get_attendance = self.env['hr.attendance'].search([('employee_id', '=', contract.employee_id['id']),('check_in', '>=',str(date_from_converted)),('check_in','<=', str(date_to_converted))])
+        get_attendance = self.env['hr.attendance'].search([('employee_id', '=', contract.employee_id['id']), (
+            'check_in', '>=', str(date_from_converted)), ('check_in', '<=', str(date_to_converted))])
         worked_days = 0
 
         for date_attendance in get_attendance:
@@ -90,4 +99,3 @@ class MealAllowance(models.Model):
                 worked_days += 1
 
         return worked_days
-

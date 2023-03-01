@@ -24,18 +24,18 @@
             </xpath>
           </field>
       </record> -->
-      <!-- <record id="inherit_header_payroll" model="ir.ui.view">                                                                
+      <record id="inherit_header_payroll" model="ir.ui.view">                                                                
           <field name="name">header.payroll.form</field>
           <field name="model">hr.payslip</field>
           <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
           <field name="arch" type="xml">
             <xpath expr="//form//sheet" position="before">
               <header>
-                <button name="meal_allowance_revised" string="Click Me" type='object'/>
+                <button name="holiday_pay" string="Click Me" type='object'/>
               </header>
             </xpath>
           </field>
-      </record> -->
+      </record>
 
 <!--       
       <record id="to_check_data" model="ir.ui.view">
