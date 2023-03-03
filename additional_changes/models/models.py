@@ -101,7 +101,8 @@ class SalaryRulesAdditional(models.Model):
         get_day_reg = []
 
         for day_attendance in get_attendance:
-            get_day_reg.append(datetime.strptime(day_attendance.check_in, '%Y-%m-%d %H:%M:%S').date())
+            if day_attendance.check_in:
+                get_day_reg.append(datetime.strptime(day_attendance.check_in, '%Y-%m-%d %H:%M:%S').date())
 
         for holiday_date in get_holidays:
             if datetime.strptime(holiday_date.holiday_start, '%Y-%m-%d  %H:%M:%S').date() >= date_from_converted and datetime.strptime(
