@@ -50,13 +50,13 @@ class PhicAdditional(models.Model):
         prev_payslip = self.env['hr.payslip'].search(
             domain, limit=1, order="date_release DESC")
         if prev_payslip:
-            datas = {'RegWrk': 0.0}
+            datas = {'GTP': 0.0}
             for line in prev_payslip.line_ids:
-                if line.code in datas:
-                    datas[line.code] += line.total
+                if line.category_id.code in datas:
+                    datas[line.category_id.code] += line.total
                 else:
                     continue
-            total_prev_regwrk = datas['RegWrk']
+            total_prev_regwrk = datas['GTP']
             if total_prev_regwrk:
                 return total_prev_regwrk
         return 0.0
