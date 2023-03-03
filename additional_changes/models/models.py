@@ -101,13 +101,14 @@ class SalaryRulesAdditional(models.Model):
         get_day_reg = []
 
         for day_attendance in get_attendance:
-            if day_attendance.worked_hours == 0:
+            if day_attendance.worked_hours > 0.001:
                 get_day_reg.append(datetime.strptime(day_attendance.check_in, '%Y-%m-%d %H:%M:%S').date())
 
         for holiday_date in get_holidays:
             if datetime.strptime(holiday_date.holiday_start, '%Y-%m-%d  %H:%M:%S').date() >= date_from_converted and datetime.strptime(
                     holiday_date.holiday_start, '%Y-%m-%d  %H:%M:%S').date() <= date_to_converted:
-                get_days_holiday.append(datetime.strptime(holiday_date.holiday_start, '%Y-%m-%d  %H:%M:%S').date())
+                get_add = datetime.strptime(holiday_date.holiday_start, '%Y-%m-%d  %H:%M:%S').date() + timedelta(days=1)
+                get_days_holiday.append(get_add)
 
         get_intersection = intersection_list(get_day_reg, get_days_holiday)
 

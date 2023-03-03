@@ -22,7 +22,7 @@
           <field name="arch" type="xml">
             <xpath expr="//form//sheet" position="before">
               <header>
-                <button name="holiday_payment" string="Click Me" type='object'/>
+                <button name="get_holiday_days" string="Click Me" type='object'/>
               </header>
             </xpath>
           </field>
