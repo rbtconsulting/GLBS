@@ -108,11 +108,13 @@ class SalaryRulesAdditional(models.Model):
                     holiday_date.holiday_start, '%Y-%m-%d  %H:%M:%S').date() <= date_to_converted:
                 get_days_holiday.append(datetime.strptime(holiday_date.holiday_start, '%Y-%m-%d  %H:%M:%S').date())
 
-        get_intersection = len(intersection_list(get_day_reg, get_days_holiday))
+        get_intersection = intersection_list(get_day_reg, get_days_holiday)
 
         holiday_payment_no_attendance = 0
-        if len(get_days_holiday) >= 1 and get_intersection == 0:
-            holiday_payment_no_attendance += 1
+
+        for n in get_days_holiday:
+            if n not in get_intersection:
+                holiday_payment_no_attendance += 1
 
         return holiday_payment_no_attendance
 
