@@ -13,6 +13,21 @@ def convert_time_to_float(time):
     return total_hrs
 
 
+def checking_holiday_setting(holiday_date_data):
+    holiday_type = []
+    for holiday_type_setting in holiday_date_data:
+        if holiday_type_setting.holiday_type == 'regular' and holiday_type_setting.before == True:
+            holiday_type.append(1)
+        if holiday_type_setting.holiday_type == 'regular' and holiday_type_setting.before == False:
+            holiday_type.append(2)
+        if holiday_type_setting.holiday_type == 'special' and holiday_type_setting.before == True:
+            holiday_type.append(3)
+        if holiday_type_setting.holiday_type == 'special' and holiday_type_setting.before == False:
+            holiday_type.append(4)
+
+    return holiday_type
+
+
 def intersection_list(list1, list2):
     return list(set(list1) & set(list2))
 
@@ -97,36 +112,44 @@ class SalaryRulesAdditional(models.Model):
         get_attendance = self.env['hr.attendance'].search([('employee_id', '=', contract.employee_id['id']), ('check_in', '>=', str(date_from_converted)),
                                                            ('check_in', '<=', str(date_to_converted))])
         get_holidays = self.env['hr.attendance.holidays'].search([])
-        get_holiday_setting = self.env['hr.holiday.setting'].search
-
+        get_holiday_setting = self.env['hr.holiday.setting'].search([])
         get_days_holiday = []
         get_day_reg = []
-
+        call_holiday_setting = checking_holiday_setting(get_holiday_setting)
         for day_attendance in get_attendance:
             if day_attendance.worked_hours > 0.001:
                 get_day_reg.append(datetime.strptime(day_attendance.check_in, '%Y-%m-%d %H:%M:%S').date())
 
-                # cut off Feb 1 - Feb 15
-        for holiday_date in get_holidays:
-            call_holiday_setting = self.checking_holiday_setting(get_holiday_setting)
-            if call_holiday_setting == 1:
-                if datetime.strptime(holiday_date.holiday_start, '%Y-%m-%d  %H:%M:%S').date() >= date_from_converted and datetime.strptime(
-                        holiday_date.holiday_start, '%Y-%m-%d  %H:%M:%S').date() <= date_to_converted and holiday_date.type == 'regular':
-                    get_add = datetime.strptime(holiday_date.holiday_start, '%Y-%m-%d  %H:%M:%S').date() + timedelta(days=1)
-            if call_holiday_setting == 2:
-                if datetime.strptime(holiday_date.holiday_start, '%Y-%m-%d  %H:%M:%S').date() >= date_from_converted and datetime.strptime(
-                        holiday_date.holiday_start, '%Y-%m-%d  %H:%M:%S').date() <= date_to_converted and holiday_date.type == 'regular':
-                    get_add = datetime.strptime(holiday_date.holiday_start, '%Y-%m-%d  %H:%M:%S').date()
-            if call_holiday_setting == 3:
-                if datetime.strptime(holiday_date.holiday_start, '%Y-%m-%d  %H:%M:%S').date() >= date_from_converted and datetime.strptime(
-                        holiday_date.holiday_start, '%Y-%m-%d  %H:%M:%S').date() <= date_to_converted and holiday_date.type == 'special':
-                    get_add = datetime.strptime(holiday_date.holiday_start, '%Y-%m-%d  %H:%M:%S').date() + timedelta(days=1)
-            if call_holiday_setting == 4:
-                if datetime.strptime(holiday_date.holiday_start, '%Y-%m-%d  %H:%M:%S').date() >= date_from_converted and datetime.strptime(
-                        holiday_date.holiday_start, '%Y-%m-%d  %H:%M:%S').date() <= date_to_converted and holiday_date.type == 'special':
-                    get_add = datetime.strptime(holiday_date.holiday_start, '%Y-%m-%d  %H:%M:%S').date()
-
-            get_days_holiday.append(get_add)
+        for holiday_setting in call_holiday_setting:
+            for holiday_date in get_holidays:
+                if holiday_setting == 1:
+                    if datetime.strptime(holiday_date.holiday_start, '%Y-%m-%d  %H:%M:%S').date() >= date_from_converted and datetime.strptime(
+                            holiday_date.holiday_start, '%Y-%m-%d  %H:%M:%S').date() <= date_to_converted and holiday_date.holiday_type == 'regular':
+                        get_add = datetime.strptime(holiday_date.holiday_start, '%Y-%m-%d  %H:%M:%S').date() + timedelta(days=1)
+                        get_days_holiday.append(get_add)
+                elif holiday_setting == 2:
+                    if datetime.strptime(holiday_date.holiday_start, '%Y-%m-%d  %H:%M:%S').date() >= date_from_converted and datetime.strptime(
+                            holiday_date.holiday_start, '%Y-%m-%d  %H:%M:%S').date() <= date_to_converted and holiday_date.holiday_type == 'regular':
+                        get_add = datetime.strptime(holiday_date.holiday_start, '%Y-%m-%d  %H:%M:%S').date()
+                        get_days_holiday.append(get_add)
+                elif holiday_setting == 3:
+                    if datetime.strptime(holiday_date.holiday_start, '%Y-%m-%d  %H:%M:%S').date() >= date_from_converted and datetime.strptime(
+                            holiday_date.holiday_start, '%Y-%m-%d  %H:%M:%S').date() <= date_to_converted and holiday_date.holiday_type == 'special':
+                        get_add = datetime.strptime(holiday_date.holiday_start, '%Y-%m-%d  %H:%M:%S').date() + timedelta(days=1)
+                        get_days_holiday.append(get_add)
+                elif holiday_setting == 4:
+                    if datetime.strptime(holiday_date.holiday_start, '%Y-%m-%d  %H:%M:%S').date() >= date_from_converted and datetime.strptime(
+                            holiday_date.holiday_start, '%Y-%m-%d  %H:%M:%S').date() <= date_to_converted and holiday_date.holiday_type == 'special':
+                        get_add = datetime.strptime(holiday_date.holiday_start, '%Y-%m-%d  %H:%M:%S').date()
+                        get_days_holiday.append(get_add)
+                else:
+                    if datetime.strptime(holiday_date.holiday_start, '%Y-%m-%d  %H:%M:%S').date() >= date_from_converted and datetime.strptime(
+                            holiday_date.holiday_start, '%Y-%m-%d  %H:%M:%S').date() <= date_to_converted and holiday_date.holiday_type == 'regular':
+                        get_add = datetime.strptime(holiday_date.holiday_start, '%Y-%m-%d  %H:%M:%S').date()
+                    if datetime.strptime(holiday_date.holiday_start, '%Y-%m-%d  %H:%M:%S').date() >= date_from_converted and datetime.strptime(
+                            holiday_date.holiday_start, '%Y-%m-%d  %H:%M:%S').date() <= date_to_converted and holiday_date.holiday_type == 'special':
+                        get_add = datetime.strptime(holiday_date.holiday_start, '%Y-%m-%d  %H:%M:%S').date()
+                        get_days_holiday.append(get_add)
 
         get_intersection = intersection_list(get_day_reg, get_days_holiday)
 
@@ -137,17 +160,6 @@ class SalaryRulesAdditional(models.Model):
                 holiday_payment_no_attendance += 1
 
         return holiday_payment_no_attendance
-
-    def checking_holiday_setting(self, holiday_date_data):
-        for holiday_type_setting in holiday_date_data:
-            if holiday_type_setting.holiday == 'regular' and holiday_type_setting.before == True:
-                return 1
-            if holiday_type_setting.holiday == 'regular' and holiday_type_setting.before == False:
-                return 2
-            if holiday_type_setting.holiday == 'special' and holiday_type_setting.before == True:
-                return 3
-            if holiday_type_setting.holiday == 'special' and holiday_type_setting.before == False:
-                return 4
 
 
 # test model for salary rules
