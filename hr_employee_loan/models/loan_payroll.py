@@ -587,11 +587,7 @@ class LoanInstallmentDetail(models.Model):
                 if ctx.get('recompute'):
                     ctx.pop('recompute')
             else:
-
                 if installment.paid_amount <= installment.total:
-=======
-                if installment.paid_amount >= installment.total:
->>>>>>> 4ac468fc88ced2e7d4ea194f9f78c448adeb7096
                     installment.write({'state': 'paid'})
         return True
 
@@ -1021,22 +1017,13 @@ class EmployeeLoanDetails(models.Model):
             vals.update({'loan_policy_ids': [(6, 0, loan_policy_ids)]})
         return super(EmployeeLoanDetails, self).create(vals)
 
-<<<<<<< HEAD
-    # checks if there are loans of the same type (approved or disbursed)
+    # checks for same loan type
     # @api.constrains('state')
     # def check_loan_state(self):
     #     loans = self.env['employee.loan.details'].search([])
     #     for rec in self:
     #         if len(loans.filtered(lambda l: l.employee_id == rec.employee_id and (l.state == 'approved' or l.state == 'disburse') and l.loan_type == rec.loan_type)) > 1:
     #             raise ValidationError(_("You cannot apply for multiple loan for same loan type!!"))
-=======
-    @api.constrains('state')
-    def check_loan_state(self):
-        loans = self.env['employee.loan.details'].search([])
-        for rec in self:
-            if len(loans.filtered(lambda l: l.employee_id == rec.employee_id and (l.state == 'approved' or l.state == 'disburse') and l.loan_type == rec.loan_type)) > 1:
-                raise ValidationError(_("You cannot apply for multiple loan for same loan type!!"))
->>>>>>> 4ac468fc88ced2e7d4ea194f9f78c448adeb7096
 
     @api.multi
     def action_applied(self):
@@ -1077,23 +1064,18 @@ class EmployeeLoanDetails(models.Model):
         if loan_obj.employee_id.loan_defaulter:
             msg += '\n Blacklisted: You are Blacklisted as loan defaulter and hence you cannot apply for a new loan !'
             qualified = False
-<<<<<<< HEAD
+            
         # if not allow_multiple_loan:
-        #     loans_list = self.search([('state', '=', 'disburse'), ('employee_id', '=', loan_obj.employee_id.id), ('loan_type', '=', self.loan_type.id)], order='date_applied asc')
+        #     loans_list = self.search([('state', '=', 'approved'), ('employee_id', '=', loan_obj.employee_id.id), ('loan_type', '=', self.loan_type.id)], order='date_applied asc')
         #     if len(loans_list):
         #         msg += '\n Multiple loan: Multiple loan is not allowed !'
-        #         qualified = False
+                # qualified = False
+
         if allow_multiple_loan:
             qualified = True
         else:
             qualified = True
-=======
-        if not allow_multiple_loan:
-            loans_list = self.search([('state', '=', 'disburse'), ('employee_id', '=', loan_obj.employee_id.id), ('loan_type', '=', self.loan_type.id)], order='date_applied asc')
-            if len(loans_list):
-                msg += '\n Multiple loan: Multiple loan is not allowed !'
-                qualified = False
->>>>>>> 4ac468fc88ced2e7d4ea194f9f78c448adeb7096
+
         for policy in loan_obj.loan_policy_ids:
             if policy.policy_type == 'maxamt':
                 if loan_obj.max_loan_amt > 0.0 and loan_obj.principal_amount > loan_obj.max_loan_amt:
