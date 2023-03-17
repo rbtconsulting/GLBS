@@ -12,7 +12,11 @@ class HRContract(models.Model):
 
     @api.model
     def get_tardiness_deduction(self, payslip, contract, late_hours, code):
+<<<<<<< HEAD
 	self = self.sudo()
+=======
+        self = self.sudo()
+>>>>>>> 05a96359f59835af560e4e2cef51f7f749e71bda
         payslip_object = self.env['hr.payslip'].browse(payslip.id)
         rules = self.env['hr.salary.rule'].search([('code', '=', code)], limit=1)
         amount_to_deduct = 0.0
