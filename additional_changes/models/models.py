@@ -50,50 +50,50 @@ def get_dates_leaves(date_from, date_to):
     return date_list
 
 
-# class LeavesAutomate(models.Model):
-#     _inherit = 'hr.holidays'
-
-#     @api.multi
-#     def action_approve(self):
-#         # raise ValidationError(self.id)
-
-#         if self.date_from and self.date_to:
-#             y = self.env['hr.attendance'].create({
-#                 'employee_id': self.employee_id.id,
-#                 'check_in': self.date_from,
-#                 'check_out': self.date_to,
-#             })
-
-#             y.write({'leave_ids': [(4, self.id)]})
-
-#         x = super(LeavesAutomate, self).action_approve()
-#         return x
-
-
 class LeavesAutomate(models.Model):
     _inherit = 'hr.holidays'
 
     @api.multi
-    def automate_leaves(self):
-        leaves_dates = []
-        # check_list = []
-        # get_days_attendance = []
-        # get_attendance = self.env['hr.attendance'].search([('employee_id', '=', self.employee_id.id)])
-        date_from_converted = datetime.strptime(str(self.date_from), '%Y-%m-%d %H:%M:%S')
-        date_to_converted = datetime.strptime(str(self.date_to), '%Y-%m-%d %H:%M:%S')
-        # date_from_hour = datetime.strptime(str(self.date_from), '%Y-%m-%d %H:%M:%S').time()
-        get_leave_dates = get_dates_leaves(date_from_converted, date_to_converted)
+    def action_approve(self):
+        # raise ValidationError(self.id)
 
-        for leave_days in get_leave_dates:
-            # leave_dates_combine = datetime.combine(leave_days.date(), date_from_hour)
-            # leaves_dates.append(leave_days.date())
-            if date.today() == leave_days:
-                y = self.env['hr.attendance'].create({
-                    'employee_id': self.employee_id.id,
-                    'check_in': str(leave_days),
-                    'check_out': str(leave_days + timedelta(hours=8)),
-                })
-                y.write({'leave_ids': [(4, self.id)]})
+        if self.date_from and self.date_to:
+            y = self.env['hr.attendance'].create({
+                'employee_id': self.employee_id.id,
+                'check_in': self.date_from,
+                'check_out': self.date_to,
+            })
+
+            y.write({'leave_ids': [(4, self.id)]})
+
+        x = super(LeavesAutomate, self).action_approve()
+        return x
+
+
+# class LeavesAutomate(models.Model):
+#     _inherit = 'hr.holidays'
+
+#     @api.multi
+#     def automate_leaves(self):
+#         leaves_dates = []
+#         # check_list = []
+#         # get_days_attendance = []
+#         # get_attendance = self.env['hr.attendance'].search([('employee_id', '=', self.employee_id.id)])
+#         date_from_converted = datetime.strptime(str(self.date_from), '%Y-%m-%d %H:%M:%S')
+#         date_to_converted = datetime.strptime(str(self.date_to), '%Y-%m-%d %H:%M:%S')
+#         # date_from_hour = datetime.strptime(str(self.date_from), '%Y-%m-%d %H:%M:%S').time()
+#         get_leave_dates = get_dates_leaves(date_from_converted, date_to_converted)
+
+#         for leave_days in get_leave_dates:
+#             # leave_dates_combine = datetime.combine(leave_days.date(), date_from_hour)
+#             # leaves_dates.append(leave_days.date())
+#             if date.today() == leave_days:
+#                 y = self.env['hr.attendance'].create({
+#                     'employee_id': self.employee_id.id,
+#                     'check_in': str(leave_days),
+#                     'check_out': str(leave_days + timedelta(hours=8)),
+#                 })
+#                 y.write({'leave_ids': [(4, self.id)]})
 
 
 class AdditionalTables(models.Model):
