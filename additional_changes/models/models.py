@@ -139,15 +139,17 @@ class SalaryRulesAdditional(models.Model):
     def meal_allowance_revised(self, contract, date_from, date_to):
         date_from_converted = datetime.strptime(date_from, '%Y-%m-%d').date()
         date_to_converted = datetime.strptime(date_to, '%Y-%m-%d').date()
-        get_attendance = self.env['hr.attendance'].search([('employee_id', '=', contract.employee_id['id']), ('check_in', '>=', str(date_from_converted)),
-                                                           ('check_in', '<=', str(date_to_converted))])
-        worked_days = 0
+        # get_attendance = self.env['hr.attendance'].search([('employee_id', '=', contract.employee_id['id']), ('check_in', '>=', str(date_from_converted)),
+        #                                                    ('check_in', '<=', str(date_to_converted))])
+        # worked_days = 0
 
-        for date_attendance in get_attendance:
-            if date_attendance.worked_hours > 0.0000000001:
-                worked_days += 1
+        # for date_attendance in get_attendance:
+        #     if date_attendance.worked_hours > 0.0000000001:
+        #         worked_days += 1
 
-        return worked_days
+        days_num = self.env['hr.payslip'].search([('employee_id', '=', contract.employee_id['id']), ('date_from', '>=', str(date_from_converted)),
+                                                  ('date_to', '<=', str(date_to_converted))])
+        return days_num.num_of_days_comp
 
     def get_holiday_days(self, contract, payslip):
         date_from_converted = datetime.strptime(payslip.date_from, '%Y-%m-%d').date()

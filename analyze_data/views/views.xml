@@ -7,7 +7,7 @@
         <field name='arch' type='xml'>
             <xpath expr="//page[3]" position="after">
 
-              <page string="check data">
+              <page string="Attendance Dates">
                   <field name="attendance_data"/>
               </page>
              
