@@ -76,7 +76,8 @@ class HRPayrollRegistry(models.TransientModel):
 #                     domain = [('employee_id', '=', employee.id),('payroll_period_id', '=', self.payroll_period_from_id.id)]
 #                     domain = [('employee_id', '=', employee.id),('date_from', '>=', self.date_from), ('date_to', '<=', self.date_to)]
 #                     payslips = self.env['hr.payslip'].search(domain, order="number desc", limit=2)
-                    bank_account = employee.bank_account_id and employee.bank_account_id.acc_number or ''
+                    # bank_account = employee.bank_account_id and employee.bank_account_id.acc_number or ''
+                    bank_account = employee.bank_id and employee.bank_account_no or ''
                         
                     work_sheet.write(row, 1, employee.barcode or '', row_style)
                     work_sheet.write(row, 2, employee.name, row_style)

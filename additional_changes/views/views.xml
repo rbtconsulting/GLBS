@@ -2,17 +2,19 @@
 <odoo>
   <data> 
       
-      <record id="sss_additional_table" model="ir.ui.view">
-          <field name="name">sss.table.change</field>
-          <field name="model">payroll.sss.contribution</field>
-          <field name="inherit_id" ref="hris.hr_payroll_sss_view_tree"/>        
-          <field name='arch' type='xml'>
-              <xpath expr="//field[@name='mpf_er']" position="after">
-                <field name="wsip_er"/>
-                <field name="wsip_ee" />
-              </xpath>
-          </field>  
-      </record>
+    <record id="sss_additional_table" model="ir.ui.view">
+        <field name="name">sss.table.change</field>
+        <field name="model">payroll.sss.contribution</field>
+        <field name="inherit_id" ref="hris.hr_payroll_sss_view_tree"/>        
+        <field name='arch' type='xml'>
+          <xpath expr="//field[@name='mpf_er']" position="after">
+            <field name="wsip_er"/>
+            <field name="wsip_ee" />
+            <field name="total_ee"/>
+            <field name="total_er"/>
+          </xpath>
+        </field>  
+    </record>
 
       <!-- test button -->
       <!-- <record id="inherit_header_payroll" model="ir.ui.view">                                                                

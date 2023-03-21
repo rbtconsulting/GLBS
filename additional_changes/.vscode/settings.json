@@ -1,10 +1,24 @@
 {
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "python.formatting.provider": "yapf",
   "[python]": {
-    "editor.defaultFormatter": "ms-python.python"
+    "editor.formatOnType": true
   },
+  "workbench.colorTheme": "Monokai",
+  "window.zoomLevel": -1,
+  "editor.minimap.enabled": false,
+  "git.openRepositoryInParentFolders": "never",
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "prettier.printWidth": 100,
+  "prettier.proseWrap": "always",
+  "python.formatting.provider": "yapf",
   "python.formatting.yapfArgs": [
     "--style={based_on_style: google, column_limit: 180, indent_width: 4}"
-  ]
+  ],
+  "python.defaultInterpreterPath": "/usr/bin/python2",
+  "redhat.telemetry.enabled": true,
+  "explorer.confirmDelete": false,
+  "[xml]": {
+    "editor.autoClosingBrackets": "never",
+    "files.trimFinalNewlines": true
+  }
 }
