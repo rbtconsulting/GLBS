@@ -10,8 +10,8 @@
           <xpath expr="//field[@name='mpf_er']" position="after">
             <field name="wsip_er"/>
             <field name="wsip_ee" />
-            <field name="total_ee"/>
-            <field name="total_er"/>
+            <!-- <field name="total_ee"/>
+            <field name="total_er"/> -->
           </xpath>
         </field>  
     </record>
