@@ -101,6 +101,8 @@ class AdditionalTables(models.Model):
 
     wsip_er = fields.Float(string="WSIP ER")
     wsip_ee = fields.Float(string="WSIP EE")
+    total_er = fields.Float(string="TOTAL ER")
+    total_ee = fields.Float(string="TOTAL EE")
 
 
 class SalaryRulesAdditional(models.Model):
