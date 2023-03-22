@@ -3498,13 +3498,17 @@ class HRPayrollAttendance(models.Model):
         #     attendances['number_of_hours'] += float_round(record.worked_hours, precision_digits=2)
 
         for record in worked_hours:
-            late_hours_convert = record.late_hours*60
-            domain = [('range1', '<=', late_hours_convert), ('range2', '>=', late_hours_convert)]
-            object = self.env['tardiness.table'].search(domain, limit=1)
-            equivalent_min = float(object.equivalent_min) / 60
+            if record.late_hours > 0.000001:
+                late_hours_convert = record.late_hours*60
+                domain = [('range1', '<=', late_hours_convert), ('range2', '>=', late_hours_convert)]
+                object = self.env['tardiness.table'].search(domain, limit=1)
+                equivalent_min = float(object.equivalent_min) / 60
 
-            attendances['number_of_days'] += float_round(1 - (equivalent_min/8), precision_digits=2) 
-            attendances['number_of_hours'] += float_round(8 - equivalent_min, precision_digits=2)
+                attendances['number_of_days'] += float_round(1 - (equivalent_min/8), precision_digits=2) 
+                attendances['number_of_hours'] += float_round(8 - equivalent_min, precision_digits=2)
+            else:
+                attendances['number_of_days'] += float_round(record.worked_hours / 8.0, precision_digits=2)
+                attendances['number_of_hours'] += float_round(record.worked_hours, precision_digits=2)
 
         worked_hours_ids += worked_hours_ids.new(attendances)
 

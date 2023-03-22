@@ -99,10 +99,34 @@ class LeavesAutomate(models.Model):
 class AdditionalTables(models.Model):
     _inherit = 'payroll.sss.contribution'
 
-    wsip_er = fields.Float(string="WSIP ER")
-    wsip_ee = fields.Float(string="WSIP EE")
-    # total_er = fields.Float(string="TOTAL ER")
-    # total_ee = fields.Float(string="TOTAL EE")
+    wisp_er = fields.Float(string="WISP (ER)")
+    wisp_ee = fields.Float(string="WISP (EE)")
+    
+    total_er = fields.Float(string="TOTAL (ER)", 
+                            default=0, 
+                            compute="_compute_total_amount", 
+                            required=True,
+                            store=True)
+    
+    total_ee = fields.Float(string="TOTAL (EE)", 
+                            default=0, 
+                            compute="_compute_total_amount", 
+                            required=True,
+                            store=True)
+    
+    total_amount = fields.Float(string="Total Amount", 
+                            default=0, 
+                            compute="_compute_total_amount", 
+                            required=True,
+                            store=True)
+    
+    @api.depends('wisp_er', 'wisp_ee', 'total_er', 'total_ee', 'contrib_ee', 'contrib_er')
+    def _compute_total_amount(self):
+        for record in self:
+            record.total_er = record.contrib_er + record.wisp_er
+            record.total_ee = record.contrib_ee + record.wisp_ee 
+            record.total_amount = record.total_er + record.total_ee
+    
 
 class SalaryRulesAdditional(models.Model):
     _inherit = 'hr.contract'
