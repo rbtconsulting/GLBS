@@ -174,7 +174,7 @@ class SalaryRulesAdditional(models.Model):
 
         days_num = self.env['hr.payslip'].search([('employee_id', '=', contract.employee_id['id']), ('date_from', '>=', str(date_from_converted)),
                                                   ('date_to', '<=', str(date_to_converted))])
-        return days_num.num_of_days_comp
+	return days_num.regular_days
 
     def get_holiday_days(self, contract, payslip):
         date_from_converted = datetime.strptime(payslip.date_from, '%Y-%m-%d').date()
