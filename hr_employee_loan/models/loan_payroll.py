@@ -556,7 +556,7 @@ class LoanInstallmentDetail(models.Model):
                     #                     'period_id': period_id,
                 }
                 if not installment.loan_id.journal_id1.default_debit_account_id:
-                    raise Warning(_('Please configure Debit/Credit accounts on the Journal %s ') % (self.journal_id1.name))
+                    raise Warning(_('Please configure Debit/Credit accounts on the Journal %s ') % (installment.loan_id.journal_id1.name))
                 debit_line = (0, 0, {
                     'name': _('EMI of loan %s') % (installment.loan_id.name),
                     'date': installment.date_from,
@@ -571,7 +571,8 @@ class LoanInstallmentDetail(models.Model):
                     'name': _('EMI of loan %s') % (installment.loan_id.name),
                     'date': installment.date_from,
                     'partner_id': partner_id,
-                    'account_id': installment.loan_id.employee_loan_account.id,
+                   # 'account_id': installment.loan_id.employee_loan_account.id,
+		    'account_id': installment.loan_id.journal_id1.default_debit_account_id.id,
                     'journal_id': installment.loan_id.journal_id1.id,
                     #                         'period_id': period_id,
                     'debit': 0.0,

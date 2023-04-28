@@ -172,9 +172,16 @@ class SalaryRulesAdditional(models.Model):
         #     if date_attendance.worked_hours > 0.0000000001:
         #         worked_days += 1
 
+	list_attendance = []
+
         days_num = self.env['hr.payslip'].search([('employee_id', '=', contract.employee_id['id']), ('date_from', '>=', str(date_from_converted)),
                                                   ('date_to', '<=', str(date_to_converted))])
-	return days_num.regular_days
+        
+        for attendance in days_num.attendance_data:
+            if attendance.leave_hours == 0 and attendance.worked_hours > 0.00000001:
+                list_attendance.append(attendance)
+
+        return len(list_attendance)
 
     def get_holiday_days(self, contract, payslip):
         date_from_converted = datetime.strptime(payslip.date_from, '%Y-%m-%d').date()
