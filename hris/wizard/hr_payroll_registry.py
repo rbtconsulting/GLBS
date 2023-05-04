@@ -49,13 +49,17 @@ class HRPayrollRegistry(models.TransientModel):
             else:
                 work_sheet.write(row, col + 3, " ",sub_header_content_style)
             row += 2
-           
-            work_sheet.write(row, col + 1, "Employee No.", header_style)
-            work_sheet.write(row, col + 2, "Employee Name", header_style)
-	    work_sheet.write(row, col + 3, "Company", header_style)
-            work_sheet.write(row, col + 4, "Bank Account", header_style)
-            work_sheet.write(row, col + 5, "Position", header_style)
-            col_counter = 6
+
+            work_sheet.write(row, col + 1, "SSS No.", header_style)
+            work_sheet.write(row, col + 2, "PHIC No.", header_style)
+            work_sheet.write(row, col + 3, "PAG-IBIG No.", header_style)
+            work_sheet.write(row, col + 4, "TIN No.", header_style)
+            work_sheet.write(row, col + 5, "Employee No.", header_style)
+            work_sheet.write(row, col + 6, "Employee Name", header_style)
+            work_sheet.write(row, col + 7, "Company", header_style)
+            work_sheet.write(row, col + 8, "Bank Account", header_style)
+            work_sheet.write(row, col + 9, "Position", header_style)
+            col_counter = 10
             
             for config in self.env['payroll.register.config'].search([('id', '=', report_config.id)]):
                         
@@ -80,15 +84,19 @@ class HRPayrollRegistry(models.TransientModel):
                     # bank_account = employee.bank_account_id and employee.bank_account_id.acc_number or ''
                     bank_account = employee.bank_id and employee.bank_account_no or ''
                         
-                    work_sheet.write(row, 1, employee.barcode or '', row_style)
-                    work_sheet.write(row, 2, employee.name, row_style)
-		    work_sheet.write(row, 3, employee.id_company.name or '', row_style)
-                    work_sheet.write(row, 4, bank_account, row_style)
-                    work_sheet.write(row, 5, employee.job_id.name or '', row_style)
+                    work_sheet.write(row, 1, employee.sss_no or '', row_style)
+                    work_sheet.write(row, 2, employee.phic_no or '', row_style)
+                    work_sheet.write(row, 3, employee.hdmf_no or '', row_style)
+                    work_sheet.write(row, 4, employee.identification_id or '', row_style)
+                    work_sheet.write(row, 5, employee.barcode or '', row_style)
+                    work_sheet.write(row, 6, employee.name, row_style)
+                    work_sheet.write(row, 7, employee.id_company.name or '', row_style)
+                    work_sheet.write(row, 8, bank_account, row_style)
+                    work_sheet.write(row, 9, employee.job_id.name or '', row_style)
                     list = []
                     for config in self.env['payroll.register.config'].search([('id', '=', report_config.id)]):
                         payslip_ids = payslips.filtered(lambda p: p.employee_id == employee)
-                        col_counter = 6
+                        col_counter = 10
                         if payslip_ids:
                             for line in config.config_line.sorted(lambda r:r.sequence):
                                 
@@ -117,7 +125,7 @@ class HRPayrollRegistry(models.TransientModel):
             row += 1
             work_sheet.write_merge(row, row, 0, 5, "TOTAL", header_style)
             
-            col = 6
+            col = 10
             for x,totals in total_amount.items():
                 work_sheet.write(row, col, "{:,.2f}".format(totals), total_style)
                 col += 1
