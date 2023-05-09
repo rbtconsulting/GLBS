@@ -171,8 +171,7 @@ class SalaryRulesAdditional(models.Model):
         # for date_attendance in get_attendance:
         #     if date_attendance.worked_hours > 0.0000000001:
         #         worked_days += 1
-
-	list_attendance = []
+        list_attendance = []
 
         days_num = self.env['hr.payslip'].search([('employee_id', '=', contract.employee_id['id']), ('date_from', '>=', str(date_from_converted)),
                                                   ('date_to', '<=', str(date_to_converted))])
@@ -241,4 +240,9 @@ class SalaryRulesAdditional(models.Model):
 
 # test model for salary rules
 # class TestModel(models.Model):
-#     _inherit = 'hr.payslip'
+#     _inherit = 'hr.contract'
+
+#     def test_function(self):
+
+# code
+#         raise ValidationError()

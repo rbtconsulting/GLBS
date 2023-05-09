@@ -104,6 +104,21 @@ class PayslipDetailsReportTemplateTwo(models.AbstractModel):
             """Returns the code belongs to deductions inputs column"""
             res = self.env['hr.payslip.template'].search([], limit=1)
             return [record.code for record in res.salary_rule_deduction_inputs]
+
+        def get_loan_balance(self, employee_id):
+           """Return employee loan balance"""
+           res = self.env['employee.loan.details'].search([('state','=','disburse'), ('employee_id','=',employee_id.id)])
+           loan_balances = res
+           results = []
+           
+           for emp_balance in loan_balances:
+                emp_loan_bal = {}
+                emp_loan_bal['name'] = emp_balance.loan_type.name
+                emp_loan_bal['used'] = emp_balance.total_amount_due
+                results.append(emp_loan_bal)
+            
+           return results
+
         
         @api.model
         def render_html(self, docids, data=None):
@@ -121,7 +136,8 @@ class PayslipDetailsReportTemplateTwo(models.AbstractModel):
                 'deductions_code': self.get_deductions(),
                 'loans_code': self.get_loans(),
                 'earning_inputs_code': self.get_earning_inputs(),
-                'deduction_inputs_code': self.get_deduction_inputs()
+                'deduction_inputs_code': self.get_deduction_inputs(),
+                'get_loan_bal_code': self.get_loan_balance
             }
             
             return self.env['report'].render(res.report_template_id.report_name, docargs)

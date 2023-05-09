@@ -20,12 +20,12 @@
       <!-- test button -->
       <!-- <record id="inherit_header_payroll" model="ir.ui.view">                                                                
           <field name="name">header.payroll.form</field>
-          <field name="model">hr.holidays</field>
-          <field name="inherit_id" ref="hr_holidays.edit_holiday_new"/>
+          <field name="model">hr.contract</field>
+          <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
           <field name="arch" type="xml">
             <xpath expr="//form//sheet" position="before">
               <header>
-                <button name="automate_leaves" string="Click Me" type='object'/>
+                <button name="test_function" string="Click Me" type='object'/>
               </header>
             </xpath>
           </field>

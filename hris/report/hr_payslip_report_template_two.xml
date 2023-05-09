@@ -225,6 +225,10 @@
 	                                                                </t>
 	                                                           </t>
 	                                                        </tr>
+															<tr>
+																<td><span style="line-height:65%!important;"/>Total Worked days</td>
+																<td  class="text-right"><span style="line-height:65%!important;" t-esc="sum(line.number_of_days for line in o.worked_days_line_ids)"/> days</td>
+															</tr>
 	                                                  </tbody>
 	                                            </table>
 	                                         </td>
@@ -263,8 +267,16 @@
 	                                                                 <td class="text-right"><span style="line-height:65%!important;" t-esc="line.amount" t-esc-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.company_id.currency_id}"/></td>
 	                                                              </t>
 	                                                            </t>
-	                                                         </tr>
-	                                                        </t>
+	                                                        </tr>
+	                                                    </t>
+														<t t-foreach="get_loan_bal_code(o.employee_id)" t-as="bal">
+															<tr>
+																<div class="row">
+																	<td class=""><span t-esc="bal['name']" ></span></td>
+																	<td class=""><span t-esc="'{:,.2f}'.format(bal['used'])" ></span></td>
+																</div>
+															</tr>
+														</t>
 	                                                </tbody>
 	                                            </table>
 	                                         </td>
